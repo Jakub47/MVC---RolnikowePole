@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2042
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZaadoptujZwierzaka", "ZaadoptujZwierzaka\ZaadoptujZwierzaka.csproj", "{2DE12932-EB39-4C1D-B484-644BB9625166}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZaadoptujZwierzaka.Tests", "ZaadoptujZwierzaka.Tests\ZaadoptujZwierzaka.Tests.csproj", "{5CCC44AD-EDE0-4BB6-A464-53CAB0AFC574}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2DE12932-EB39-4C1D-B484-644BB9625166}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DE12932-EB39-4C1D-B484-644BB9625166}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DE12932-EB39-4C1D-B484-644BB9625166}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DE12932-EB39-4C1D-B484-644BB9625166}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CCC44AD-EDE0-4BB6-A464-53CAB0AFC574}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CCC44AD-EDE0-4BB6-A464-53CAB0AFC574}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CCC44AD-EDE0-4BB6-A464-53CAB0AFC574}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CCC44AD-EDE0-4BB6-A464-53CAB0AFC574}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4096FDB3-343F-4591-BD3C-4AC127985D15}
+	EndGlobalSection
+EndGlobal
