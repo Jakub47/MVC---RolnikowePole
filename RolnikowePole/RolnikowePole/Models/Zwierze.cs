@@ -19,7 +19,9 @@ namespace RolnikowePole.Models
         public DateTime DataDodania { get; set; }
         [StringLength(100)]
         public string NazwaPlikuObrazka { get; set; }
+        [Required(ErrorMessage = "Wprowadz Opis Zwierza")]
         public string OpisZwierza { get; set; }
+        [Required(ErrorMessage = "Wprowadz Cene")]
         public decimal CenaZwierza { get; set; }
         public string Wojewodztwo { get; set; }
         public string Miasto { get; set; }
