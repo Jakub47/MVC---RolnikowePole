@@ -14,9 +14,7 @@ namespace RolnikowePole.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            var gatunek = new Gatunek() { NazwaGatunku = "Ryby", OpisGatunku = "Test" };
-            db.Gatunki.Add(gatunek);
-            db.SaveChanges();
+            var lk = db.Gatunki.ToList();
             return View();
         }
     }

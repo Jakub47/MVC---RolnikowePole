@@ -15,6 +15,11 @@ namespace RolnikowePole.DAL
 
         }
 
+        static RolnikowePoleContext()
+        {
+            Database.SetInitializer<RolnikowePoleContext>(new RolnikowePoleInitializer());
+        }
+
         public DbSet<Zwierze> Zwierzeta { get; set; }
         public DbSet<Gatunek> Gatunki { get; set; }
         public DbSet<Zamowienie> Zamowienia { get; set; }
