@@ -124,6 +124,14 @@
     <Compile Include="Migrations\201808160504430_dodaniePolaOpisSkrocony.Designer.cs">
       <DependentUpon>201808160504430_dodaniePolaOpisSkrocony.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808160527446_dodaniePolaTest.cs" />
+    <Compile Include="Migrations\201808160527446_dodaniePolaTest.Designer.cs">
+      <DependentUpon>201808160527446_dodaniePolaTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808160530437_usunieciePolaTest.cs" />
+    <Compile Include="Migrations\201808160530437_usunieciePolaTest.Designer.cs">
+      <DependentUpon>201808160530437_usunieciePolaTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Gatunek.cs" />
     <Compile Include="Models\PozycjaZamowienia.cs" />
@@ -157,6 +165,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808160504430_dodaniePolaOpisSkrocony.resx">
       <DependentUpon>201808160504430_dodaniePolaOpisSkrocony.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808160527446_dodaniePolaTest.resx">
+      <DependentUpon>201808160527446_dodaniePolaTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808160530437_usunieciePolaTest.resx">
+      <DependentUpon>201808160530437_usunieciePolaTest.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

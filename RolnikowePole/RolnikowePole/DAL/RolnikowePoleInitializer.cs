@@ -1,21 +1,17 @@
-﻿using RolnikowePole.Models;
+﻿using RolnikowePole.Migrations;
+using RolnikowePole.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web;
 
 namespace RolnikowePole.DAL
 {
-    public class RolnikowePoleInitializer : DropCreateDatabaseAlways<RolnikowePoleContext>
+    public class RolnikowePoleInitializer : MigrateDatabaseToLatestVersion<RolnikowePoleContext,Configuration>
     {
-        protected override void Seed(RolnikowePoleContext context)
-        {
-            SeedRolnikowePoleData(context);
-            base.Seed(context);
-        }
-
-        private void SeedRolnikowePoleData(RolnikowePoleContext context)
+        public static void SeedRolnikowePoleData(RolnikowePoleContext context)
         {
             var gatunki = new List<Gatunek>
             {
@@ -32,7 +28,7 @@ namespace RolnikowePole.DAL
                 new Gatunek() {GatunekId = 11, NazwaGatunku = "Kroliki", NazwaPlikuIkony="krolik.png", OpisGatunku = "Kroliki"},
             };
 
-            gatunki.ForEach(i => context.Gatunki.Add(i));
+            gatunki.ForEach(i => context.Gatunki.AddOrUpdate(i));
             context.SaveChanges();
 
 
@@ -55,7 +51,7 @@ namespace RolnikowePole.DAL
                 new Zwierze() { ZwierzeId = 15, GatunekId = 4, Nazwa = "Kajetan", DataNarodzin = new DateTime(2018,7,3), DataDodania = DateTime.Now, NazwaPlikuObrazka = "Kajetan.png", OpisZwierza = "Znosi złote Jaja",CenaZwierza = 35,Wojewodztwo = "Lubelskie",Miasto = "Chełm", },
             };
 
-            zwierzeta.ForEach(i => context.Zwierzeta.Add(i));
+            zwierzeta.ForEach(i => context.Zwierzeta.AddOrUpdate(i));
             context.SaveChanges();
         }
     }

@@ -1,11 +1,12 @@
 namespace RolnikowePole.Migrations
 {
+    using RolnikowePole.DAL;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<RolnikowePole.DAL.RolnikowePoleContext>
+    public sealed class Configuration : DbMigrationsConfiguration<RolnikowePole.DAL.RolnikowePoleContext>
     {
         public Configuration()
         {
@@ -16,7 +17,7 @@ namespace RolnikowePole.Migrations
         protected override void Seed(RolnikowePole.DAL.RolnikowePoleContext context)
         {
             //  This method will be called after migrating to the latest version.
-
+            RolnikowePoleInitializer.SeedRolnikowePoleData(context);
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
         }
