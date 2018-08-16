@@ -31,6 +31,8 @@ namespace RolnikowePole.Models
         public bool Wykastrowany { get; set; }
         public bool Wyrozniony { get; set; }
         public bool Ukryty { get; set; }
+        public string OpisSkrocony { get; set; }
+
 
         public virtual Gatunek Gatunek { get; set; }
     }
