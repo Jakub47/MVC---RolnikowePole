@@ -15,4 +15,4 @@ namespace RolnikowePole.Migrations
             AddColumn("dbo.Zwierze", "Test", c => c.String());
         }
     }
-}
+} 
