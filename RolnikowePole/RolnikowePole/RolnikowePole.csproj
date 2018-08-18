@@ -219,6 +219,7 @@
     <Compile Include="Models\Zamowienie.cs" />
     <Compile Include="Models\Zwierze.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\HomeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
