@@ -11,11 +11,17 @@ namespace RolnikowePole.Controllers
     public class HomeController : Controller
     {
         RolnikowePoleContext db = new RolnikowePoleContext();
-        // GET: Home
+        
+        
         public ActionResult Index()
         {
             var lk = db.Gatunki.ToList();
             return View();
+        }
+
+        public ActionResult StronyStatyczne(string nazwa)
+        {
+            return View(nazwa);
         }
     }
 }
