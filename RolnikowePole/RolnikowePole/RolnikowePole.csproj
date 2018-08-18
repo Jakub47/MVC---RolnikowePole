@@ -220,6 +220,12 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Home\Onas.cshtml" />
+    <Content Include="Views\Home\Spolecznosc.cshtml" />
+    <Content Include="Views\Home\Opinie.cshtml" />
+    <Content Include="Views\Home\Pomoc.cshtml" />
+    <Content Include="Views\Home\Regulamin.cshtml" />
+    <Content Include="Views\Home\Kontakt.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
