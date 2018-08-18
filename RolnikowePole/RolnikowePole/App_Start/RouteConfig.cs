@@ -15,7 +15,7 @@ namespace RolnikowePole
 
             routes.MapRoute(
                 name: "StronyStatyczne",
-                url: "strony/{nazwa}.html",
+                url: "stronyStatyczne/{nazwa}.html",
                 defaults: new { controller = "Home", action = "StronyStatyczne" }
                 );
 
