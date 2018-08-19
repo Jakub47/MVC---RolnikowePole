@@ -123,13 +123,15 @@
     <Content Include="Content\Images\new.png" />
     <Content Include="Content\Images\searchlogo.png" />
     <Content Include="Content\Images\upload.png" />
-    <Content Include="Content\Kategorie\aspnet.png" />
-    <Content Include="Content\Kategorie\csharp.png" />
-    <Content Include="Content\Kategorie\css.png" />
-    <Content Include="Content\Kategorie\html.png" />
-    <Content Include="Content\Kategorie\javascript.png" />
-    <Content Include="Content\Kategorie\jquery.png" />
-    <Content Include="Content\Kategorie\xml.png" />
+    <Content Include="Content\Kategorie\ges.png" />
+    <Content Include="Content\Kategorie\indyk.png" />
+    <Content Include="Content\Kategorie\kaczka.png" />
+    <Content Include="Content\Kategorie\kon.png" />
+    <Content Include="Content\Kategorie\koza.png" />
+    <Content Include="Content\Kategorie\krowa.png" />
+    <Content Include="Content\Kategorie\kura.png" />
+    <Content Include="Content\Kategorie\owca.png" />
+    <Content Include="Content\Kategorie\swinia.png" />
     <Content Include="Content\Kursy\ges.png" />
     <Content Include="Content\Kursy\indyk.png" />
     <Content Include="Content\Kursy\kaczka.png" />
@@ -198,6 +200,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastucture\AppConfig.cs" />
+    <Compile Include="Infrastucture\UrlHelpers.cs" />
     <Compile Include="Migrations\201808151132051_InitialCreate.cs" />
     <Compile Include="Migrations\201808151132051_InitialCreate.Designer.cs">
       <DependentUpon>201808151132051_InitialCreate.cs</DependentUpon>

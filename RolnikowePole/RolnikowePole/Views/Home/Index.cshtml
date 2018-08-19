@@ -1,4 +1,5 @@
 ﻿@model RolnikowePole.ViewModels.HomeViewModel
+@using RolnikowePole.Infrastucture
 
 @{
     ViewBag.Title = "Rolnikowe Pole";
@@ -11,7 +12,7 @@
         @foreach (var gatunki in Model.Gatunki)
         {
             <li>
-                <a href="@Url.Action("Lista","Zwierzeta", new { nazwaGatunku = gatunki.NazwaGatunku.ToLower() })" style="background-image: url(../Content/Kategorie/aspnet.png); ">
+                <a href="@Url.Action("Lista","Zwierzeta", new { nazwaGatunku = gatunki.NazwaGatunku.ToLower() })" style="background-image: url(@Url.IkonyGatunkowSciezka(gatunki.NazwaPlikuIkony)); ">
                     @gatunki.NazwaGatunku
                 </a>
             </li>
