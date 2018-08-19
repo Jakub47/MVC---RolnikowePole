@@ -191,6 +191,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ZwierzetaController.cs" />
     <Compile Include="DAL\RolnikowePoleContext.cs" />
     <Compile Include="DAL\RolnikowePoleInitializer.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
@@ -237,6 +238,7 @@
     <Content Include="Views\Home\Pomoc.cshtml" />
     <Content Include="Views\Home\Regulamin.cshtml" />
     <Content Include="Views\Home\Kontakt.cshtml" />
+    <Content Include="Views\Zwierzeta\Lista.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
