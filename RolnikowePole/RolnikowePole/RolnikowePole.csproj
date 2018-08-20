@@ -134,11 +134,14 @@
     <Content Include="Content\Kategorie\swinia.png" />
     <Content Include="Content\Kursy\ges.png" />
     <Content Include="Content\Kursy\indyk.png" />
+    <Content Include="Content\Kursy\jan.png" />
     <Content Include="Content\Kursy\kaczka.png" />
     <Content Include="Content\Kursy\kon.png" />
     <Content Include="Content\Kursy\koza.png" />
     <Content Include="Content\Kursy\krowa.png" />
+    <Content Include="Content\Kursy\krzysztof.png" />
     <Content Include="Content\Kursy\kura.png" />
+    <Content Include="Content\Kursy\marek.png" />
     <Content Include="Content\Kursy\owca.png" />
     <Content Include="Content\Kursy\swinia.png" />
     <Content Include="Content\Prototype.css" />
@@ -193,6 +196,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\KoszykController.cs" />
     <Compile Include="Controllers\ZwierzetaController.cs" />
     <Compile Include="DAL\RolnikowePoleContext.cs" />
     <Compile Include="DAL\RolnikowePoleInitializer.cs" />
@@ -243,6 +247,7 @@
     <Content Include="Views\Home\Regulamin.cshtml" />
     <Content Include="Views\Home\Kontakt.cshtml" />
     <Content Include="Views\Zwierzeta\Lista.cshtml" />
+    <Content Include="Views\Koszyk\DodajDoKoszyka.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
