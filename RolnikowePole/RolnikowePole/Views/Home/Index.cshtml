@@ -25,48 +25,23 @@
 
 <section>
     <ul class="KursyTrzyKolumny duzaListaKursy">
-        <li>
-            <article>
-                <a class="dodajDoKoszykaLink" href="link">
-                    <img src="../Content/Images/koszyk.png" />
-                </a>
-                <a class="kursSzczegolyLink" href="link">
-                    <div class="bestsellerFlag"></div>
-                    <img class="kurs" src="../Content/Kursy/ges.png" />
-                    <h1>
-                        Tutaj będzie tytuł
-                    </h1>
-                </a>
-            </article>
-        </li>
-        <li>
-            <article>
-                <a class="dodajDoKoszykaLink" href="link">
-                    <img src="../Content/Images/koszyk.png" />
-                </a>
-                <a class="kursSzczegolyLink" href="link">
-                    <div class="bestsellerFlag"></div>
-                    <img class="kurs" src="../Content/Kursy/indyk.png" />
-                    <h1>
-                        Tutaj będzie tytuł
-                    </h1>
-                </a>
-            </article>
-        </li>
-        <li>
-            <article>
-                <a class="dodajDoKoszykaLink" href="link">
-                    <img src="../Content/Images/koszyk.png" />
-                </a>
-                <a class="kursSzczegolyLink" href="link">
-                    <div class="bestsellerFlag"></div>
-                    <img class="kurs" src="../Content/Kursy/kaczka.png" />
-                    <h1>
-                        Tutaj będzie tytuł
-                    </h1>
-                </a>
-            </article>
-        </li>
+        @foreach (var noweZwierze in Model.NoweZwierzeta)
+        {
+            <li>
+                <article>
+                    <a class="dodajDoKoszykaLink" href="@Url.Action("DodajDoKoszyka","Koszyk", new { id = noweZwierze.ZwierzeId })">
+                        <img src="../Content/Images/koszyk.png" />
+                    </a>
+                    <a class="kursSzczegolyLink" href="@Url.Action("Szczegoly","Zwierzeta", new { id = noweZwierze.ZwierzeId })">
+                        <div class="bestsellerFlag"></div>
+                        <img class="kurs" src="@Url.ObrazkiSciezka(noweZwierze.NazwaPlikuObrazka)" />
+                        <h1>
+                            @noweZwierze.Nazwa
+                        </h1>
+                    </a>
+                </article>
+            </li>
+        }
     </ul>
 </section>
 

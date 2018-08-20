@@ -18,5 +18,10 @@ namespace RolnikowePole.Controllers
         {
             return View();
         }
+
+        public ActionResult Szczegoly(string id)
+        {
+            return View();
+        }
     }
 }
