@@ -248,6 +248,7 @@
     <Content Include="Views\Home\Kontakt.cshtml" />
     <Content Include="Views\Zwierzeta\Lista.cshtml" />
     <Content Include="Views\Koszyk\DodajDoKoszyka.cshtml" />
+    <Content Include="Views\Zwierzeta\_GatunkiMenu.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
