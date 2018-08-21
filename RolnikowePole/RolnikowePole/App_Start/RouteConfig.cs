@@ -14,6 +14,12 @@ namespace RolnikowePole
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "ZwierzetaList",
+                url: "Gatunki/{nazwaGatunku}",
+                defaults: new { controller = "Zwierzeta", action = "Lista" }
+                );
+
+            routes.MapRoute(
                 name: "StronyStatyczne",
                 url: "stronyStatyczne/{nazwa}.html",
                 defaults: new { controller = "Home", action = "StronyStatyczne" }

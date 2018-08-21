@@ -9,10 +9,14 @@
                 <a class="dodajDoKoszykaLink" href="@Url.Action("DodajDoKoszyka","Koszyk", new { id = zwierze.ZwierzeId })">
                     <img src="@Url.ObrazkiSciezka(zwierze.NazwaPlikuObrazka)" />
                 </a>
-                <a class="kursSzczegolyLink" href="@Url.Action()">
-                    <img class="kurs" src="../Content/Kursy/ges.png" />
+                @if (zwierze.Wyrozniony)
+                {
+                    <div class="bestsellerFlag"> </div>
+                }   
+                <a class="kursSzczegolyLink" href="@Url.Action("Szczegoly","Zwierzeta", new { id = zwierze.ZwierzeId })">
+                    <img class="kurs" src="@Url.ObrazkiSciezka(zwierze.NazwaPlikuObrazka)" )" />
                     <h1>
-                        Tutaj będzie tytuł
+                        @zwierze.Nazwa
                     </h1>
                 </a>
             </article>
