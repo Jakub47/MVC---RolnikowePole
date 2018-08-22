@@ -5,7 +5,7 @@
     @foreach (var zwierze in Model)
     {
         <li>
-            <article>
+            <article style="width: 250px; height: 250px;">
                 <a class="dodajDoKoszykaLink" href="@Url.Action("DodajDoKoszyka","Koszyk", new { id = zwierze.ZwierzeId })">
                     <img src="@Url.ObrazkiSciezka(zwierze.NazwaPlikuObrazka)" />
                 </a>

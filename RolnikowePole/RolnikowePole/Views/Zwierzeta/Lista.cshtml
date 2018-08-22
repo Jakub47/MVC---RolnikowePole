@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<RolnikowePole.Models.Zwierze>
 @{
     ViewBag.Title = "Lista";
 }
@@ -15,7 +15,7 @@
             </a>
         </div>
 
-        <div id="SekcjaListaKategori">
+        <div id="SekcjaListaKategori" style="height:1000px;">
            @Html.Partial("_ZwierzetaList")
         </div>
 

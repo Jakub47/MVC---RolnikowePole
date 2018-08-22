@@ -20,7 +20,7 @@ namespace RolnikowePole.Controllers
         public ActionResult Lista(string nazwaGatunku)
         {
 
-            var gatunki = db.Gatunki.Include("Kursy").Where(k => k.NazwaGatunku.ToUpper() == nazwaGatunku.ToUpper()).Single();
+            var gatunki = db.Gatunki.Include("Zwierzeta").Where(k => k.NazwaGatunku.ToUpper() == nazwaGatunku.ToUpper()).Single();
             var zwierzeta = gatunki.Zwierzeta.ToList();
             return View(zwierzeta);
         }
