@@ -27,7 +27,8 @@ namespace RolnikowePole.Controllers
 
         public ActionResult Szczegoly(string id)
         {
-            return View();
+            var kurs = db.Zwierzeta.Find(id);
+            return View(kurs);
         }
 
         [ChildActionOnly]
