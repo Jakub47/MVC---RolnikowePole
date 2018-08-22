@@ -1,0 +1,25 @@
+﻿@model IEnumerable<RolnikowePole.Models.Zwierze>
+@using RolnikowePole.Infrastucture
+
+<ul class="KursyTrzyKolumny KursCena">
+    @foreach (var zwierze in Model)
+    {
+        <li>
+            <article style="width: 250px; height: 250px;">
+                <a class="dodajDoKoszykaLink" href="@Url.Action("DodajDoKoszyka","Koszyk", new { id = zwierze.ZwierzeId })">
+                    <img src="@Url.ObrazkiSciezka(zwierze.NazwaPlikuObrazka)" />
+                </a>
+                @if (zwierze.Wyrozniony)
+                {
+                    <div class="bestsellerFlag"> </div>
+                }   
+                <a class="kursSzczegolyLink" href="@Url.Action("Szczegoly","Zwierzeta", new { id = zwierze.ZwierzeId })">
+                    <img class="kurs" src="@Url.ObrazkiSciezka(zwierze.NazwaPlikuObrazka)" )" />
+                    <h1>
+                        @zwierze.Nazwa
+                    </h1>
+                </a>
+            </article>
+        </li>
+    }
+</ul>

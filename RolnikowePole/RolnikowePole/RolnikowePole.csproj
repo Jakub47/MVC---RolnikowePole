@@ -123,20 +123,25 @@
     <Content Include="Content\Images\new.png" />
     <Content Include="Content\Images\searchlogo.png" />
     <Content Include="Content\Images\upload.png" />
-    <Content Include="Content\Kategorie\aspnet.png" />
-    <Content Include="Content\Kategorie\csharp.png" />
-    <Content Include="Content\Kategorie\css.png" />
-    <Content Include="Content\Kategorie\html.png" />
-    <Content Include="Content\Kategorie\javascript.png" />
-    <Content Include="Content\Kategorie\jquery.png" />
-    <Content Include="Content\Kategorie\xml.png" />
+    <Content Include="Content\Kategorie\ges.png" />
+    <Content Include="Content\Kategorie\indyk.png" />
+    <Content Include="Content\Kategorie\kaczka.png" />
+    <Content Include="Content\Kategorie\kon.png" />
+    <Content Include="Content\Kategorie\koza.png" />
+    <Content Include="Content\Kategorie\krowa.png" />
+    <Content Include="Content\Kategorie\kura.png" />
+    <Content Include="Content\Kategorie\owca.png" />
+    <Content Include="Content\Kategorie\swinia.png" />
     <Content Include="Content\Kursy\ges.png" />
     <Content Include="Content\Kursy\indyk.png" />
+    <Content Include="Content\Kursy\jan.png" />
     <Content Include="Content\Kursy\kaczka.png" />
     <Content Include="Content\Kursy\kon.png" />
     <Content Include="Content\Kursy\koza.png" />
     <Content Include="Content\Kursy\krowa.png" />
+    <Content Include="Content\Kursy\Tomek.png" />
     <Content Include="Content\Kursy\kura.png" />
+    <Content Include="Content\Kursy\Wojtek.png" />
     <Content Include="Content\Kursy\owca.png" />
     <Content Include="Content\Kursy\swinia.png" />
     <Content Include="Content\Prototype.css" />
@@ -191,6 +196,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\KoszykController.cs" />
     <Compile Include="Controllers\ZwierzetaController.cs" />
     <Compile Include="DAL\RolnikowePoleContext.cs" />
     <Compile Include="DAL\RolnikowePoleInitializer.cs" />
@@ -198,6 +204,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastucture\AppConfig.cs" />
+    <Compile Include="Infrastucture\UrlHelpers.cs" />
     <Compile Include="Migrations\201808151132051_InitialCreate.cs" />
     <Compile Include="Migrations\201808151132051_InitialCreate.Designer.cs">
       <DependentUpon>201808151132051_InitialCreate.cs</DependentUpon>
@@ -239,6 +247,10 @@
     <Content Include="Views\Home\Regulamin.cshtml" />
     <Content Include="Views\Home\Kontakt.cshtml" />
     <Content Include="Views\Zwierzeta\Lista.cshtml" />
+    <Content Include="Views\Koszyk\DodajDoKoszyka.cshtml" />
+    <Content Include="Views\Zwierzeta\_GatunkiMenu.cshtml" />
+    <Content Include="Views\Zwierzeta\_ZwierzetaList.cshtml" />
+    <Content Include="Views\Zwierzeta\Szczegoly.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

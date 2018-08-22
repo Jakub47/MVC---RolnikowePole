@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RolnikowePole.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +9,8 @@ namespace RolnikowePole.Controllers
 {
     public class ZwierzetaController : Controller
     {
+        private RolnikowePoleContext db = new RolnikowePoleContext();
+
         // GET: Zwierzeta
         public ActionResult Index()
         {
@@ -16,7 +19,23 @@ namespace RolnikowePole.Controllers
 
         public ActionResult Lista(string nazwaGatunku)
         {
-            return View();
+
+            var gatunki = db.Gatunki.Include("Zwierzeta").Where(k => k.NazwaGatunku.ToUpper() == nazwaGatunku.ToUpper()).Single();
+            var zwierzeta = gatunki.Zwierzeta.ToList();
+            return View(zwierzeta);
+        }
+
+        public ActionResult Szczegoly(string id)
+        {
+            var kurs = db.Zwierzeta.Find(id);
+            return View(kurs);
+        }
+
+        [ChildActionOnly]
+        public ActionResult GatunkiMenu()
+        {
+            var gatunki = db.Gatunki.ToList();
+            return PartialView("_GatunkiMenu", gatunki);
         }
     }
 }
