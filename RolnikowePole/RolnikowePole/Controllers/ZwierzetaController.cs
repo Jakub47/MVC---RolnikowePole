@@ -15,7 +15,6 @@ namespace RolnikowePole.Controllers
         public ActionResult Index()
         {
             return View();
-            RolnikowePole.Infrastucture.GatunkiDynamicNodeProvider
         }
 
         public ActionResult Lista(string nazwaGatunku)
