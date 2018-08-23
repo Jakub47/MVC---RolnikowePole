@@ -34,5 +34,10 @@ namespace RolnikowePole.Controllers
         {
             return View(nazwa);
         }
+
+        public ActionResult Index2()
+        {
+            return View();
+        }
     }
 }
