@@ -4,7 +4,9 @@
             xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
 
   <mvcSiteMapNode title="Home" controller="Home" action="Index">
-    <mvcSiteMapNode title="Index2" controller="Home" action="Index2"/>
+    <mvcSiteMapNode title="Gatunki" controller="Zwierzeta" action="Lista" dynamicNodeProvider="RolnikowePole.Infrastucture.GatunkiDynamicNodeProvider, RolnikowePole">
+      <mvcSiteMapNode title="Zwierze" controller="Zwierzeta" action="Szczegoly" dynamicNodeProvider="RolnikowePole.Infrastucture.ZwierzeSzczegolyDynamicNodeProvider, RolnikowePole"/>
+    </mvcSiteMapNode>
   </mvcSiteMapNode>
 
 </mvcSiteMap>

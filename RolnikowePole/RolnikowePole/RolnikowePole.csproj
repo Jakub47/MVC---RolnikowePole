@@ -218,7 +218,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastucture\AppConfig.cs" />
+    <Compile Include="Infrastucture\GatunkiDynamicNodeProvider.cs" />
     <Compile Include="Infrastucture\UrlHelpers.cs" />
+    <Compile Include="Infrastucture\ZwierzeSzczegolyDynamicNodeProvider.cs" />
     <Compile Include="Migrations\201808151132051_InitialCreate.cs" />
     <Compile Include="Migrations\201808151132051_InitialCreate.Designer.cs">
       <DependentUpon>201808151132051_InitialCreate.cs</DependentUpon>
