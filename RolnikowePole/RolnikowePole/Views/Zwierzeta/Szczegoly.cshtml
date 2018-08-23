@@ -11,7 +11,7 @@
         <div id="Breadcrumb">
             <img src="../Content/Images/dommaly.png" />
             <a href="link">
-                Start > ASP.NET
+                @Html.MvcSiteMap().SiteMapPath()
             </a>
         </div>
         <section id="SekcjaKurs">
@@ -26,7 +26,7 @@
                 </div>
                 <div id="KursCena">
                     <div>
-                        @string.Format("{0:0.##", Model.CenaZwierza)<span>PLN</span>
+                        @string.Format("{0:0.##}", Model.CenaZwierza)<span>PLN</span>
                     </div>
                     <a href="@Url.Action("DodajDoKoszyka","Koszyk", new { id = Model.ZwierzeId })"></a>
                 </div>
