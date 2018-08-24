@@ -205,6 +205,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastucture\AppConfig.cs" />
+    <Compile Include="Infrastucture\DefaultCacheProvider.cs" />
+    <Compile Include="Infrastucture\ICacheProvider.cs" />
     <Compile Include="Infrastucture\UrlHelpers.cs" />
     <Compile Include="Migrations\201808151132051_InitialCreate.cs" />
     <Compile Include="Migrations\201808151132051_InitialCreate.Designer.cs">

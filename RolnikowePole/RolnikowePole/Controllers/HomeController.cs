@@ -1,4 +1,5 @@
 ﻿using RolnikowePole.DAL;
+using RolnikowePole.Infrastucture;
 using RolnikowePole.Models;
 using RolnikowePole.ViewModels;
 using System;
@@ -17,7 +18,14 @@ namespace RolnikowePole.Controllers
         public ActionResult Index()
         {
             var gatunki = db.Gatunki.ToList();
+
+            //              Test Cache with create class
+            ICacheProvider cache = new DefaultCacheProvider();
+
+            //Check if given values already exits in cache
+            if(cache.IsSet())
             var nowosci = db.Zwierzeta.Where(a => !a.Ukryty).OrderByDescending(a => a.DataDodania).Take(3).ToList();
+
             var wyroznione = db.Zwierzeta.Where(a => !a.Ukryty && a.Wyrozniony).OrderBy(a => Guid.NewGuid()).Take(3).ToList();
 
             var vm = new HomeViewModel()
