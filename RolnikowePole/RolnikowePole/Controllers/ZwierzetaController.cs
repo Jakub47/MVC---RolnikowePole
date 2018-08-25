@@ -31,9 +31,14 @@ namespace RolnikowePole.Controllers
             return View(kurs);
         }
 
+        [OutputCache(Duration = 60000)]
         [ChildActionOnly]
         public ActionResult GatunkiMenu()
         {
+            /*     W przypadku standardowego skorzystania z cache (asp.net caching) skorzystać z :
+                       HttpContext.Cache.Add(); HttpContext.Cache.Get();
+                   Niemniej w przypadku zmiany chache (możliwego w przyszłości np memcache reditcache) będziemy musieli zmienić wszyskie odnośniki stąd utworzenie dyna.
+            */
             var gatunki = db.Gatunki.ToList();
             return PartialView("_GatunkiMenu", gatunki);
         }

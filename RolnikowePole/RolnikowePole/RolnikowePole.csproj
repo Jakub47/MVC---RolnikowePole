@@ -219,6 +219,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastucture\AppConfig.cs" />
+    <Compile Include="Infrastucture\Consts.cs" />
+    <Compile Include="Infrastucture\DefaultCacheProvider.cs" />
+    <Compile Include="Infrastucture\ICacheProvider.cs" />
     <Compile Include="Infrastucture\GatunkiDynamicNodeProvider.cs" />
     <Compile Include="Infrastucture\UrlHelpers.cs" />
     <Compile Include="Infrastucture\ZwierzeSzczegolyDynamicNodeProvider.cs" />

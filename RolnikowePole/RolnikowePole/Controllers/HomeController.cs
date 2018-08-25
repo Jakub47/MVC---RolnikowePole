@@ -1,4 +1,5 @@
 ﻿using RolnikowePole.DAL;
+using RolnikowePole.Infrastucture;
 using RolnikowePole.Models;
 using RolnikowePole.ViewModels;
 using System;
@@ -16,9 +17,49 @@ namespace RolnikowePole.Controllers
         
         public ActionResult Index()
         {
-            var gatunki = db.Gatunki.ToList();
-            var nowosci = db.Zwierzeta.Where(a => !a.Ukryty).OrderByDescending(a => a.DataDodania).Take(3).ToList();
-            var wyroznione = db.Zwierzeta.Where(a => !a.Ukryty && a.Wyrozniony).OrderBy(a => Guid.NewGuid()).Take(3).ToList();
+            
+
+            //              Test Cache with create class
+            ICacheProvider cache = new DefaultCacheProvider();
+
+            List<Gatunek> gatunki;
+
+            if (cache.IsSet(Consts.GatunkiCacheKey))
+            {
+                gatunki = cache.Get(Consts.GatunkiCacheKey) as List<Gatunek>;
+            }
+            else
+            {
+                gatunki = db.Gatunki.ToList();
+                cache.Set(Consts.NowosciCacheKey, gatunki, 60);
+            }
+
+            List<Zwierze> nowosci;
+
+            //Check if given values already exits in cache {Remeber to use Consts because we don't want to remeber the key don't we? Let just use variable for that!}
+            if (cache.IsSet(Consts.NowosciCacheKey))
+            {
+                //If it exitsts get that value from cache
+                nowosci = cache.Get(Consts.NowosciCacheKey) as List<Zwierze>;
+            }
+            else
+            {
+                //If it does not exists get from database
+                nowosci = db.Zwierzeta.Where(a => !a.Ukryty).OrderByDescending(a => a.DataDodania).Take(3).ToList();
+                cache.Set(Consts.NowosciCacheKey, nowosci, 60);
+            }
+
+            List<Zwierze> wyroznione;
+
+            if (cache.IsSet(Consts.WyroznioneCacheKey))
+            {
+                wyroznione = cache.Get(Consts.WyroznioneCacheKey) as List<Zwierze>;
+            }
+            else
+            {
+                wyroznione = db.Zwierzeta.Where(a => !a.Ukryty && a.Wyrozniony).OrderBy(a => Guid.NewGuid()).Take(3).ToList();
+                cache.Set(Consts.NowosciCacheKey, wyroznione, 60);
+            }
 
             var vm = new HomeViewModel()
             {
