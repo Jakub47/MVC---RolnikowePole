@@ -17,9 +17,7 @@ namespace RolnikowePole.Controllers
         
         public ActionResult Index()
         {
-            
-
-            //              Test Cache with create class
+            // Test Cache with create class
             ICacheProvider cache = new DefaultCacheProvider();
 
             List<Gatunek> gatunki;
@@ -28,10 +26,11 @@ namespace RolnikowePole.Controllers
             {
                 gatunki = cache.Get(Consts.GatunkiCacheKey) as List<Gatunek>;
             }
+
             else
             {
                 gatunki = db.Gatunki.ToList();
-                cache.Set(Consts.NowosciCacheKey, gatunki, 60);
+                cache.Set(Consts.GatunkiCacheKey, gatunki, 60);
             }
 
             List<Zwierze> nowosci;
