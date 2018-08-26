@@ -17,11 +17,19 @@ namespace RolnikowePole.Controllers
             return View();
         }
 
-        public ActionResult Lista(string nazwaGatunku)
+        public ActionResult Lista(string nazwaGatunku, string searchQuery = null)
         {
 
             var gatunki = db.Gatunki.Include("Zwierzeta").Where(k => k.NazwaGatunku.ToUpper() == nazwaGatunku.ToUpper()).Single();
-            var zwierzeta = gatunki.Zwierzeta.ToList();
+
+            var zwierzeta = gatunki.Zwierzeta.Where(a => (searchQuery == null ||
+                                                    a.Nazwa.ToLower().Contains(searchQuery.ToLower())) && !a.Ukryty);
+
+            if(Request.IsAjaxRequest())
+            {
+                return PartialView("_ZwierzetaList", zwierzeta);
+            }
+
             return View(zwierzeta);
         }
 
@@ -41,6 +49,14 @@ namespace RolnikowePole.Controllers
             */
             var gatunki = db.Gatunki.ToList();
             return PartialView("_GatunkiMenu", gatunki);
+        }
+
+        public ActionResult ZwierzePodpowiedzi(string term)
+        {
+            var zwierzeta = this.db.Zwierzeta.Where(a => !a.Ukryty && a.Nazwa.ToLower().Contains(term.ToLower()))
+                            .Take(5).Select(a => new { label = a.Nazwa });
+
+            return Json(zwierzeta, JsonRequestBehavior.AllowGet);
         }
     }
 }
