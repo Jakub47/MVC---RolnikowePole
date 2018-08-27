@@ -10,5 +10,6 @@ namespace RolnikowePole.Infrastucture
         public const string NowosciCacheKey = "NowosciCacheKey";
         public const string WyroznioneCacheKey = "WyroznioneCacheKey";
         public const string GatunkiCacheKey = "GatunkiCacheKey";
+        public const string KoszykSessionKlucz = "KoszykSessionKlucz";
     }
 }

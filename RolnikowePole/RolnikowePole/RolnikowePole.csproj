@@ -266,6 +266,9 @@
     <Compile Include="Infrastucture\DefaultCacheProvider.cs" />
     <Compile Include="Infrastucture\GatunkiDynamicNodeProvider.cs" />
     <Compile Include="Infrastucture\ICacheProvider.cs" />
+    <Compile Include="Infrastucture\ISessionManager.cs" />
+    <Compile Include="Infrastucture\KoszykManager.cs" />
+    <Compile Include="Infrastucture\SessionManager.cs" />
     <Compile Include="Infrastucture\UrlHelpers.cs" />
     <Compile Include="Infrastucture\ZwierzeSzczegolyDynamicNodeProvider.cs" />
     <Compile Include="Migrations\201808151132051_InitialCreate.cs" />
@@ -286,6 +289,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Gatunek.cs" />
+    <Compile Include="Models\PozycjaKoszyka.cs" />
     <Compile Include="Models\PozycjaZamowienia.cs" />
     <Compile Include="Models\Zamowienie.cs" />
     <Compile Include="Models\Zwierze.cs" />
