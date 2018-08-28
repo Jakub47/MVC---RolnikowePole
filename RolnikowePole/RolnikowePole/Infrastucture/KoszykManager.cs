@@ -89,6 +89,52 @@ namespace RolnikowePole.Infrastucture
             return koszyk.Sum(i => (i.Wartosc * i.Ilosc));
         }
 
+        public int PobierzIloscPozycjiKoszyka()
+        {
+            var koszyk = PobierzKoszyk();
+            int ilosc = koszyk.Sum(k => k.Ilosc);
+            return ilosc;
+        }
 
+        public Zamowienie UtworzZamowienie(Zamowienie noweZamowienie, string userId)
+        {
+            var koszyk = PobierzKoszyk();
+            noweZamowienie.DataDodania = DateTime.Now;
+            //noweZamowienie.userId = userId;
+
+            db.Zamowienia.Add(noweZamowienie);
+
+            if(noweZamowienie.PozycjeZamowienia == null)
+            {
+                noweZamowienie.PozycjeZamowienia = new List<PozycjaZamowienia>();
+            }
+
+            decimal koszykWartosc = 0;
+
+            //Iteracja po wszystkich elementach w koszyku
+            foreach (var koszykElement in koszyk)
+            {
+                var nowaPozycjaZamowienia = new PozycjaZamowienia()
+                {
+                    ZwierzeId = koszykElement.Zwierze.ZwierzeId,
+                    Ilosc = koszykElement.Ilosc,
+                    CenaZakupu = koszykElement.Zwierze.CenaZwierza
+                };
+
+                koszykWartosc += (koszykElement.Ilosc * koszykElement.Zwierze.CenaZwierza);
+                noweZamowienie.PozycjeZamowienia.Add(nowaPozycjaZamowienia);
+            }
+
+            noweZamowienie.WartoscZamowienia = koszykWartosc;
+            db.SaveChanges();
+
+            return noweZamowienie;
+        }
+
+        public void PustyKoszyk()
+        {
+            //Just 'Destroy' our session!
+            session.Set<List<PozycjaKoszyka>>(Consts.KoszykSessionKlucz, null);
+        }
     }
 }
