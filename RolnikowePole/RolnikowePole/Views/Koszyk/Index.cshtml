@@ -1,0 +1,45 @@
+﻿@model RolnikowePole.ViewModels.KoszykViewModel
+@using RolnikowePole.Infrastucture
+@{
+    ViewBag.Title = "Koszyk";
+}
+
+<div id="ListaKategoriZawartosc">
+    @Html.Action("GatunkiMenu", "Zwierzeta")
+    <div id="KategorieListPrawaSekcja">
+        <div id="Breadcrumb">
+            <img src="../Content/Images/dommaly.png" />
+            <a href="link">
+                @Html.MvcSiteMap().SiteMapPath()
+            </a>
+        </div>
+
+        <section class="SekcjaKoszyk">
+            <div class="SekcjaHeader" style="margin-bottom: 0px;">
+                <h1>Twój koszyk</h1>
+            </div>
+
+            <table id="koszykTabela">
+                @foreach (var pozycjaKoszyka in Model.PozycjeKoszyka)
+                {
+                    <tr id="koszyk-wiersz-@pozycjaKoszyka.ZwierzeId">
+                        <td><a href="link"><img src="../Content/Kursy/kon.png" /></a></td>
+                        <td><a href="link">Asp.Net - Lorem ipsum dolor sit amet, consectetur adipiscing elit fusce.</a></td>
+                        <td>Ilość: 1</td>
+                        <td>100 zł</td>
+                        <td><a href="link">Usuń</a></td>
+                    </tr>
+                }
+            </table>
+
+            <div id="CenaCalkowita" style="">
+                Razem: 150 zł
+            </div>
+
+            <div class="SekcjaPrzyciski">
+                <a class="PrzyciskLink" href="link">Kontynułuj zakupy</a>
+                <a class="PrzyciskLink" href="link">Zapłać</a>
+            </div>
+        </section>
+    </div>
+</div>
