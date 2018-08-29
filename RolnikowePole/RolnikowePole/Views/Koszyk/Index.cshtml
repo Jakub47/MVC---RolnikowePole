@@ -58,3 +58,29 @@
         </section>
     </div>
 </div>
+@section Scripts
+{
+    @System.Web.Optimization.Scripts.Render("~/bundles/jqueryAndjqueryUI")
+    <script type="text/javascript">
+        $(".usunZwierze").click(function () {
+
+            var recordDoUsuniecia = $this.attr("data - id");
+
+            if (recordDoUsuniecia != '') {
+                $.post("/Koszyk/UsunZKoszyka", { "ZwierzeId": recordDoUsuniecia }), function (respons) {
+                    if (respons.IloscPozycjiUsuwanej == 0) {
+
+                        $('#koszyk-wiersz-' + respons.IdPozycjiUsuwanej).fadeOut('slow', function () {
+                            if (respons.KoszykIloscPozycji == 0) {
+                                $('#koszyk-empty-message').removeClass("hidden");
+                            }
+                        });
+                    }
+                    else {
+
+                    }
+                }
+            }
+        });
+    </script>
+}

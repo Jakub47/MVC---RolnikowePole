@@ -42,5 +42,10 @@ namespace RolnikowePole.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public int PobierzIloscElementowKoszyka()
+        {
+            return koszykManager.PobierzIloscPozycjiKoszyka();
+        }
     }
 }
