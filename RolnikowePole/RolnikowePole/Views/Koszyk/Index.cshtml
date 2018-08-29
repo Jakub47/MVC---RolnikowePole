@@ -22,23 +22,38 @@
             <table id="koszykTabela">
                 @foreach (var pozycjaKoszyka in Model.PozycjeKoszyka)
                 {
-                    <tr id="koszyk-wiersz-@pozycjaKoszyka.ZwierzeId">
-                        <td><a href="link"><img src="../Content/Kursy/kon.png" /></a></td>
-                        <td><a href="link">Asp.Net - Lorem ipsum dolor sit amet, consectetur adipiscing elit fusce.</a></td>
-                        <td>Ilość: 1</td>
-                        <td>100 zł</td>
-                        <td><a href="link">Usuń</a></td>
+                    <tr id="koszyk-wiersz-@pozycjaKoszyka.Zwierze.ZwierzeId">
+                        <td>
+                            <a href="@Url.Action("Szczegoly","Zwierzeta", new { id = pozycjaKoszyka.Zwierze.ZwierzeId })">
+                                <img src="@Url.Content("~/Content/Kursy" + pozycjaKoszyka.Zwierze.NazwaPlikuObrazka)" />
+                            </a>
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Szczegoly","Zwierzeta", new { id = pozycjaKoszyka.Zwierze.ZwierzeId })">
+                                @pozycjaKoszyka.Zwierze.Nazwa
+                            </a>
+                        </td>
+                        <td>Ilość: <span id="koszyk-id-pozycji-@pozycjaKoszyka.Zwierze.ZwierzeId">@pozycjaKoszyka.Ilosc</span></td>
+                        <td>@String.Format("{0:0.##}", pozycjaKoszyka.Wartosc) zł</td>
+                        <td><a class="usunZwierze" data-id="@pozycjaKoszyka.Zwierze.ZwierzeId" href="#">Usuń</a></td>
                     </tr>
                 }
+
+                <tr id="koszyk-empty-message" @if (Model.PozycjeKoszyka != null && Model.PozycjeKoszyka.Count > 0) { <text> class="hidden" </text> }>
+                    <td>Twój koszyk jest pusty. Może chcesz coś dodać do koszyka</td>
+                </tr>
             </table>
 
             <div id="CenaCalkowita" style="">
-                Razem: 150 zł
+                Razem: <span id="calkowita-cena-wartosc">@String.Format("{0:0.##}", Model.CenaCalkowita)</span> zł
             </div>
 
             <div class="SekcjaPrzyciski">
                 <a class="PrzyciskLink" href="link">Kontynułuj zakupy</a>
-                <a class="PrzyciskLink" href="link">Zapłać</a>
+                @if (Model.CenaCalkowita > 0)
+                {
+                    <a class="PrzyciskLink" id="koszyk-button-zaplac" href="@Url.Action("Zaplac","Koszyk")">Zapłać</a>
+                }
             </div>
         </section>
     </div>

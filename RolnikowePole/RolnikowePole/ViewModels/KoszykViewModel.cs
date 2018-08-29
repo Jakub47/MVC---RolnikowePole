@@ -8,7 +8,7 @@ namespace RolnikowePole.ViewModels
 {
     public class KoszykViewModel
     {
-        public List<Zwierze> PozycjeKoszyka { get; set; }
+        public List<PozycjaKoszyka> PozycjeKoszyka { get; set; }
         public decimal CenaCalkowita { get; set; }
     }
 }
