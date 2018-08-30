@@ -47,5 +47,21 @@ namespace RolnikowePole.Controllers
         {
             return koszykManager.PobierzIloscPozycjiKoszyka();
         }
+
+        public ActionResult UsunZKoszyka(int ZwierzeId)
+        {
+            int iloscPozycji = koszykManager.UsunZKoszyka(ZwierzeId);
+            int iloscPozycjiKoszyka = koszykManager.PobierzIloscPozycjiKoszyka();
+            decimal wartoscKoszyka = koszykManager.PobierzWartoscKoszyka();
+
+            var wynik = new KoszykUsuwanieViewModel
+            {
+                IdPozycjiUsuwanej = ZwierzeId,
+                IloscPozycjiUsuwanej = iloscPozycji,
+                KoszykCenaCalkowita = wartoscKoszyka,
+                KoszykIloscPozycji = iloscPozycjiKoszyka
+            };
+            return Json(wynik);
+        }
     }
 }

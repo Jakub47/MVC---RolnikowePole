@@ -7,6 +7,10 @@
     <mvcSiteMapNode title="Gatunki" controller="Zwierzeta" action="Lista" dynamicNodeProvider="RolnikowePole.Infrastucture.GatunkiDynamicNodeProvider, RolnikowePole">
       <mvcSiteMapNode title="Zwierze" controller="Zwierzeta" action="Szczegoly" dynamicNodeProvider="RolnikowePole.Infrastucture.ZwierzeSzczegolyDynamicNodeProvider, RolnikowePole"/>
     </mvcSiteMapNode>
+    <mvcSiteMapNode title="Koszyk" controller="Koszyk" action="Index">
+      <mvcSiteMapNode title="Dane zamowienia" controller="Koszyk" action="Zaplac"/>
+      <mvcSiteMapNode title="Potwierdzenia zamowienia" controller="Koszyk" action="PotwierdzZamowienie"/>
+    </mvcSiteMapNode>
   </mvcSiteMapNode>
 
 </mvcSiteMap>
