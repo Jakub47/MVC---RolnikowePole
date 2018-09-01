@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "_RightSectionLayout";
+}
+
+<div id="ListaKategoriZawartosc">
+    @Html.Action("GatunkiMenu", "Zwierzeta")
+
+    <div id="KategorieListPrawaSekcja">
+        <div id="Breadcrumb">
+            <img src="../Content/Images/dommaly.png" />
+            @Html.MvcSiteMap().SiteMapPath()
+        </div>
+        <section class="SekcjaKoszyk">
+            <div class="SekcjaHeader" style="margin-bottom: 0px;">
+                <h1>
+                    @RenderSection("SectionTitle", required: false)
+                </h1>
+            </div>
+            @RenderBody()
+        </section>
+    </div>
+</div>
+@section Scripts
+{
+    @RenderSection("Scripts", required: false)
+}
