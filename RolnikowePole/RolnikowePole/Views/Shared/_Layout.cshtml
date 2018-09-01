@@ -12,6 +12,9 @@
                 Koszyk (<span id="koszyk-naglowek-ilosc-elementow">@Html.Action("PobierzIloscElementowKoszyka","Koszyk")</span>)
                 <span></span>
             </a>
+
+            @Html.Partial("_LoginPartial")
+
             <a id="indexHeaderLogo" href="link">
                 <img src="@Url.Content("~/Content/Images/logo.png")" class="center" />
             </a>

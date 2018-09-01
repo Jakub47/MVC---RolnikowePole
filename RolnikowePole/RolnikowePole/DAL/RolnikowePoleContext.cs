@@ -1,4 +1,5 @@
-﻿using RolnikowePole.Models;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using RolnikowePole.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -8,7 +9,7 @@ using System.Web;
 
 namespace RolnikowePole.DAL
 {
-    public class RolnikowePoleContext : DbContext
+    public class RolnikowePoleContext : IdentityDbContext<ApplicationUser>
     {
         public RolnikowePoleContext() : base("RolnikowePoleContext")
         {
@@ -18,6 +19,11 @@ namespace RolnikowePole.DAL
         static RolnikowePoleContext()
         {
             Database.SetInitializer<RolnikowePoleContext>(new RolnikowePoleInitializer());
+        }
+
+        public static RolnikowePoleContext Create()
+        {
+            return new RolnikowePoleContext();
         }
 
         public DbSet<Zwierze> Zwierzeta { get; set; }
