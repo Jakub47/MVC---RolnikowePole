@@ -100,7 +100,7 @@ namespace RolnikowePole.Infrastucture
         {
             var koszyk = PobierzKoszyk();
             noweZamowienie.DataDodania = DateTime.Now;
-            //noweZamowienie.userId = userId;
+            noweZamowienie.UserId = userId;
 
             db.Zamowienia.Add(noweZamowienie);
 

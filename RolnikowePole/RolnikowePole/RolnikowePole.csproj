@@ -340,6 +340,14 @@
     <Compile Include="Migrations\201809011710438_DodanieAspIdentity.Designer.cs">
       <DependentUpon>201809011710438_DodanieAspIdentity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809021730547_Dodanie pola Kod Pocztowy.cs" />
+    <Compile Include="Migrations\201809021730547_Dodanie pola Kod Pocztowy.Designer.cs">
+      <DependentUpon>201809021730547_Dodanie pola Kod Pocztowy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809021806421_Zamowienia.cs" />
+    <Compile Include="Migrations\201809021806421_Zamowienia.Designer.cs">
+      <DependentUpon>201809021806421_Zamowienia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DaneUzytkownika.cs" />
     <Compile Include="Models\Gatunek.cs" />
@@ -396,6 +404,8 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Koszyk\Zaplac.cshtml" />
+    <Content Include="Views\Koszyk\PotwierdzenieZamowienia.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -421,6 +431,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809011710438_DodanieAspIdentity.resx">
       <DependentUpon>201809011710438_DodanieAspIdentity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809021730547_Dodanie pola Kod Pocztowy.resx">
+      <DependentUpon>201809021730547_Dodanie pola Kod Pocztowy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809021806421_Zamowienia.resx">
+      <DependentUpon>201809021806421_Zamowienia.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

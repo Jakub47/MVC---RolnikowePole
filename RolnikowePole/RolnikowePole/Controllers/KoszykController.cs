@@ -1,9 +1,14 @@
-﻿using RolnikowePole.DAL;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using RolnikowePole.App_Start;
+using RolnikowePole.DAL;
 using RolnikowePole.Infrastucture;
+using RolnikowePole.Models;
 using RolnikowePole.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -63,5 +68,78 @@ namespace RolnikowePole.Controllers
             };
             return Json(wynik);
         }
+
+        //Jezeli wykonujemy coś asynchroniczne (asynce) to rezultat musi zwracać  Task
+        public async Task<ActionResult> Zaplac()
+        {
+            //Verifry whether user is loged in
+            if(Request.IsAuthenticated)
+            {
+                //wiec obecnie zalogowany user ten jest uzyskiwany poprzez User.Identity.GetUserId()
+                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+
+                //Create zamowienie from this User! Te dane jezeli juz sa w bazie to te dane zostana juz przypisane i uzytkownik nie bedzie ich musial ponownie wypelniac
+                var zamowienie = new Zamowienie
+                {
+                    Imie = user.DaneUzytkownika.Imie,
+                    Nazwisko = user.DaneUzytkownika.Nazwisko,
+                    Adres = user.DaneUzytkownika.Adres,
+                    Miasto = user.DaneUzytkownika.Miasto,
+                    KodPocztowy = user.DaneUzytkownika.KodPocztowy,
+                    Email = user.DaneUzytkownika.Email,
+                    Telefon = user.DaneUzytkownika.Telefon
+                };
+
+                return View(zamowienie);
+            }
+            else
+                return RedirectToAction("Login", "Account", new { returnUrl = Url.Action("Zaplac", "Koszyk") });
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Zaplac(Zamowienie zamowienieSzczegoly)
+        {
+            if (ModelState.IsValid)
+            {
+                //pobieranie id użytkownika aktualnie zalogowanego
+                var userId = User.Identity.GetUserId();
+
+                //utworzenie obiektu zamówienia na podstawie tego co mamy w koszyku
+                var zamowienie = koszykManager.UtworzZamowienie(zamowienieSzczegoly, userId);
+
+                //szczególy użytkownika - aktualizacja danych. Jezeli podczas skladania zamowienia jakies zaktualizuje dane np. imie
+                //To te same dane zostana zaktualizowane w tabeli stad właśnie modyfikacja TryUpdate i UpdateAsync!
+                var user = await UserManager.FindByIdAsync(userId);
+                TryUpdateModel(user.DaneUzytkownika); //Jezeli bedziemy chcieli zmodyfikowac opis Patrz!
+                await UserManager.UpdateAsync(user);
+
+                //opróżnimy nasz koszyk zakupów
+                koszykManager.PustyKoszyk();
+
+                return RedirectToAction("PotwierdzenieZamowienia");
+            }
+            else
+                return View(zamowienieSzczegoly);
+        }
+
+        public ActionResult PotwierdzenieZamowienia()
+        {
+            return View();
+        }
+
+        private ApplicationUserManager _userManager;
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
     }
 }
