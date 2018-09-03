@@ -1,0 +1,29 @@
+﻿@model RolnikowePole.ViewModels.PotwierdzenieZamowieniaEmail
+Content-Type: text/plain; charset=utf-8
+
+Dziękujemy! 
+
+Złożyłeś zamówienie w serwisie rolnikowe pole.
+
+Zamówione pozycje: 
+
+@{ 
+    IEnumerable<RolnikowePole.Models.PozycjaZamowienia> pozycjeZamowienia = Model.PozycjeZamowienia;
+
+    for (int i = 0; i < pozycjeZamowienia.Count(); i++)
+    {
+        @pozycjeZamowienia.ElementAt(i).zwierze.Nazwa
+    }
+}
+
+Prosimy o przelanie kwoty @Model.Wartosc zł., tytułem zamówienia nr @Model.NumerZamowienia na nasze konto:
+
+Rolnikowe Pole test
+ul. test 12
+40-800 test
+PKO Bp 0000 0000 0000 0000 000 0
+
+Zaraz po otrzymaniu środków uzyskasz pełny dostęp do kursy
+
+Dziękujemy i zapraszamy ponownie!
+Rolnikowe Pole!

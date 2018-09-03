@@ -105,7 +105,7 @@ namespace RolnikowePole.Controllers
                 var userId = User.Identity.GetUserId();
 
                 //utworzenie obiektu zamówienia na podstawie tego co mamy w koszyku
-                var zamowienie = koszykManager.UtworzZamowienie(zamowienieSzczegoly, userId);
+                var newOrder = koszykManager.UtworzZamowienie(zamowienieSzczegoly, userId);
 
                 //szczególy użytkownika - aktualizacja danych. Jezeli podczas skladania zamowienia jakies zaktualizuje dane np. imie
                 //To te same dane zostana zaktualizowane w tabeli stad właśnie modyfikacja TryUpdate i UpdateAsync!
@@ -115,6 +115,21 @@ namespace RolnikowePole.Controllers
 
                 //opróżnimy nasz koszyk zakupów
                 koszykManager.PustyKoszyk();
+
+                //Zamówienie Które właśnie zostało wysłane
+                var zamowienie = db.Zamowienia.Include("PozycjeZamowienia").Include("PozycjeZamowienia.zwierze")
+                    .SingleOrDefault(o => o.ZamowienieId == newOrder.ZamowienieId);
+
+                PotwierdzenieZamowieniaEmail email = new PotwierdzenieZamowieniaEmail()
+                {
+                    To = zamowienie.Email,
+                    From = "jakub7249@gmail.com",
+                    Wartosc = zamowienie.WartoscZamowienia,
+                    NumerZamowienia = zamowienie.ZamowienieId,
+                    PozycjeZamowienia = zamowienie.PozycjeZamowienia
+                };
+
+                email.Send();
 
                 return RedirectToAction("PotwierdzenieZamowienia");
             }
