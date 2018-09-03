@@ -19,10 +19,13 @@
             <a class="manageLink" href="@Url.Action("ListaZamowien", "Manage")" style="width: 100px">
                 Zamówienia
             </a>
-            @if(User.IsInRole("Admin"))
+            @if (User.IsInRole("Admin"))
             {
                 <a class="manageLink" href="@Url.Action("DodajZwierze", "Manage")">
                     Dodaj
+                </a>
+                <a class="manageLink" href="@Url.Content("~/elmah")">
+                    Logi
                 </a>
             }
             <a id="koszykHeaderLink" href="@Url.Action("Index", "Koszyk")">

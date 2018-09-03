@@ -50,6 +50,12 @@
     <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Elmah, Version=1.2.14706.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
+    </Reference>
+    <Reference Include="Elmah.Mvc, Version=2.1.2.1389, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Elmah.Mvc.2.1.2\lib\net40\Elmah.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -99,9 +105,19 @@
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.5.9\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog.Elmah, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.Elmah.4.0\lib\net35\NLog.Elmah.dll</HintPath>
+    </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -243,6 +259,7 @@
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="Content\S.css" />
     <Content Include="Global.asax" />
+    <Content Include="Migrations\ELMAH-1.2-db-SQLServer.sql" />
     <Content Include="Prototype\Index.html" />
     <Content Include="Prototype\Kategorie.html" />
     <Content Include="Prototype\Koszyk.html" />
@@ -269,6 +286,10 @@
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Mvc.sitemap" />
     <None Include="MvcSiteMapSchema.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="NLog.config" />
+    <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -348,6 +369,10 @@
     <Compile Include="Migrations\201809021806421_Zamowienia.cs" />
     <Compile Include="Migrations\201809021806421_Zamowienia.Designer.cs">
       <DependentUpon>201809021806421_Zamowienia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809031107225_Elmah.cs" />
+    <Compile Include="Migrations\201809031107225_Elmah.Designer.cs">
+      <DependentUpon>201809031107225_Elmah.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DaneUzytkownika.cs" />
@@ -445,6 +470,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809021806421_Zamowienia.resx">
       <DependentUpon>201809021806421_Zamowienia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809031107225_Elmah.resx">
+      <DependentUpon>201809031107225_Elmah.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

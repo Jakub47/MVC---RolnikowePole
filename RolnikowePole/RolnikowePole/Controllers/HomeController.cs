@@ -1,4 +1,5 @@
-﻿using RolnikowePole.DAL;
+﻿using NLog;
+using RolnikowePole.DAL;
 using RolnikowePole.Infrastucture;
 using RolnikowePole.Models;
 using RolnikowePole.ViewModels;
@@ -13,10 +14,12 @@ namespace RolnikowePole.Controllers
     public class HomeController : Controller
     {
         RolnikowePoleContext db = new RolnikowePoleContext();
-        
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         
         public ActionResult Index()
         {
+            logger.Info("Jestes na stronie glownej");
+
             // Test Cache with create class
             ICacheProvider cache = new DefaultCacheProvider();
 
