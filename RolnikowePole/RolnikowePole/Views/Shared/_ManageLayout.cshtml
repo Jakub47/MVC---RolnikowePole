@@ -15,6 +15,9 @@
             <a class="manageLink" href="@Url.Action("Index", "Manage")">
                 Twoje dane
             </a>
+            <a class="manageLink" href="@Url.Action("ListaZamowien", "Manage")" style="width: 100px">
+                Zamówienia
+            </a>
             <a id="koszykHeaderLink" href="@Url.Action("Index", "Koszyk")">
                 KOSZYK (<span id="koszyk-naglowek-ilosc-elementow">@Html.Action("PobierzIloscElementowKoszyka", "Koszyk")</span>)
                 <span id="cart-header-logo"></span>

@@ -1,4 +1,6 @@
-﻿using RolnikowePole.Migrations;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using RolnikowePole.Migrations;
 using RolnikowePole.Models;
 using System;
 using System.Collections.Generic;
@@ -53,6 +55,38 @@ namespace RolnikowePole.DAL
 
             zwierzeta.ForEach(i => context.Zwierzeta.AddOrUpdate(i));
             context.SaveChanges();
+        }
+
+        public static void SeedUzytkownicy(RolnikowePoleContext db)
+        {
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db)); //povuerant id uzytkownika 
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
+
+            const string name = "admin@rolnikowePole.pl"; //nazwa naszego 1 amistrownika 
+            const string password = "P@ssw0rd"; //haslo
+            const string roleName = "Admin"; //rola
+
+            var user = userManager.FindByName(name);//sprawdzamy czy mamy juz takiego uzytkownika 
+            if (user == null) //jezeli go nie ma
+            {
+                user = new ApplicationUser { UserName = name, Email = name, DaneUzytkownika = new DaneUzytkownika() }; //to go stworzymy
+                var result = userManager.Create(user, password);//wywołujemy Create Zeby utworzyc takei uzytkonika 
+            }
+
+            // utworzenie roli Admin jeśli nie istnieje 
+            var role = roleManager.FindByName(roleName); //spr czy mamy takia role to jest Admin
+            if (role == null)
+            {
+                role = new IdentityRole(roleName); //jezeli nie to ją utworzymy 
+                var roleresult = roleManager.Create(role);
+            }
+
+            // dodanie uzytkownika do roli Admin jesli juz nie jest w roli
+            var rolesForUser = userManager.GetRoles(user.Id);
+            if (!rolesForUser.Contains(role.Name))  //dodamy uzytkownika do roli Admin jezeli nie jest w tej roli
+            {
+                var result = userManager.AddToRole(user.Id, role.Name);
+            }
         }
     }
 }
