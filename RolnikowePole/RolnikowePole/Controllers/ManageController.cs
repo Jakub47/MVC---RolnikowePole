@@ -2,10 +2,12 @@
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using RolnikowePole.App_Start;
+using RolnikowePole.DAL;
 using RolnikowePole.Models;
 using RolnikowePole.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -16,6 +18,8 @@ namespace RolnikowePole.Controllers
     [Authorize]
     public class ManageController : Controller
     {
+        private RolnikowePoleContext db = new RolnikowePoleContext();
+        
         public enum ManageMessageId
         {
             ChangePasswordSuccess, //Jezeli zmiana hasła była sukcesem 
@@ -138,6 +142,40 @@ namespace RolnikowePole.Controllers
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie, DefaultAuthenticationTypes.TwoFactorCookie);
             AuthenticationManager.SignIn(new AuthenticationProperties { IsPersistent = isPersistent }, await user.GenerateUserIdentityAsync(UserManager));
+        }
+
+        public ActionResult ListaZamowien()
+        {
+            //Check if current user is admin
+            bool IsAdmin = User.IsInRole("Admin");
+            ViewBag.UserIsAdmin = IsAdmin;
+
+            IEnumerable<Zamowienie> ZamowieniaUzytkownika;
+
+            //Dla administratorów zwracamy wszystkie zamowienia
+            if(IsAdmin)
+            {
+                ZamowieniaUzytkownika = db.Zamowienia.Include("PozycjeZamowienia").OrderByDescending(o => o.DataDodania).ToArray();
+            }
+            else
+            {
+                var userId = User.Identity.GetUserId();
+                ZamowieniaUzytkownika = db.Zamowienia.Where(o => o.UserId == userId).Include("PozycjeZamowienia").OrderByDescending(o => o.DataDodania).ToArray();
+            }
+
+            return View(ZamowieniaUzytkownika);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public StanZamowienia ZmianaStanuZamowienia(Zamowienie zamowienie)
+        {
+            //Pobierz Zamowienie z Bazy
+            Zamowienie zamowienieDoModyfikacji = db.Zamowienia.Find(zamowienie.ZamowienieId);
+            zamowienieDoModyfikacji.StanZamowienia = zamowienie.StanZamowienia;
+            db.SaveChanges();
+
+            return zamowienie.StanZamowienia;
         }
     }
 }
