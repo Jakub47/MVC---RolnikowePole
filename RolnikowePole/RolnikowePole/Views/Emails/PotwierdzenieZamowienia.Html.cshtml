@@ -1,0 +1,52 @@
+﻿@model RolnikowePole.ViewModels.PotwierdzenieZamowieniaEmail
+Content-Type: text/html; charset=utf-8
+
+<html>
+<body>
+
+    @Html.EmbedImage("~/Content/Images/logo.png")
+
+    <p>
+        Dziękujemy!
+    </p>
+    <p>Złożyłeś zamówienie w serwisie rolnikowe pole.</p>
+    <p>Zamówione pozycje: </p>
+
+
+    @{
+        IEnumerable<RolnikowePole.Models.PozycjaZamowienia> pozycjeZamowienia = Model.PozycjeZamowienia;
+
+        for (int i = 0; i < pozycjeZamowienia.Count(); i++)
+        {
+            <p>
+                @pozycjeZamowienia.ElementAt(i).zwierze.Nazwa - @pozycjeZamowienia.ElementAt(i).zwierze.CenaZwierza
+            </p>
+        }
+    }
+    <p>
+        Prosimy o przelanie kwoty @Model.Wartosc zł., tytułem zamówienia nr @Model.NumerZamowienia na nasze konto:
+    </p>
+    <p>Rolnikowe Pole test</p>
+    <p>
+        ul. test 12
+    </p>
+    <p>
+        40-800 test
+    </p>
+    <p>
+        PKO Bp 0000 0000 0000 0000 000 0
+    </p>
+    <p>
+        Zaraz po otrzymaniu środków uzyskasz pełny dostęp do kursy
+    </p>
+    <p>
+        Dziękujemy i zapraszamy ponownie!
+
+    </p>
+    <p>
+        Rolnikowe Pole!
+    </p>
+</body>
+
+
+</html>
