@@ -36,7 +36,10 @@
                 <div id="KursInfo">
                     @Model.OpisSkrocony
                 </div>
-
+                @if(User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                {
+                    <a href="@Url.Action("DodajZwierze", "Manage", new { zwierzeId = Model.ZwierzeId })" style="margin-top: 20px; font-weight: bold; display: block;">Edytuj</a>
+                }
             </div>
         </section>
     </div>
