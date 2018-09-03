@@ -1,0 +1,1 @@
+2018-09-03 13:29:32.2698|INFO|RolnikowePole.Controllers.HomeController|Jestes na stronie glownej
