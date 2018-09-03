@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using Hangfire;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using RolnikowePole.App_Start;
 using RolnikowePole.DAL;
@@ -8,6 +9,7 @@ using RolnikowePole.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -116,25 +118,48 @@ namespace RolnikowePole.Controllers
                 //opróżnimy nasz koszyk zakupów
                 koszykManager.PustyKoszyk();
 
-                //Zamówienie Które właśnie zostało wysłane
-                var zamowienie = db.Zamowienia.Include("PozycjeZamowienia").Include("PozycjeZamowienia.zwierze")
-                    .SingleOrDefault(o => o.ZamowienieId == newOrder.ZamowienieId);
+                string url = Url.Action("PotwierdzenieZamowieniaEmail", "Koszyk", new { zamowienieId =
+                    newOrder.ZamowienieId, nazwisko = newOrder.Nazwisko }, Request.Url.Scheme);
+                
+                //Przekazany zostanie url czy tym samym zostanie wywołana akcji w naszym kontrolerze odpowidzialna 
+                //za wysłanie e-maila!
+                BackgroundJob.Enqueue(() => Call(url));
 
-                PotwierdzenieZamowieniaEmail email = new PotwierdzenieZamowieniaEmail()
-                {
-                    To = zamowienie.Email,
-                    From = "jakub7249@gmail.com",
-                    Wartosc = zamowienie.WartoscZamowienia,
-                    NumerZamowienia = zamowienie.ZamowienieId,
-                    PozycjeZamowienia = zamowienie.PozycjeZamowienia
-                };
-
-                email.Send();
+                
 
                 return RedirectToAction("PotwierdzenieZamowienia");
             }
             else
                 return View(zamowienieSzczegoly);
+        }
+
+        public void Call(string url)
+        {
+            var req = HttpWebRequest.Create(url);
+            req.GetResponseAsync();
+        }
+
+        public ActionResult PotwierdzenieZamowieniaEmail(int zamowienieId, string nazwisko)
+        {
+            //Zamówienie Które właśnie zostało wysłane
+            var zamowienie = db.Zamowienia.Include("PozycjeZamowienia").Include("PozycjeZamowienia.zwierze")
+                .SingleOrDefault(o => o.ZamowienieId == zamowienieId && o.Nazwisko == nazwisko);
+
+            if (zamowienie == null)
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+
+            PotwierdzenieZamowieniaEmail email = new PotwierdzenieZamowieniaEmail()
+            {
+                To = zamowienie.Email,
+                From = "jakub7249@gmail.com",
+                Wartosc = zamowienie.WartoscZamowienia,
+                NumerZamowienia = zamowienie.ZamowienieId,
+                PozycjeZamowienia = zamowienie.PozycjeZamowienia
+            };
+
+            email.Send();
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
         public ActionResult PotwierdzenieZamowienia()
