@@ -12,12 +12,18 @@ namespace RolnikowePole.Infrastucture
 
         public SessionManager()
         {
-            session = HttpContext.Current.Session;
+            try
+            {
+                session = HttpContext.Current.Session;
+            }
+            catch(NullReferenceException e)
+            {
+                HttpContext.Current.Session.Abandon();
+            }
         }
 
         public T Get<T>(string key)
         {
-
             return (T)session[key];
         }
 
