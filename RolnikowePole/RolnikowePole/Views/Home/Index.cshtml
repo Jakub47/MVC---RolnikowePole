@@ -1,4 +1,4 @@
-﻿@model RolnikowePole.ViewModels.HomeViewModel
+﻿@model List<RolnikowePole.Models.Zwierze>
 @using RolnikowePole.Infrastucture
 
 @{
@@ -7,21 +7,11 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-3">
-            <h1 class="my-4">Aktulanie wybrany gatunek</h1>
-            <div class="list-group">
-                @foreach (var gatunki in Model.Gatunki)
-                {
-                    <a href="@Url.Action("Lista","Zwierzeta", new { nazwaGatunku = gatunki.NazwaGatunku.ToLower() })" class="list-group-item " style="background-image: url(@Url.IkonyGatunkowSciezka(gatunki.NazwaPlikuIkony)); text-align: center;">
-                        @gatunki.NazwaGatunku
-                    </a>
-                }
-            </div>
-        </div>
+        @Html.Action("GatunkiMenu","Zwierzeta")
         <!-- /.col-lg-3 -->
         <div class="col-lg-9">
             <div class="row">
-                @foreach (var zwierze in Model.ZwierzetaGatunku)
+                @foreach (var zwierze in Model)
                 {
                     <div class="col-lg-4 col-md-6 mb-4">
                         <div class="card h-100">
@@ -36,7 +26,7 @@
 
                             <a class="dodajDoKoszykaLink" style="text-decoration: none;" href="@Url.Action("DodajDoKoszyka","Koszyk", new { id = zwierze.ZwierzeId })">
                                 <div class="card-footer bg-secondary d-flex justify-content-center">
-                                        Dodaj Do Koszyka                                    
+                                    Dodaj Do Koszyka
                                 </div>
                             </a>
                         </div>

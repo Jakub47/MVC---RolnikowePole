@@ -1,16 +1,14 @@
 ﻿@model IEnumerable<RolnikowePole.Models.Gatunek>
 @using RolnikowePole.Infrastucture
 
-<nav class="KategorieVertical">
-    <ul>
-        @foreach (var gatunek in Model)
+<div class="col-lg-3">
+    <h1 class="my-4">Aktulanie wybrany gatunek</h1>
+    <div class="list-group">
+        @foreach (var gatunki in Model)
         {
-            <li>
-                <a href="@Url.Action("Lista","Zwierzeta", new { nazwaGatunku = gatunek.NazwaGatunku.ToString() })" style="background-image: url(@Url.IkonyGatunkowSciezka(gatunek.NazwaPlikuIkony)); ">
-                   @gatunek.NazwaGatunku
-                </a>
-            </li>
+            <a href="@Url.Action("Lista","Zwierzeta", new { nazwaGatunku = gatunki.NazwaGatunku.ToLower() })" class="list-group-item " style="background-image: url(@Url.IkonyGatunkowSciezka(gatunki.NazwaPlikuIkony)); text-align: center;">
+                @gatunki.NazwaGatunku
+            </a>
         }
-    </ul>
-</nav>
-
+    </div>
+</div>

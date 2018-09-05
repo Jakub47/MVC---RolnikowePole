@@ -404,6 +404,7 @@
     <Compile Include="ViewModels\KoszykViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModel.cs" />
     <Compile Include="ViewModels\PotwierdzenieZamowieniaEmail.cs" />
+    <Compile Include="ViewModels\ZwierzetaGatunkiViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />

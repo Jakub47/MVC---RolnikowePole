@@ -1,4 +1,7 @@
 ﻿using RolnikowePole.DAL;
+using RolnikowePole.Infrastucture;
+using RolnikowePole.Models;
+using RolnikowePole.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,8 +38,45 @@ namespace RolnikowePole.Controllers
 
         public ActionResult Szczegoly(string id)
         {
-            var kurs = db.Zwierzeta.Find(int.Parse(id));
-            return View(kurs);
+            ICacheProvider cache = new DefaultCacheProvider();
+
+            List<Zwierze> nowosci;
+
+            //Check if given values already exits in cache {Remeber to use Consts because we don't want to remeber the key don't we? Let just use variable for that!}
+            if (cache.IsSet(Consts.NowosciCacheKey))
+            {
+                //If it exitsts get that value from cache
+                nowosci = cache.Get(Consts.NowosciCacheKey) as List<Zwierze>;
+            }
+            else
+            {
+                //If it does not exists get from database
+                nowosci = db.Zwierzeta.Where(a => !a.Ukryty).OrderByDescending(a => a.DataDodania).Take(3).ToList();
+                cache.Set(Consts.NowosciCacheKey, nowosci, 60);
+            }
+
+            List<Zwierze> wyroznione;
+
+            if (cache.IsSet(Consts.WyroznioneCacheKey))
+            {
+                wyroznione = cache.Get(Consts.WyroznioneCacheKey) as List<Zwierze>;
+            }
+            else
+            {
+                wyroznione = db.Zwierzeta.Where(a => !a.Ukryty && a.Wyrozniony).OrderBy(a => Guid.NewGuid()).Take(3).ToList();
+                cache.Set(Consts.NowosciCacheKey, wyroznione, 60);
+            }
+
+            var zwierze = db.Zwierzeta.Find(int.Parse(id));
+
+            var vm = new HomeViewModel
+            {
+                Nowe = nowosci,
+                Wyroznione = wyroznione,
+                Zwierze = zwierze
+            };
+
+            return View(vm);
         }
 
         [OutputCache(Duration = 60000)]

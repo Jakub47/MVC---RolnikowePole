@@ -8,9 +8,8 @@ namespace RolnikowePole.ViewModels
 {
     public class HomeViewModel
     {
-        public IEnumerable<Gatunek> Gatunki { get; set; }
-        //public IEnumerable<Zwierze> NoweZwierzeta { get; set; }
-        //public IEnumerable<Zwierze> Wyroznione { get; set; }
-        public IEnumerable<Zwierze> ZwierzetaGatunku { get; set; }
+        public Zwierze Zwierze { get; set; }
+        public IEnumerable<Zwierze> Wyroznione { get; set; }
+        public IEnumerable<Zwierze> Nowe { get; set; }
     }
 }

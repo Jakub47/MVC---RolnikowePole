@@ -1,46 +1,85 @@
-﻿@model RolnikowePole.Models.Zwierze
+﻿@model RolnikowePole.ViewModels.HomeViewModel
 @using RolnikowePole.Infrastucture
 
 @{
     ViewBag.Title = "Szczegoly";
 }
+<!-- Page Content -->
+<div class="container">
 
-<div id="ListaKategoriZawartosc">
-    @Html.Action("GatunkiMenu")
-    <div id="KategorieListPrawaSekcja">
-        <div id="Breadcrumb">
-            <img src="../Content/Images/dommaly.png" />
-            <a href="link">
-                @Html.MvcSiteMap().SiteMapPath()
-            </a>
-        </div>
-        <section id="SekcjaKurs">
-            <div id="KursLewa">
-                <img src="@Url.ObrazkiSciezka(Model.NazwaPlikuObrazka)" />
+    <div class="row">
+        @Html.Action("GatunkiMenu", "Zwierzeta")
+
+        <div class="col-lg-9">
+
+            <div class="card mt-4 mb-4">
+                <img class="card-img-top img-fluid" style="height: 400px;" src="@Url.ObrazkiSciezka(Model.Zwierze.NazwaPlikuObrazka)" alt="">
+                <div class="card-body">
+                    <h3 class="card-title">@Model.Zwierze.Nazwa</h3>
+                    <h4>@string.Format("{0:0.##}", Model.Zwierze.CenaZwierza)<span>PLN</span></h4>
+                    <p class="card-text">@Model.Zwierze.OpisZwierza</p>
+                    <a href="@Url.Action("DodajDoKoszyka","Koszyk", new { id = Model.Zwierze.ZwierzeId })">Dodaj Do Koszyka</a>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <a href="@Url.Action("DodajZwierze", "Manage", new { zwierzeId = Model.Zwierze.ZwierzeId })">Edytuj</a>
+                    }
+                </div>
             </div>
-            <div id="KursPrawa">
-                <div id="KursNazwa">
-                    <h1>
-                        @Model.Nazwa
-                    </h1>
-                </div>
-                <div id="KursCena">
-                    <div>
-                        @string.Format("{0:0.##}", Model.CenaZwierza)<span>PLN</span>
-                    </div>
-                    <a href="@Url.Action("DodajDoKoszyka","Koszyk", new { id = Model.ZwierzeId })"></a>
-                </div>
-                <div id="KursOpis">
-                    @Model.OpisZwierza
-                </div>
-                <div id="KursInfo">
-                    @Model.OpisSkrocony
-                </div>
-                @if(User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+
+            Nowości
+            <div class="row mb-4">
+
+                @foreach (var zwierze in Model.Nowe)
                 {
-                    <a href="@Url.Action("DodajZwierze", "Manage", new { zwierzeId = Model.ZwierzeId })" style="margin-top: 20px; font-weight: bold; display: block;">Edytuj</a>
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card h-100">
+                            <a href="@Url.Action("Szczegoly","Zwierzeta", new { id = zwierze.ZwierzeId })"><img class="card-img-top img-fluid" src="@Url.ObrazkiSciezka(zwierze.NazwaPlikuObrazka)" onerror="this.onerror=null;this.src='http://placehold.it/700x400';" alt=""></a>
+                            <div class="card-body">
+                                <h4 class="card-title">
+                                    <a href="@Url.Action("Szczegoly","Zwierzeta", new { id = zwierze.ZwierzeId })">@zwierze.Nazwa</a>
+                                </h4>
+                                <h5>@zwierze.CenaZwierza</h5>
+                                <p class="card-text">@zwierze.OpisZwierza</p>
+                            </div>
+
+                            <a class="dodajDoKoszykaLink" style="text-decoration: none;" href="@Url.Action("DodajDoKoszyka","Koszyk", new { id = zwierze.ZwierzeId })">
+                                <div class="card-footer bg-secondary d-flex justify-content-center">
+                                    Dodaj Do Koszyka
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                 }
             </div>
-        </section>
-    </div>
+
+            Wyróżnione
+            <div class="row mb-4">
+                @foreach (var zwierze in Model.Wyroznione)
+                {
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card h-100">
+                            <a href="@Url.Action("Szczegoly","Zwierzeta", new { id = zwierze.ZwierzeId })"><img class="card-img-top img-fluid" src="@Url.ObrazkiSciezka(zwierze.NazwaPlikuObrazka)" onerror="this.onerror=null;this.src='http://placehold.it/700x400';" alt=""></a>
+                            <div class="card-body">
+                                <h4 class="card-title">
+                                    <a href="@Url.Action("Szczegoly","Zwierzeta", new { id = zwierze.ZwierzeId })">@zwierze.Nazwa</a>
+                                </h4>
+                                <h5>@zwierze.CenaZwierza</h5>
+                                <p class="card-text">@zwierze.OpisZwierza</p>
+                            </div>
+
+                            <a class="dodajDoKoszykaLink" style="text-decoration: none;" href="@Url.Action("DodajDoKoszyka","Koszyk", new { id = zwierze.ZwierzeId })">
+                                <div class="card-footer bg-secondary d-flex justify-content-center">
+                                    Dodaj Do Koszyka
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+            <!-- /.col-lg-9 -->
+
+        </div>
+
 </div>
