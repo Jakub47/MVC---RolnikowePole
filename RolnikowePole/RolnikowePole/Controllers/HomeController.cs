@@ -36,38 +36,52 @@ namespace RolnikowePole.Controllers
                 cache.Set(Consts.GatunkiCacheKey, gatunki, 60);
             }
 
-            List<Zwierze> nowosci;
+            List<Zwierze> zwierzeta;
 
-            //Check if given values already exits in cache {Remeber to use Consts because we don't want to remeber the key don't we? Let just use variable for that!}
-            if (cache.IsSet(Consts.NowosciCacheKey))
+            if (cache.IsSet(Consts.ZwierzetaGatunkuCacheKey))
             {
-                //If it exitsts get that value from cache
-                nowosci = cache.Get(Consts.NowosciCacheKey) as List<Zwierze>;
+                zwierzeta = cache.Get(Consts.ZwierzetaGatunkuCacheKey) as List<Zwierze>;
             }
+
             else
-            {
-                //If it does not exists get from database
-                nowosci = db.Zwierzeta.Where(a => !a.Ukryty).OrderByDescending(a => a.DataDodania).Take(3).ToList();
-                cache.Set(Consts.NowosciCacheKey, nowosci, 60);
+            {                
+                zwierzeta = db.Zwierzeta.Where(z => !z.Ukryty).OrderBy(a => Guid.NewGuid()).ToList();
+                cache.Set(Consts.ZwierzetaGatunkuCacheKey, zwierzeta, 60);
             }
 
-            List<Zwierze> wyroznione;
+            //List<Zwierze> nowosci;
 
-            if (cache.IsSet(Consts.WyroznioneCacheKey))
-            {
-                wyroznione = cache.Get(Consts.WyroznioneCacheKey) as List<Zwierze>;
-            }
-            else
-            {
-                wyroznione = db.Zwierzeta.Where(a => !a.Ukryty && a.Wyrozniony).OrderBy(a => Guid.NewGuid()).Take(3).ToList();
-                cache.Set(Consts.NowosciCacheKey, wyroznione, 60);
-            }
+            ////Check if given values already exits in cache {Remeber to use Consts because we don't want to remeber the key don't we? Let just use variable for that!}
+            //if (cache.IsSet(Consts.NowosciCacheKey))
+            //{
+            //    //If it exitsts get that value from cache
+            //    nowosci = cache.Get(Consts.NowosciCacheKey) as List<Zwierze>;
+            //}
+            //else
+            //{
+            //    //If it does not exists get from database
+            //    nowosci = db.Zwierzeta.Where(a => !a.Ukryty).OrderByDescending(a => a.DataDodania).Take(3).ToList();
+            //    cache.Set(Consts.NowosciCacheKey, nowosci, 60);
+            //}
+
+            //List<Zwierze> wyroznione;
+
+            //if (cache.IsSet(Consts.WyroznioneCacheKey))
+            //{
+            //    wyroznione = cache.Get(Consts.WyroznioneCacheKey) as List<Zwierze>;
+            //}
+            //else
+            //{
+            //    wyroznione = db.Zwierzeta.Where(a => !a.Ukryty && a.Wyrozniony).OrderBy(a => Guid.NewGuid()).Take(3).ToList();
+            //    cache.Set(Consts.NowosciCacheKey, wyroznione, 60);
+            //}
 
             var vm = new HomeViewModel()
             {
                 Gatunki = gatunki,
-                NoweZwierzeta = nowosci,
-                Wyroznione = wyroznione
+                ZwierzetaGatunku = zwierzeta
+                //NoweZwierzeta = nowosci,
+                //Wyroznione = wyroznione
             };
 
             return View(vm);

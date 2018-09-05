@@ -5,64 +5,48 @@
     ViewBag.Title = "Rolnikowe Pole";
 }
 
-
-
-<nav class="kategorieHorizontal">
-    <ul>
-        @foreach (var gatunki in Model.Gatunki)
-        {
-            <li>
-                <a href="@Url.Action("Lista","Zwierzeta", new { nazwaGatunku = gatunki.NazwaGatunku.ToLower() })" style="background-image: url(@Url.IkonyGatunkowSciezka(gatunki.NazwaPlikuIkony)); ">
-                    @gatunki.NazwaGatunku
-                </a>
-            </li>
-        }
-    </ul>
-    <a href="link">
-        <img id="baner" src="../Content/Images/baner.png" />
-    </a>
-</nav>
-
-<section>
-    <ul class="KursyTrzyKolumny duzaListaKursy">
-        @foreach (var wyrozniony in Model.Wyroznione)
-        {
-            <li>
-                <article>
-                    <a class="dodajDoKoszykaLink" href="@Url.Action("DodajDoKoszyka","Koszyk", new { id = wyrozniony.ZwierzeId })">
-                        <img src="../Content/Images/koszyk.png" />
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3">
+            <h1 class="my-4">Aktulanie wybrany gatunek</h1>
+            <div class="list-group">
+                @foreach (var gatunki in Model.Gatunki)
+                {
+                    <a href="@Url.Action("Lista","Zwierzeta", new { nazwaGatunku = gatunki.NazwaGatunku.ToLower() })" class="list-group-item " style="background-image: url(@Url.IkonyGatunkowSciezka(gatunki.NazwaPlikuIkony)); text-align: center;">
+                        @gatunki.NazwaGatunku
                     </a>
-                    <a class="kursSzczegolyLink" href="@Url.Action("Szczegoly","Zwierzeta", new { id = wyrozniony.ZwierzeId })">
-                        <div class="bestsellerFlag"></div>
-                        <img class="kurs" src="@Url.ObrazkiSciezka(wyrozniony.NazwaPlikuObrazka)" />
-                        <h1>
-                            @wyrozniony.Nazwa
-                        </h1>
-                    </a>
-                </article>
-            </li>
-        }
-    </ul>
-</section>
+                }
+            </div>
+        </div>
+        <!-- /.col-lg-3 -->
+        <div class="col-lg-9">
+            <div class="row">
+                @foreach (var zwierze in Model.ZwierzetaGatunku)
+                {
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card h-100">
+                            <a href="@Url.Action("Szczegoly","Zwierzeta", new { id = zwierze.ZwierzeId })"><img class="card-img-top img-fluid" src="@Url.ObrazkiSciezka(zwierze.NazwaPlikuObrazka)" onerror="this.onerror=null;this.src='http://placehold.it/700x400';" alt=""></a>
+                            <div class="card-body">
+                                <h4 class="card-title">
+                                    <a href="@Url.Action("Szczegoly","Zwierzeta", new { id = zwierze.ZwierzeId })">@zwierze.Nazwa</a>
+                                </h4>
+                                <h5>@zwierze.CenaZwierza</h5>
+                                <p class="card-text">@zwierze.OpisZwierza</p>
+                            </div>
 
-<section>
-    <ul class="KursyTrzyKolumny duzaListaKursy">
-        @foreach (var noweZwierze in Model.NoweZwierzeta)
-        {
-            <li>
-                <article>
-                    <a class="dodajDoKoszykaLink" href="@Url.Action("DodajDoKoszyka","Koszyk", new { id = noweZwierze.ZwierzeId })">
-                        <img src="../Content/Images/koszyk.png" />
-                    </a>
-                    <a class="kursSzczegolyLink" href="@Url.Action("Szczegoly","Zwierzeta", new { id = noweZwierze.ZwierzeId })">
-                        <div class="newFlag"></div>
-                        <img class="kurs" src="@Url.ObrazkiSciezka(noweZwierze.NazwaPlikuObrazka)" />
-                        <h1>
-                            @noweZwierze.Nazwa
-                        </h1>
-                    </a>
-                </article>
-            </li>
-        }
-    </ul>
-</section>
+                            <a class="dodajDoKoszykaLink" style="text-decoration: none;" href="@Url.Action("DodajDoKoszyka","Koszyk", new { id = zwierze.ZwierzeId })">
+                                <div class="card-footer bg-secondary d-flex justify-content-center">
+                                        Dodaj Do Koszyka                                    
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.col-lg-9 -->
+    </div>
+    <!-- /.row -->
+</div>
+<!-- /.container -->

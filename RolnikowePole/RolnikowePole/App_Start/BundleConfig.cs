@@ -24,6 +24,25 @@ namespace RolnikowePole.App_Start
                                         "~/Content/themes/base/autocomplete.css",
                                         "~/Content/themes/base/theme.css",
                                         "~/Content/themes/base/menu.css"));
-        }
+
+            //Bundle for homepage
+            bundles.Add(new StyleBundle("~/Content/BootstrapAndCssForHomepage").Include(
+                                        "~/Content/bootstrap.min.css",
+                                        "~/Content/css/shop-homepage.css"
+                                        ));
+
+
+            //Bundle for item
+            bundles.Add(new StyleBundle("~/Content/Bootstrap&CssForItem").Include(
+                                        "~/Content/bootstrap.min.css",
+                                        "~/Content/css/shop-item.css"
+                                        ));
+
+            //Bundle Scripts for homepage & item
+            bundles.Add(new ScriptBundle("~/bundles/jqueryAndBootstrapBundle").Include(
+                                         "~/Scripts/jquery-{version}.js",
+                                         "~/Scripts/bootstrap.bundle.min.js"
+                                         ));
+        }   
     }
 }

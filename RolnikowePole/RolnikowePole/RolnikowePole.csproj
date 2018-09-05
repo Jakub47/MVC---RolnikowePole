@@ -189,6 +189,8 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\shop-homepage.css" />
+    <Content Include="Content\css\shop-item.css" />
     <Content Include="Content\Images\ajax-loader.gif" />
     <Content Include="Content\Images\ajax-loader.png" />
     <Content Include="Content\Images\baner.png" />
@@ -272,10 +274,8 @@
     <Content Include="Content\S.css" />
     <Content Include="Global.asax" />
     <Content Include="Migrations\ELMAH-1.2-db-SQLServer.sql" />
-    <Content Include="Prototype\Index.html" />
-    <Content Include="Prototype\Kategorie.html" />
-    <Content Include="Prototype\Koszyk.html" />
-    <Content Include="Prototype\Kurs.html" />
+    <Content Include="Prototype\index.html" />
+    <Content Include="Prototype\item.html" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />

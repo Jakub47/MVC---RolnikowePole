@@ -1,26 +1,21 @@
 ﻿@using Microsoft.AspNet.Identity
-<div id="login-header">
+
     @if (Request.IsAuthenticated)
     {
-        using (Html.BeginForm("Logoff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+        using (Html.BeginForm("Logoff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "nav-link" }))
         {
             @Html.AntiForgeryToken()
 
-            <div>
-                @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-            </div>
-            <div>
-                <a href="javascript:document.getElementById('logoutForm').submit()">Wyloguj</a>
-            </div>
+                @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" , @class = "dropdown-item" })
+
+            <a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">
+                Wyloguj
+            </a>
         }
     }
     else
     {
-        <div>
-            @Html.ActionLink("Rejestracja", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
-        </div>
-        <div>
-            @Html.ActionLink("Zaloguj", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
-        </div>
+            @Html.ActionLink("Rejestracja", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" , @class = "dropdown-item" })
+           
+            @Html.ActionLink("Zaloguj", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" , @class = "dropdown-item" })
     }
-</div>
