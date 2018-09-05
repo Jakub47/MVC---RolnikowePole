@@ -1,49 +1,65 @@
 ﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
     <title>@ViewBag.Title</title>
-    <link href="@Url.Content("../Content/S.css")" rel="stylesheet" />
-    @System.Web.Optimization.Styles.Render("~/Content/themes/base/css")
+
+    <!-- Bootstrap core CSS + Custom styles for this template -->
+    @System.Web.Optimization.Styles.Render("~/Content/BootstrapAndCssForHomepage")
 </head>
+
 <body>
-    <header>
-        <div style="overflow: hidden;">
-            <a id="koszykHeaderLink" href="@Url.Content("~/")">
-                Koszyk (<span id="koszyk-naglowek-ilosc-elementow">@Html.Action("PobierzIloscElementowKoszyka","Koszyk")</span>)
-                <span></span>
-            </a>
-
-            @Html.Partial("_LoginPartial")
-
-            <a id="indexHeaderLogo" href="link">
-                <img src="@Url.Content("~/Content/Images/logo.png")" class="center" />
-            </a>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Rolnikowe Pole</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">
+                            Strona główna
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Gatunki&Zwierzeta</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Koszyk [ @Html.Action("PobierzIloscElementowKoszyka", "Koszyk") ]</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Konto
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @Html.Partial("_LoginPartial")
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </header>
+    </nav>
+    <!-- Navigation -->
 
-    <div>
-        @RenderBody()
-    </div>
+    @RenderBody()
 
-    <footer>
-        <nav>
-            <ul>
-                <li><a href="@Url.Action("StronyStatyczne","Home", new { nazwa = "Onas" })" style="">O nas</a></li>
-
-                <li><a href="@Url.Action("StronyStatyczne","Home", new { nazwa = "Spolecznosc" })" style="">Społeczność</a></li>
-                <li><a href="@Url.Action("StronyStatyczne","Home", new { nazwa = "Opinie" })" style="">Opinie</a></li>
-                <li><a href="@Url.Action("StronyStatyczne","Home", new { nazwa = "Pomoc" })" style="">Pomoc</a></li>
-                <li><a href="@Url.Action("StronyStatyczne","Home", new { nazwa = "Regulamin" })" style="">Regulamin</a></li>
-                <li><a href="@Url.Action("StronyStatyczne","Home", new { nazwa = "Kontakt" })" style="">Kontakt</a></li>
-            </ul>
-        </nav>
-        <div id="footerLogo">
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; Your Website 2017</p>
         </div>
-        <div id="footerCopyright">
-            Copyright &copy; 2016 P. Kursy
-        </div>
+        <!-- /.container -->
     </footer>
 
+    @System.Web.Optimization.Scripts.Render("~/bundles/jqueryAndBootstrapBundle")
     @RenderSection("Scripts", required: false)
 
 </body>
