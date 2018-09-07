@@ -412,12 +412,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\Onas.cshtml" />
-    <Content Include="Views\Home\Spolecznosc.cshtml" />
-    <Content Include="Views\Home\Opinie.cshtml" />
-    <Content Include="Views\Home\Pomoc.cshtml" />
-    <Content Include="Views\Home\Regulamin.cshtml" />
-    <Content Include="Views\Home\Kontakt.cshtml" />
     <Content Include="Views\Zwierzeta\Lista.cshtml" />
     <Content Include="Views\Koszyk\DodajDoKoszyka.cshtml" />
     <Content Include="Views\Zwierzeta\_GatunkiMenu.cshtml" />

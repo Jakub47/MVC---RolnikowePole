@@ -4,58 +4,71 @@
     ViewBag.Title = "Koszyk";
 }
 
-<div id="ListaKategoriZawartosc">
-    @Html.Action("GatunkiMenu", "Zwierzeta")
-    <div id="KategorieListPrawaSekcja">
-        <div id="Breadcrumb">
-            <img src="../Content/Images/dommaly.png" />
-            <a href="link">
-                @Html.MvcSiteMap().SiteMapPath()
-            </a>
-        </div>
-
-        <section class="SekcjaKoszyk">
-            <div class="SekcjaHeader" style="margin-bottom: 0px;">
-                <h1>Twój koszyk</h1>
-            </div>
-
-            <table id="koszykTabela">
+<div class="container">
+    <div class="row">
+        @Html.Action("GatunkiMenu", "Zwierzeta")
+        <!-- /.col-lg-3 -->
+        <div class="col-lg-9">
+            <div class="row">
                 @foreach (var pozycjaKoszyka in Model.PozycjeKoszyka)
                 {
-                    <tr id="koszyk-wiersz-@pozycjaKoszyka.Zwierze.ZwierzeId">
-                        <td>
+                    <div class="col-lg-4 col-md-6 mb-4" id="koszyk-wiersz-@pozycjaKoszyka.Zwierze.ZwierzeId">
+                        <div class="card h-100">
                             <a href="@Url.Action("Szczegoly","Zwierzeta", new { id = pozycjaKoszyka.Zwierze.ZwierzeId })">
-                                <img src="@Url.Content("~/Content/Kursy" + pozycjaKoszyka.Zwierze.NazwaPlikuObrazka)" />
+                                <img class="img-fluid" src="@Url.Content("~/Content/Kursy/" + pozycjaKoszyka.Zwierze.NazwaPlikuObrazka)" />
                             </a>
-                        </td>
-                        <td>
-                            <a href="@Url.Action("Szczegoly","Zwierzeta", new { id = pozycjaKoszyka.Zwierze.ZwierzeId })">
-                                @pozycjaKoszyka.Zwierze.Nazwa
+                            <div class="card-body">
+                                <h4 class="card-title">
+                                    <a href="@Url.Action("Szczegoly","Zwierzeta", new { id = pozycjaKoszyka.Zwierze.ZwierzeId })">
+                                        @pozycjaKoszyka.Zwierze.Nazwa
+                                    </a>
+                                </h4>
+                                <h5>@pozycjaKoszyka.Zwierze.CenaZwierza</h5>
+                                <p class="card-text">@pozycjaKoszyka.Zwierze.OpisZwierza</p>
+                                <p class="btn btn-dark">Ilość: <span id="koszyk-id-pozycji-@pozycjaKoszyka.Zwierze.ZwierzeId">@pozycjaKoszyka.Ilosc</span></p>
+                                <p>@String.Format("{0:0.##}", pozycjaKoszyka.Wartosc) zł</p>
+                            </div>
+
+                            <a class="usunZwierze" data-id="@pozycjaKoszyka.Zwierze.ZwierzeId" href="#">
+                                <div class="card-footer bg-secondary d-flex justify-content-center">
+                                    Usuń
+                                </div>
                             </a>
-                        </td>
-                        <td>Ilość: <span id="koszyk-id-pozycji-@pozycjaKoszyka.Zwierze.ZwierzeId">@pozycjaKoszyka.Ilosc</span></td>
-                        <td>@String.Format("{0:0.##}", pozycjaKoszyka.Wartosc) zł</td>
-                        <td><a class="usunZwierze" data-id="@pozycjaKoszyka.Zwierze.ZwierzeId" href="#">Usuń</a></td>
-                    </tr>
-                }
-
-                <tr id="koszyk-empty-message" @if (Model.PozycjeKoszyka != null && Model.PozycjeKoszyka.Count > 0) { <text> class="hidden" </text> }>
-                    <td>Twój koszyk jest pusty. Może chcesz coś dodać do koszyka</td>
-                </tr>
-            </table>
-
-            <div id="CenaCalkowita" style="">
-                Razem: <span id="calkowita-cena-wartosc">@String.Format("{0:0.##}", Model.CenaCalkowita)</span> zł
-            </div>
-
-            <div class="SekcjaPrzyciski">
-                <a class="PrzyciskLink" href="link">Kontynułuj zakupy</a>
-                @if (Model.CenaCalkowita > 0)
-                {
-                    <a class="PrzyciskLink" id="koszyk-button-zaplac" href="@Url.Action("Zaplac","Koszyk")">Zapłać</a>
+                        </div>
+                    </div>
                 }
             </div>
-        </section>
+            <div class="row bg-dark text-white mb-sm-2">
+
+                @*<div class="col-md-4">
+                        @if (Model.PozycjeKoszyka != null && Model.PozycjeKoszyka.Count <= 0)
+                        {
+                            <p id="koszyk-empty-message">
+                                Twój koszyk jest pusty. Może chcesz coś dodać do koszyka
+                            </p>
+                        }
+                    </div>*@
+
+
+
+                <div class="col-md-4" id="CenaCalkowita">
+                    <a class="btn btn-outline-primary btn-lg m-2 text-capitalize" href="link">Kontynułuj zakupy</a>
+                </div>
+
+                <div class="col-md-4 text-center">
+                    @if (Model.CenaCalkowita > 0)
+                    {
+
+                        <a class="btn btn-outline-success btn-lg m-2 text-capitalize" id="koszyk-button-zaplac" href="@Url.Action("Zaplac","Koszyk")">Zapłać</a>
+                    }
+                </div>
+
+                <div class="col-md-4 text-right mt-3" id="CenaCalkowita">
+                    <span class="btn-danger"> Razem: <span class="" id="calkowita-cena-wartosc">@String.Format("{0:0.##}", Model.CenaCalkowita)</span> zł </span>
+                </div>
+
+            </div>
+        </div>
     </div>
 </div>
 @section Scripts
@@ -64,8 +77,9 @@
     <script type="text/javascript">
         $(function () {
             $(".usunZwierze").click(function () {
-
-                var recordDoUsuniecia = $this.attr("data - id");
+                var $this = $(this);
+                alert('dsadsa');
+                var recordDoUsuniecia = $this.attr("data-id");
 
                 if (recordDoUsuniecia != '') {
                     $.post("/Koszyk/UsunZKoszyka", { "ZwierzeId": recordDoUsuniecia }, function (respons) {
@@ -78,15 +92,15 @@
                             });
                         }
                         else {
-                            $('#koszyk-ilosc-pozycji-' + response.IdPozycjiUsuwanej).text(response.IloscPozycjiUsuwanej);
+                            $('#koszyk-ilosc-pozycji-' + respons.IdPozycjiUsuwanej).text(response.IloscPozycjiUsuwanej);
                         }
 
-                        if (response.KoszykIloscPozycji == 0) {
+                        if (respons.KoszykIloscPozycji == 0) {
                             $('#koszyk-button-zaplac').addClass('hidden');
                             $('#CenaCalkowita').addClass('invisible');
                         }
-                        $('#calkowita-cena-wartosc').text(response.KoszykCenaCalkowita);
-                        $('#koszyk-naglowek-ilosc-elementow').text(response.KoszykIloscPozycji);
+                        $('#calkowita-cena-wartosc').text(respons.KoszykCenaCalkowita);
+                        $('#koszyk-naglowek-ilosc-elementow').text(respons.KoszykIloscPozycji);
                     });
                     return false;
                 }

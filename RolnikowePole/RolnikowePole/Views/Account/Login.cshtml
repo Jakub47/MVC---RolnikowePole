@@ -9,7 +9,7 @@
     Zaloguj się
 }
 
-<div>
+<div class="col-sm-offset-2 col-sm-8 mt-5">
     @using (@Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
     {
         //Verify whether login is coming from our site
@@ -19,7 +19,7 @@
             @Html.ValidationMessage("loginError", "")
         </div>
 
-        <table id="login-table" style="margin-left: auto; margin-left: auto;">
+        <table id="login-table" style="margin-left: auto; margin-left: auto; text-align: center; ">
             <tr>
                 <td>@Html.LabelFor(o => o.Email, "E-mail:")</td>
                 <td>
@@ -43,19 +43,19 @@
                     <div class="checkbox" style="margin-bottom: 10px;">
                         @Html.CheckBoxFor(m => m.RememberMe, new { @checked = "checked" })
                         @Html.LabelFor(m => m.RememberMe)
+                        <input type="submit" value="Zaloguj" class="submitLink" style="height: 40px; margin: 10px; margin-left: 50px;" />
                     </div>
 
-                    <input type="submit" value="Zaloguj" class="submitLink" style="height: 40px;" />
+                    
                 </td>
             </tr>
         </table>
     }
 
-    <div style="text-align: center;">
+    <div style="text-align: right;">
         <a href="@Url.Action("Register")">Nie mam jeszcze konta</a>
     </div>
 </div>
-
 @section Scripts
 {
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>

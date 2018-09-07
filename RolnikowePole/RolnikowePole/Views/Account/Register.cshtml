@@ -10,8 +10,7 @@
     Rejestracja
 }
 
-
-<div>
+<div class="col-sm-offset-2 col-sm-8 mt-5">
     @using (Html.BeginForm("Register", "Account"))
     {
         @Html.AntiForgeryToken();
@@ -58,8 +57,8 @@
 
             <tr>
                 <td></td>
-                <td colspan="2" style="text-align: right; padding-right: 20px;">
-                    <input type="submit" value="Zarejestruj" class="submitLink" style="height: 40px; text-align: right; margin: 0px; padding: 0px;" />
+                <td colspan="2" style="text-align: right;">
+                    <input type="submit" value="Zarejestruj" class="submitLink mt-2" style="height: 40px; text-align: right; margin: 0px; padding: 0px;"  />
                 </td>
             </tr>
         </table>
