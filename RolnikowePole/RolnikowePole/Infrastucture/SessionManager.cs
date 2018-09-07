@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.SessionState;
 
@@ -9,6 +10,7 @@ namespace RolnikowePole.Infrastucture
     public class SessionManager : ISessionManager
     {
         private HttpSessionState session;
+        AutoResetEvent _resetEvent = new AutoResetEvent(false);
 
         public SessionManager()
         {
@@ -16,10 +18,12 @@ namespace RolnikowePole.Infrastucture
             {
                 session = HttpContext.Current.Session;
             }
-            catch(NullReferenceException e)
+            catch(NullReferenceException)
             {
-                HttpContext.Current.Session.Abandon();
+                _resetEvent.Set();
             }
+
+            _resetEvent = null;
         }
 
         public T Get<T>(string key)

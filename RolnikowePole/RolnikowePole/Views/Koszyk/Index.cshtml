@@ -7,68 +7,76 @@
 <div class="container">
     <div class="row">
         @Html.Action("GatunkiMenu", "Zwierzeta")
-        <!-- /.col-lg-3 -->
-        <div class="col-lg-9">
-            <div class="row">
-                @foreach (var pozycjaKoszyka in Model.PozycjeKoszyka)
-                {
-                    <div class="col-lg-4 col-md-6 mb-4" id="koszyk-wiersz-@pozycjaKoszyka.Zwierze.ZwierzeId">
-                        <div class="card h-100">
-                            <a href="@Url.Action("Szczegoly","Zwierzeta", new { id = pozycjaKoszyka.Zwierze.ZwierzeId })">
-                                <img class="img-fluid" src="@Url.Content("~/Content/Kursy/" + pozycjaKoszyka.Zwierze.NazwaPlikuObrazka)" />
-                            </a>
-                            <div class="card-body">
-                                <h4 class="card-title">
-                                    <a href="@Url.Action("Szczegoly","Zwierzeta", new { id = pozycjaKoszyka.Zwierze.ZwierzeId })">
-                                        @pozycjaKoszyka.Zwierze.Nazwa
-                                    </a>
-                                </h4>
-                                <h5>@pozycjaKoszyka.Zwierze.CenaZwierza</h5>
-                                <p class="card-text">@pozycjaKoszyka.Zwierze.OpisZwierza</p>
-                                <p class="btn btn-dark">Ilość: <span id="koszyk-id-pozycji-@pozycjaKoszyka.Zwierze.ZwierzeId">@pozycjaKoszyka.Ilosc</span></p>
-                                <p>@String.Format("{0:0.##}", pozycjaKoszyka.Wartosc) zł</p>
-                            </div>
 
-                            <a class="usunZwierze" data-id="@pozycjaKoszyka.Zwierze.ZwierzeId" href="#">
-                                <div class="card-footer bg-secondary d-flex justify-content-center">
-                                    Usuń
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                }
+        @if (Model.PozycjeKoszyka.Count <= 0)
+        {
+        <div class="col-lg-9 align-middle" id="extra">
+            <div class="row h-50"></div>
+            <div class="row h-50  mb-5">
+                <p id="koszyk-empty-message" class="text-center">
+                    Twój koszyk jest pusty. Może chcesz coś dodać do koszyka
+                </p>
             </div>
-            <div class="row bg-dark text-white mb-sm-2">
+            <div class="row h-50"></div>
+            
 
-                @*<div class="col-md-4">
-                        @if (Model.PozycjeKoszyka != null && Model.PozycjeKoszyka.Count <= 0)
-                        {
-                            <p id="koszyk-empty-message">
-                                Twój koszyk jest pusty. Może chcesz coś dodać do koszyka
-                            </p>
-                        }
-                    </div>*@
+        </div>
+        }
 
-
-
-                <div class="col-md-4" id="CenaCalkowita">
-                    <a class="btn btn-outline-primary btn-lg m-2 text-capitalize" href="link">Kontynułuj zakupy</a>
-                </div>
-
-                <div class="col-md-4 text-center">
-                    @if (Model.CenaCalkowita > 0)
+        else
+        {
+            <!-- /.col-lg-3 -->
+            <div class="col-lg-9" id="main">
+                <div class="row">
+                    @foreach (var pozycjaKoszyka in Model.PozycjeKoszyka)
                     {
+                        <div class="col-lg-4 col-md-6 mb-4" id="koszyk-wiersz-@pozycjaKoszyka.Zwierze.ZwierzeId">
+                            <div class="card h-100">
+                                <a href="@Url.Action("Szczegoly", "Zwierzeta", new { id = pozycjaKoszyka.Zwierze.ZwierzeId })">
+                                    <img class="img-fluid" src="@Url.Content("~/Content/Kursy/" + pozycjaKoszyka.Zwierze.NazwaPlikuObrazka)" />
+                                </a>
+                                <div class="card-body">
+                                    <h4 class="card-title">
+                                        <a href="@Url.Action("Szczegoly", "Zwierzeta", new { id = pozycjaKoszyka.Zwierze.ZwierzeId })">
+                                            @pozycjaKoszyka.Zwierze.Nazwa
+                                        </a>
+                                    </h4>
+                                    <h5>@pozycjaKoszyka.Zwierze.CenaZwierza</h5>
+                                    <p class="card-text">@pozycjaKoszyka.Zwierze.OpisZwierza</p>
+                                    <p class="btn btn-dark">Ilość: <span id="koszyk-id-pozycji-@pozycjaKoszyka.Zwierze.ZwierzeId">@pozycjaKoszyka.Ilosc</span></p>
+                                    <p>@String.Format("{0:0.##}", pozycjaKoszyka.Wartosc) zł</p>
+                                </div>
 
-                        <a class="btn btn-outline-success btn-lg m-2 text-capitalize" id="koszyk-button-zaplac" href="@Url.Action("Zaplac","Koszyk")">Zapłać</a>
+                                <a class="usunZwierze" data-id="@pozycjaKoszyka.Zwierze.ZwierzeId" href="#">
+                                    <div class="card-footer bg-secondary d-flex justify-content-center">
+                                        Usuń
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
                     }
                 </div>
+                <div class="row bg-dark text-white mb-sm-2">
 
-                <div class="col-md-4 text-right mt-3" id="CenaCalkowita">
-                    <span class="btn-danger"> Razem: <span class="" id="calkowita-cena-wartosc">@String.Format("{0:0.##}", Model.CenaCalkowita)</span> zł </span>
+                    <div class="col-md-4" id="CenaCalkowita">
+                        <a class="btn btn-outline-primary btn-lg m-2 text-capitalize" href="link">Kontynułuj zakupy</a>
+                    </div>
+
+                    <div class="col-md-4 text-center">
+                        @if (Model.CenaCalkowita > 0)
+                        {
+
+                            <a class="btn btn-outline-success btn-lg m-2 text-capitalize" id="koszyk-button-zaplac" href="@Url.Action("Zaplac", "Koszyk")">Zapłać</a>
+                        }
+                    </div>
+
+                    <div class="col-md-4 text-right mt-3 " id="CenaCalkowita">
+                        <span class="btn-danger"> Razem: <span class="" id="calkowita-cena-wartosc">@String.Format("{0:0.##}", Model.CenaCalkowita)</span> zł </span>
+                    </div>
+
                 </div>
-
             </div>
-        </div>
+        }
     </div>
 </div>
 @section Scripts
@@ -76,9 +84,9 @@
     @System.Web.Optimization.Scripts.Render("~/bundles/jqueryAndjqueryUI")
     <script type="text/javascript">
         $(function () {
-            $(".usunZwierze").click(function () {
+            $(".usunZwierze").click(function ()
+            {
                 var $this = $(this);
-                alert('dsadsa');
                 var recordDoUsuniecia = $this.attr("data-id");
 
                 if (recordDoUsuniecia != '') {
@@ -95,9 +103,11 @@
                             $('#koszyk-ilosc-pozycji-' + respons.IdPozycjiUsuwanej).text(response.IloscPozycjiUsuwanej);
                         }
 
-                        if (respons.KoszykIloscPozycji == 0) {
-                            $('#koszyk-button-zaplac').addClass('hidden');
-                            $('#CenaCalkowita').addClass('invisible');
+                        if (respons.KoszykIloscPozycji == 0)
+                        {
+                            //$('#koszyk-button-zaplac').addClass('hidden');
+                            //$('#CenaCalkowita').addClass('invisible');
+                            location.reload(); 
                         }
                         $('#calkowita-cena-wartosc').text(respons.KoszykCenaCalkowita);
                         $('#koszyk-naglowek-ilosc-elementow').text(respons.KoszykIloscPozycji);

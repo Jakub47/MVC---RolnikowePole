@@ -123,8 +123,7 @@ namespace RolnikowePole.Controllers
                 
                 //Przekazany zostanie url czy tym samym zostanie wywołana akcji w naszym kontrolerze odpowidzialna 
                 //za wysłanie e-maila!
-                BackgroundJob.Enqueue(() => Call(url));
-
+                //BackgroundJob.Enqueue(() => Call(url));
                 
 
                 return RedirectToAction("PotwierdzenieZamowienia");
