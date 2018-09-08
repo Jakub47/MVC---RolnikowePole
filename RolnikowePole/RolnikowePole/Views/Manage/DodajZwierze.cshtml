@@ -3,104 +3,100 @@
     ViewBag.Title = "DodajZwierze";
     Layout = "~/Views/Shared/_ManageLayout.cshtml";
 }
+
 <hr />
 <h2 class="manageHeader">Edycja Zwierzaka</h2>
-<div>
+@if (Model.Potwierdzenie.HasValue && Model.Potwierdzenie.Value)
+{
+    <div style="text-align: center; margin: 50px;">
+        Pomyślnie wprowadzono zmiany!
+    </div>
+}
 
-    @if(Model.Potwierdzenie.HasValue && Model.Potwierdzenie.Value)
+@using (@Html.BeginForm("DodajZwierze", "Manage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="error-summary-centered">
+        @Html.ValidationSummary()
+    </div>
+
+    @Html.HiddenFor(o => o.Zwierze.ZwierzeId)
+    @Html.HiddenFor(o => o.Zwierze.DataDodania)
+    @Html.HiddenFor(o => o.Zwierze.NazwaPlikuObrazka)
+
+    <div class="form-group">
+        @Html.LabelFor(o => o.Zwierze.Nazwa, "Nazwa:")
+        @Html.TextBoxFor(o => o.Zwierze.Nazwa, new { @class = "form-control" })
+        @Html.ValidationMessageFor(o => o.Zwierze.Nazwa, null, new { @class = "form-text text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(o => o.Zwierze.OpisZwierza, "Opis:")
+        @Html.TextBoxFor(o => o.Zwierze.OpisZwierza, new { @class = "form-control" })
+        @Html.ValidationMessageFor(o => o.Zwierze.OpisZwierza, null, new { @class = "form-text text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(o => o.Zwierze.OpisSkrocony, "Opis skrócony:")
+        @Html.TextBoxFor(o => o.Zwierze.OpisSkrocony, new { @class = "form-control" })
+        @Html.ValidationMessageFor(o => o.Zwierze.OpisSkrocony, null, new { @class = "form-text text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(o => o.Gatunki, "Gatunek:")
+        @Html.DropDownListFor(m => m.Zwierze.GatunekId, new SelectList(Model.Gatunki, "GatunekId", "NazwaGatunku", Model.Gatunki.First().GatunekId))
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(o => o.Zwierze.CenaZwierza, "Cena:")
+        @Html.TextBoxFor(o => o.Zwierze.CenaZwierza, new { @class = "form-control" })
+        @Html.ValidationMessageFor(o => o.Zwierze.CenaZwierza, null, new { @class = "form-text text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(o => o.Zwierze.DataNarodzin, "Data Narodzin: ")
+        @Html.TextBoxFor(o => o.Zwierze.DataNarodzin, new { @class = "date-picker " })
+        @Html.ValidationMessageFor(o => o.Zwierze.DataNarodzin, null, new { @class = "form-text text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(o => o.Zwierze.Wyrozniony, "Wyróżniony:")
+        @Html.CheckBoxFor(o => o.Zwierze.Wyrozniony)
+    </div>
+
+    if (ViewBag.EditMode == null || !ViewBag.EditMode)
     {
-        <div style="text-align: center; margin: 50px;">
-            Pomyślnie wprowadzono zmiany!
+        <div class="form-group">
+            <label for="exampleFormControlFile1">Wprowadź zdjęcia</label>
+            <input type="file" name="file" class="form-control-file">
         </div>
     }
 
-    @using (@Html.BeginForm("DodajZwierze", "Manage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    else if (ViewBag.EditMode)
     {
-        @Html.AntiForgeryToken()
-
-        <div class="error-summary-centered">
-            @Html.ValidationSummary()
-        </div>
-
-        @Html.HiddenFor(o => o.Zwierze.ZwierzeId)
-        @Html.HiddenFor(o => o.Zwierze.DataDodania)
-        @Html.HiddenFor(o => o.Zwierze.NazwaPlikuObrazka)
-
-        <div style="text-align: center;">
-            <table id="albumedit-address-table">
-                <tr>
-                    <td>@Html.LabelFor(o => o.Zwierze.Nazwa, "Nazwa:")</td>
-                    <td>@Html.TextBoxFor(o => o.Zwierze.Nazwa)</td>
-                    <td>@Html.ValidationMessageFor(o => o.Zwierze.Nazwa)</td>
-                </tr>
-                <tr>
-                    <td>@Html.LabelFor(o => o.Zwierze.OpisZwierza, "Opis:")</td>
-                    <td>@Html.TextBoxFor(o => o.Zwierze.OpisZwierza)</td>
-                    <td>@Html.ValidationMessageFor(o => o.Zwierze.OpisZwierza)</td>
-                </tr>
-                <tr>
-                    <td>@Html.LabelFor(o => o.Zwierze.OpisSkrocony, "Opis skrócony:")</td>
-                    <td>@Html.TextBoxFor(o => o.Zwierze.OpisSkrocony)</td>
-                    <td>@Html.ValidationMessageFor(o => o.Zwierze.OpisSkrocony)</td>
-                </tr>
-                <tr>  
-                    <td>@Html.LabelFor(o => o.Gatunki, "Gatunek:")</td>
-                    <td>@Html.DropDownListFor(m => m.Zwierze.GatunekId, new SelectList(Model.Gatunki, "GatunekId", "NazwaGatunku", Model.Gatunki.First().GatunekId))</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>@Html.LabelFor(o => o.Zwierze.CenaZwierza, "Cena:")</td>
-                    <td>@Html.TextBoxFor(o => o.Zwierze.CenaZwierza)</td>
-                    <td>@Html.ValidationMessageFor(o => o.Zwierze.CenaZwierza)</td>
-                </tr>
-                <tr>
-                    <td>@Html.LabelFor(o => o.Zwierze.DataNarodzin, "Data Narodzin: ")</td>
-                    <td>@Html.TextBoxFor(o => o.Zwierze.DataNarodzin, new { @class = "date-picker" })</td>
-                    <td>@Html.ValidationMessageFor(o => o.Zwierze.DataNarodzin)</td>
-                </tr>
-                <tr>
-                    <td>@Html.LabelFor(o => o.Zwierze.Wyrozniony, "Wyróżniony:")</td>
-                    <td>@Html.CheckBoxFor(o => o.Zwierze.Wyrozniony)</td>
-                    <td></td>
-                </tr>
-                @if (ViewBag.EditMode == null || !ViewBag.EditMode)
-                {
-                    <tr>
-                        <td colspan="3">
-                            <div class="upload">
-                                <input type="file" name="file" />
-                            </div>
-                        </td>
-                    </tr>
-                }
-                <tr>
-                    <td style="text-align: left">
-                        @if (ViewBag.EditMode)
-                        {
-                            if (Model.Zwierze.Ukryty)
-                            {
-                                <a href="@Url.Action("PokazZwierza", "Manage", new { zwierzeId = Model.Zwierze.ZwierzeId })" style="display: block; margin-top: 15px; font-weight: bold;">
-                                    Przywróć
-                                </a>
-                            }
-                            else
-                            {
-                                <a href="@Url.Action("UkryjZwierza", "Manage", new { zwierzeId = Model.Zwierze.ZwierzeId })" style="display: block; margin-top: 15px; font-weight: bold;">
-                                    Usuń
-                                </a>
-                            }
-                        }
-                    </td>
-
-                    <td style="text-align: right;">
-                        <input type="submit" value="Zapisz" class="submitLink" style="height: 40px; margin-right: 0px; margin-top: 30px; font-weight: bold;" />
-                    </td>
-                    <td></td>
-                </tr>
-            </table>
-        </div>
+        if (Model.Zwierze.Ukryty)
+        {
+            <div class="form-group">
+                <a href="@Url.Action("PokazZwierza", "Manage", new { zwierzeId = Model.Zwierze.ZwierzeId })" style="display: block; margin-top: 15px; font-weight: bold;">
+                    Przywróć
+                </a>
+            </div>
+        }
+        else
+        {
+            <div class="form-group">
+                <a href="@Url.Action("UkryjZwierza", "Manage", new { zwierzeId = Model.Zwierze.ZwierzeId })" style="display: block; margin-top: 15px; font-weight: bold;">
+                    Usuń
+                </a>
+            </div>
+        }
     }
-</div>
+
+    <button type="submit" class="btn btn-primary">Zapisz</button>
+
+}
+
 
 <script type="text/javascript">
     $(function () {

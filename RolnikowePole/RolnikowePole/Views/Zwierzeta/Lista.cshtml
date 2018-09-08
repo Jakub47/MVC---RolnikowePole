@@ -3,81 +3,61 @@
     ViewBag.Title = "Lista";
 }
 
-<h2>Lista</h2>
-
-<div id="ListaKategoriZawartosc">
-    @Html.Action("GatunkiMenu")
-    <div id="KategorieListPrawaSekcja">
-        <div id="Breadcrumb">
-            <img src="../Content/Images/dommaly.png" />
-            <a href="link">
-                @Html.MvcSiteMap().SiteMapPath()
-            </a>
-        </div>
-
-
-        <form id="search-form" method="get" data-ajax="true" data-ajax-target="#SekcjaListaGatunkow">
-            <input id="search-filter" type="search" name="searchQuery"
-                   data-autocomplete-source="@Url.Action("ZwierzePodpowiedzi")"
-                   placeholder="Wprowadź teskt aby wyfiltrować..."/>
-            <input type="submit" value="" />
-        </form>
-
-
-        <div id="SekcjaListaGatunkow" style="height:1000px;">
+<div class="container">
+    <div class="row">
+        @Html.Action("GatunkiMenu", "Zwierzeta")        
+        <div class="col-lg-9">
             @Html.Partial("_ZwierzetaList")
         </div>
-
     </div>
 </div>
-
 @section Scripts
 {
-    @System.Web.Optimization.Scripts.Render("~/bundles/jqueryAndjqueryUI")    
+    @System.Web.Optimization.Scripts.Render("~/bundles/jqueryAndjqueryUI")
 
-<script>
-    $(function () {
+    <script>
+        $(function () {
 
-        var setupAutoComplete = function () {
+            var setupAutoComplete = function () {
 
-            //Przypisywanie inputu z naszego formularza!
-            var $Input = $(this);
+                //Przypisywanie inputu z naszego formularza!
+                var $Input = $(this);
 
-            var options =
-                {
-                    source: $Input.attr("data-autocomplete-source"), //Żródło naszej podpowiedzi {Akcja} 
-                    select: function (event, ui) {
-                        $Input = $(this);
-                        $Input.val(ui.item.label);
-                        var $form = $Input.parent("form:first");
-                        $form.submit();
-                        //Po kliknięciu w przycisku submit!
-                    }
-                };
-            $Input.autocomplete(options);
-        };
-
-        var ajaxSubmit = function () {
-            var $form = $(this);
-
-            var settings = {
-                data: $(this).serialize(),
-                url: $(this).attr("action"),
-                type: $(this).attr("method")
+                var options =
+                    {
+                        source: $Input.attr("data-autocomplete-source"), //Żródło naszej podpowiedzi {Akcja}
+                        select: function (event, ui) {
+                            $Input = $(this);
+                            $Input.val(ui.item.label);
+                            var $form = $Input.parent("form:first");
+                            $form.submit();
+                            //Po kliknięciu w przycisku submit!
+                        }
+                    };
+                $Input.autocomplete(options);
             };
 
-            $.ajax(settings).done(function (result) {
-                var $targetElement = $($form.data("ajax-target"));
-                var $newContent = $(result);
-                $($targetElement).replaceWith($newContent);
-                $newContent.effect("slide");
-            });
+            var ajaxSubmit = function () {
+                var $form = $(this);
 
-            return false;
-        };
+                var settings = {
+                    data: $(this).serialize(),
+                    url: $(this).attr("action"),
+                    type: $(this).attr("method")
+                };
 
-        $("#search-filter").each(setupAutoComplete);
-        $("#search-form").submit(ajaxSubmit);
-    })
-</script>
+                $.ajax(settings).done(function (result) {
+                    var $targetElement = $($form.data("ajax-target"));
+                    var $newContent = $(result);
+                    $($targetElement).replaceWith($newContent);
+                    $newContent.effect("slide");
+                });
+
+                return false;
+            };
+
+            $("#search-filter").each(setupAutoComplete);
+            $("#search-form").submit(ajaxSubmit);
+        })
+    </script>
 }

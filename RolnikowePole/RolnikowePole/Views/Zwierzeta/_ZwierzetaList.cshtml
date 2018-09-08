@@ -1,25 +1,25 @@
 ﻿@model IEnumerable<RolnikowePole.Models.Zwierze>
 @using RolnikowePole.Infrastucture
-
-<ul class="KursyTrzyKolumny KursCena">
+<div class="row">
     @foreach (var zwierze in Model)
     {
-        <li>
-            <article style="width: 250px; height: 250px;">
-                <a class="dodajDoKoszykaLink" href="@Url.Action("DodajDoKoszyka","Koszyk", new { id = zwierze.ZwierzeId })">
-                    <img src="@Url.ObrazkiSciezka(zwierze.NazwaPlikuObrazka)" />
+        <div class="col-lg-4 col-md-6 mb-4 mt-lg-5">
+            <div class="card h-100">
+                <a href="@Url.Action("Szczegoly","Zwierzeta", new { id = zwierze.ZwierzeId })"><img class="card-img-top img-fluid" src="@Url.ObrazkiSciezka(zwierze.NazwaPlikuObrazka)" onerror="this.onerror=null;this.src='http://placehold.it/700x400';" alt=""></a>
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a href="@Url.Action("Szczegoly","Zwierzeta", new { id = zwierze.ZwierzeId })">@zwierze.Nazwa</a>
+                    </h4>
+                    <h5>@zwierze.CenaZwierza</h5>
+                    <p class="card-text">@zwierze.OpisZwierza</p>
+                </div>
+
+                <a class="dodajDoKoszykaLink" style="text-decoration: none;" href="@Url.Action("DodajDoKoszyka","Koszyk", new { id = zwierze.ZwierzeId })">
+                    <div class="card-footer bg-secondary d-flex justify-content-center">
+                        Dodaj Do Koszyka
+                    </div>
                 </a>
-                @if (zwierze.Wyrozniony)
-                {
-                    <div class="bestsellerFlag"> </div>
-                }   
-                <a class="kursSzczegolyLink" href="@Url.Action("Szczegoly","Zwierzeta", new { id = zwierze.ZwierzeId })">
-                    <img class="kurs" src="@Url.ObrazkiSciezka(zwierze.NazwaPlikuObrazka)" )" />
-                    <h1>
-                        @zwierze.Nazwa
-                    </h1>
-                </a>
-            </article>
-        </li>
+            </div>
+        </div>
     }
-</ul>
+</div>
