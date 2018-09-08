@@ -4,84 +4,58 @@
     Layout = "~/Views/Shared/_ManageLayout.cshtml";
 }
 
-<h2>ListaZamowien</h2>
-
-<div>
-    <hr />
-    <h2 class="menageHeader">Twoje zamówienie</h2>
-
-    <div>
+<div class="container">
+    <div class="row">
         @if (Model.Any())
         {
-            <table id="zamowienia-table">
-                @foreach (var zamowienie in Model)
+            foreach (var zamowienie in Model)
+            {
+                foreach (var pozycjaZamowienia in zamowienie.PozycjeZamowienia)
                 {
-                    <!-- Jeżeli zamówienie jest nowe wyróżnij je! -->
-                    <tr @if (zamowienie.StanZamowienia == RolnikowePole.Models.StanZamowienia.Nowy) { <text> class="noweZamowienie" </text> }>
-                        <td>
-                            <strong>Nr zamówienia: </strong>@zamowienie.ZamowienieId
-                        </td>
-                        <td>
-                            <strong>Data: </strong>
-                            @zamowienie.DataDodania.ToString("dd-MM-yyyy")
-                        </td>
-                        <td>
-                            <strong>Stan: </strong><br />
-                            @if (ViewBag.UserIsAdmin)
-                            {
-                                using (Html.BeginForm("ZmianaStanuZamowienia", "Manage"))
-                                {
-                                    @Html.HiddenFor(o => zamowienie.ZamowienieId)
-                                    @Html.EnumDropDownListFor(o => zamowienie.StanZamowienia, new { @class = "StanZamowieniaZmien" })
-                                }
-                            }
-                            else
-                            {
-                                @Html.DisplayFor(o => zamowienie.StanZamowienia)
-                            }
-                        </td>
-                        <td>
-                            <strong>Dane wysyłkowe:</strong><br />
-                            @zamowienie.Imie @zamowienie.Nazwisko<br />
-                            @zamowienie.Adres<br />
-                            @zamowienie.KodPocztowy @zamowienie.Miasto<br />
-                        </td>
-                        <td>
-                            <strong>Uwagi: </strong><br />
-                            @zamowienie.Komentarz
-                        </td>
-                        <td>
-                            <strong>Łączny koszt:</strong> @zamowienie.WartoscZamowienia zł
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="6">
-                            <section>
-                                <ul class="TrzyKolumnyList duzaListaKursy-bottom">
-                                    @foreach (var pozycjaZamowienia in zamowienie.PozycjeZamowienia)
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card" style="width: 18rem; @(zamowienie.StanZamowienia == RolnikowePole.Models.StanZamowienia.Nowy ? "background-color: #92a8d1;" : "")">
+                            <a href="@Url.Action("Szczegoly", "Zwierzeta", new { id = pozycjaZamowienia.ZwierzeId })">
+                                <img class="card-img-top" src="@Url.Content("~/Content/Kursy/" + pozycjaZamowienia.zwierze.NazwaPlikuObrazka)" alt="Card image cap" />
+                            </a>
+                            <div class="card-body">
+                                <h5 class="card-title"><strong>Nr zamówienia: </strong>@zamowienie.ZamowienieId </h5>
+                                <p class="card-text">
+                                    <strong style="float: left; margin-right: 15px;">Stan:</strong>
+                                    @if (ViewBag.UserIsAdmin)
                                     {
-                                        <li>
-                                            <article>
-                                                <a class="kursSzczegolyLink" href="@Url.Action("Szczegoly", "Zwierzeta", new { id = pozycjaZamowienia.ZwierzeId })">
-                                                    <img class="kurs" src="@Url.Content("~/Content/Kursy/" + pozycjaZamowienia.zwierze.NazwaPlikuObrazka)" />
-                                                    <h1>
-                                                        @pozycjaZamowienia.zwierze.Nazwa<br />
-                                                        <strong>sztuk: @pozycjaZamowienia.Ilosc, łącznie: @(pozycjaZamowienia.Ilosc * @pozycjaZamowienia.CenaZakupu)  zł</strong>
-                                                    </h1>
-                                                </a>
-                                            </article>
-                                        </li>
+                                        using (Html.BeginForm("ZmianaStanuZamowienia", "Manage"))
+                                        {
+                                            @Html.HiddenFor(o => zamowienie.ZamowienieId)
+                                            @Html.EnumDropDownListFor(o => zamowienie.StanZamowienia, new { @class = "StanZamowieniaZmien" })
+                                        }
                                     }
-                                </ul>
-                            </section>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="6"></td>
-                    </tr>
-                    <!-- nastepne zamowienie -->
+                                    else
+                                    {
+                                        @Html.DisplayFor(o => zamowienie.StanZamowienia)
+                                    }
+                                    <strong>Dane wysyłkowe:</strong><br />
+                                    @zamowienie.Imie @zamowienie.Nazwisko<br />
+                                    @zamowienie.Adres<br />
+                                    @zamowienie.KodPocztowy @zamowienie.Miasto<br />
+                                    <strong>Uwagi: </strong><br /> @zamowienie.Komentarz
+                                    <strong>Łączny koszt:</strong> @zamowienie.WartoscZamowienia zł
+                                </p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <strong>Nazwa:</strong> @pozycjaZamowienia.zwierze.Nazwa , <strong>Cena: </strong> @pozycjaZamowienia.zwierze.CenaZwierza
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>sztuk: @pozycjaZamowienia.Ilosc</strong>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Łącznie:</strong> @(pozycjaZamowienia.Ilosc * @pozycjaZamowienia.CenaZakupu)  zł
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 }
-            </table>
+            }
         }
         else
         {
@@ -89,32 +63,50 @@
                 Brak zamówień.
             </div>
         }
+
     </div>
 </div>
 
 @section scripts
-{
-    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
-
+        {
     <script>
-        //Odowłanie do stanuZamowienia i bedziemy odwoływać się w momencie gdy nastąpi zmiana!
-        $(".StanZamowieniaZmien").on('change', function (e) {
-                //e.preventDefault();
+                //Odowłanie do stanuZamowienia i bedziemy odwoływać się w momencie gdy nastąpi zmiana!
+                $(".StanZamowieniaZmien").on('change', function (e) {
+                        //e.preventDefault();
+                    var f = $(this);
+                    var tr = f.closest("div");
 
-        var f = $(this.form);
-        var tr = f.closest("tr");
-        var action = f.attr("action");
-        var serializedForm = f.serialize();
 
-        $.post(action, serializedForm).done(function (data) {
-            if (data == '@RolnikowePole.Models.StanZamowienia.Nowy.ToString()') {
-                tr.addClass("noweZamowienie")
-            }
-            else {
-                tr.removeClass("noweZamowienie");
-            }
-          });
-    });
-              
+                    $.ajax({
+                        type: "POST",
+                        data: f.serialize(),
+                        success: function (data) {
+                            if (data == '@RolnikowePole.Models.StanZamowienia.Nowy.ToString()') {
+                                alert('tak');
+                                tr.addClass("background-color", "black")
+                            }
+                            else {
+                                alert(data)
+                                tr.parent.css("background-color", "#9431d1;");
+                            }
+                        }
+                    });
+
+
+
+                @*var f = $(this);
+                var action = f.attr("action");
+                var serializedForm = f.serialize();
+
+                $.post(action, serializedForm).done(function (data) {
+                    if (data == '@RolnikowePole.Models.StanZamowienia.Nowy.ToString()') {
+                        f.css("background-color", "#92a8d1;");
+                    }
+                    else {
+                        f.css("background-color", "");
+                    }
+                  });*@
+            });
+
     </script>
 }

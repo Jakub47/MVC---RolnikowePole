@@ -1,70 +1,101 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>@ViewBag.Title</title>
-    <meta name="viewport" content="width=device-width" />
-    <link href="@Url.Content("~/Content/S.css")" rel="stylesheet" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
     <link href="@Url.Content("~/Content/themes/base/jquery-ui.css")" rel="stylesheet" />
-    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    @System.Web.Optimization.Styles.Render("~/Content/BootstrapAndCssForHomepage")
+
 </head>
 <body>
-    <header>
-        <div style="overflow: hidden; margin-bottom: 30px;">
-            <a class="manageLink" href="@Url.Action("Index", "Home")">
-                Start
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="@Url.Action("Index","Home")">
+                <img src="~/Content/Images/leadership.jpg" class="img-fluid" />
             </a>
-            <a class="manageLink" href="@Url.Action("Index", "Manage")">
-                Twoje dane
-            </a>
-            <a class="manageLink" href="@Url.Action("ListaZamowien", "Manage")" style="width: 100px">
-                Zamówienia
-            </a>
-            @if (User.IsInRole("Admin"))
-            {
-                <a class="manageLink" href="@Url.Action("DodajZwierze", "Manage")">
-                    Dodaj
-                </a>
-                <a class="manageLink" href="@Url.Content("~/elmah")">
-                    Logi
-                </a>
-                <a class="manageLink" href="@Url.Content("~/hangfire")">
-                    Jobs
-                </a>
-            }
-            <a id="koszykHeaderLink" href="@Url.Action("Index", "Koszyk")">
-                KOSZYK (<span id="koszyk-naglowek-ilosc-elementow">@Html.Action("PobierzIloscElementowKoszyka", "Koszyk")</span>)
-                <span id="cart-header-logo"></span>
-            </a>
-            @Html.Partial("_LoginPartial")
-        </div>
-        <div id="Breadcrumb">
-            <img src="@Url.Content("~/Content/Images/dommaly.png")" />
-            @Html.MvcSiteMap().SiteMapPath()
-        </div>
-    </header>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index","Home")">
+                            Strona główna
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "Manage")">
+                            Twoje dane
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("ListaZamowien", "Manage")">
+                            Zamówienia
+                        </a>
+                    </li>
 
-    <div>
-        @RenderBody()
-    </div>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("DodajZwierze", "Manage")">
+                                Dodaj
+                            </a>
+                        </li>
 
-    <footer>
-        <nav>
-            <ul>
-                <li><a href="@Url.Action("StronyStatyczne","Home", new { nazwa = "Onas" })" style="">O nas</a></li>
-                <li><a href="@Url.Action("StronyStatyczne","Home", new { nazwa = "Spolecznosc" })" style="">Spolecznosc</a></li>
-                <li><a href="@Url.Action("StronyStatyczne","Home", new { nazwa = "Opinie" })" style="">Opinie</a></li>
-                <li><a href="@Url.Action("StronyStatyczne","Home", new { nazwa = "Pomoc" })" style="">Pomoc</a></li>
-                <li><a href="@Url.Action("StronyStatyczne","Home", new { nazwa = "Regulamin" })" style="">Regulamin</a></li>
-                <li><a href="@Url.Action("StronyStatyczne","Home", new { nazwa = "Kontakt" })" style="">Kontakt</a></li>
-            </ul>
-        </nav>
-        <div id="footerLogo">
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Content("~/elmah")">
+                                Logi
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Content("~/hangfire")">
+                                Jobs
+                            </a>
+                        </li>
+                    }
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index","Home")">Gatunki&Zwierzeta</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index","Koszyk")">Koszyk [ @Html.Action("PobierzIloscElementowKoszyka", "Koszyk") ]</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Konto
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @Html.Partial("_LoginPartial")
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div id="footerCopyright">
-            Copyright &copy; 2016 P. Kursy
+    </nav>
+    <!-- Navigation -->
+
+    @RenderBody()
+
+    <!--Footer -->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; Your Website 2017</p>
         </div>
+        <!-- /.container -->
     </footer>
+    <!-- Footer -->
 
+    @System.Web.Optimization.Scripts.Render("~/bundles/jqueryAndBootstrapBundle")
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
