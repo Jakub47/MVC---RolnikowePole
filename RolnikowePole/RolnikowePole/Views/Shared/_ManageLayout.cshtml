@@ -38,15 +38,14 @@
                             Zamówienia
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("DodajZwierze", "Manage")">
+                            Dodaj
+                        </a>
+                    </li>
 
                     @if (User.IsInRole("Admin"))
                     {
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("DodajZwierze", "Manage")">
-                                Dodaj
-                            </a>
-                        </li>
-
                         <li class="nav-item">
                             <a class="nav-link" href="@Url.Content("~/elmah")">
                                 Logi

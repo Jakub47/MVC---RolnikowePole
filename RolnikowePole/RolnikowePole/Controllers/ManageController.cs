@@ -180,7 +180,28 @@ namespace RolnikowePole.Controllers
             return zamowienie.StanZamowienia;
         }
 
+
         [Authorize(Roles = "Admin")]
+        public ActionResult UkryjZwierza(int zwierzeId)
+        {
+            var zwierze = db.Zwierzeta.Find(zwierzeId);
+            zwierze.Ukryty = true;
+            db.SaveChanges();
+
+            return RedirectToAction("DodajZwierze", new { potwierdzenie = true });
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult PokazZwierza(int zwierzeId)
+        {
+            var zwierze = db.Zwierzeta.Find(zwierzeId);
+            zwierze.Ukryty = false;
+            db.SaveChanges();
+
+            return RedirectToAction("DodajZwierze", new { potwierdzenie = true });
+        }
+
+
         public ActionResult DodajZwierze(int? zwierzeId, bool? potwierdzenie)
         {
             Zwierze zwierze;
@@ -207,28 +228,8 @@ namespace RolnikowePole.Controllers
             return View(result);
         }
 
-        [Authorize(Roles = "Admin")]
-        public ActionResult UkryjZwierza(int zwierzeId)
-        {
-            var zwierze = db.Zwierzeta.Find(zwierzeId);
-            zwierze.Ukryty = true;
-            db.SaveChanges();
-
-            return RedirectToAction("DodajZwierze", new { potwierdzenie = true });
-        }
-
-        [Authorize(Roles = "Admin")]
-        public ActionResult PokazZwierza(int zwierzeId)
-        {
-            var zwierze = db.Zwierzeta.Find(zwierzeId);
-            zwierze.Ukryty = false;
-            db.SaveChanges();
-
-            return RedirectToAction("DodajZwierze", new { potwierdzenie = true });
-        }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
         public ActionResult DodajZwierze(EditZwierzeViewModel model, HttpPostedFileBase file)
         {
             //Patrz pola ukryte w widoku
