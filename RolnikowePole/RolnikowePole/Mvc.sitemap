@@ -16,7 +16,7 @@
       <mvcSiteMapNode title="Logowanie" controller="Account" action="Login" />
       <mvcSiteMapNode title="Edycja zwierza" controller="Manage" action="DodajZwierze" />
       <mvcSiteMapNode title="Twoje dane" controller="Manage" action="Index" />
-      <mvcSiteMapNode title="Zamówienia" controller="Manage" action="ListaZamowien" />
+      <mvcSiteMapNode title="Zamówienia" controller="Manage" action="ListaWystawionychZwierzakow" />
     </mvcSiteMapNode>
   </mvcSiteMapNode>
 </mvcSiteMap>

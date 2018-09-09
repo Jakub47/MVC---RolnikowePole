@@ -1,0 +1,128 @@
+﻿@model IEnumerable<RolnikowePole.Models.Zwierze>
+@{
+    ViewBag.Title = "ListaWystawionychZwierzakow";
+    Layout = "~/Views/Shared/_ManageLayout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        @if (Model.Count() >= 0)
+        {
+            foreach (var pozycjaZamowienia in Model)
+            {
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card" style="width: 18rem;">
+                        <a href="@Url.Action("Szczegoly", "Zwierzeta", new { id = pozycjaZamowienia.ZwierzeId })">
+                            <img class="card-img-top" src="@Url.Content("~/Content/Kursy/" + pozycjaZamowienia.NazwaPlikuObrazka)" alt="Card image cap" />
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title"><strong></strong>@pozycjaZamowienia.Nazwa</h5>
+                            <p class="card-text">
+                                <strong>Opis: </strong> @pozycjaZamowienia.OpisZwierza
+                                <strong>Opis skrócony: </strong> @pozycjaZamowienia.OpisSkrocony
+                            </p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <strong>Cena: </strong> @pozycjaZamowienia.CenaZwierza
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Data Dodania: </strong> @pozycjaZamowienia.DataDodania
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Data Narodzin: </strong> @pozycjaZamowienia.DataNarodzin
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Gatunek: </strong> @pozycjaZamowienia.Gatunek.NazwaGatunku
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Województwo:  </strong> @pozycjaZamowienia.Wojewodztwo
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Miasto:  </strong> @pozycjaZamowienia.Miasto
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Ukryty </strong> 
+                                @if(pozycjaZamowienia.Ukryty)
+                                {
+                                    @: TAK
+                                }
+                                else
+                                {
+                                    @: NIE
+                                }
+                            </li>
+
+                            <li class="list-group-item">
+                                <strong>Wyróżniony: </strong> 
+                                @if (pozycjaZamowienia.Wyrozniony)
+                                {
+                                    @: TAK
+                                }
+                                else
+                                {
+                                    @: NIE
+                                }
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            }
+
+        }
+        else
+        {
+            <div style="text-align: center; margin-top: 50px; margin-bottom: 50px;">
+                Brak Zwięrząt! Może chcesz dodać ?
+                <a class="btn btn-primary" href="@Url.Action("DodajZwierze","Manage")" role="button">
+                    Dodaj Zwierze
+                </a>
+            </div>
+        }
+
+    </div>
+</div>
+
+@section scripts
+        {
+    <script>
+                //Odowłanie do stanuZamowienia i bedziemy odwoływać się w momencie gdy nastąpi zmiana!
+                $(".StanZamowieniaZmien").on('change', function (e) {
+                        //e.preventDefault();
+                    var f = $(this);
+                    var tr = f.closest("div");
+
+
+                    $.ajax({
+                        type: "POST",
+                        data: f.serialize(),
+                        success: function (data) {
+                            if (data == '@RolnikowePole.Models.StanZamowienia.Nowy.ToString()') {
+                                alert('tak');
+                                tr.addClass("background-color", "black")
+                            }
+                            else {
+                                alert(data)
+                                tr.parent.css("background-color", "#9431d1;");
+                            }
+                        }
+                    });
+
+
+
+                @*var f = $(this);
+                var action = f.attr("action");
+                var serializedForm = f.serialize();
+
+                $.post(action, serializedForm).done(function (data) {
+                    if (data == '@RolnikowePole.Models.StanZamowienia.Nowy.ToString()') {
+                        f.css("background-color", "#92a8d1;");
+                    }
+                    else {
+                        f.css("background-color", "");
+                    }
+                  });*@
+            });
+
+    </script>
+}

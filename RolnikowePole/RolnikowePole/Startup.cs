@@ -12,11 +12,11 @@ namespace RolnikowePole
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
-            GlobalConfiguration.Configuration
-                .UseSqlServerStorage("RolnikowePoleContext");
+            //GlobalConfiguration.Configuration
+            //    .UseSqlServerStorage("RolnikowePoleContext");
+            //app.UseHangfireDashboard();
+            //app.UseHangfireServer();
 
-            app.UseHangfireDashboard();
-            app.UseHangfireServer();
         }
     }
 }

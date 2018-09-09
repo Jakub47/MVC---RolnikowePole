@@ -10,6 +10,9 @@ namespace RolnikowePole.Models
     {
         public int ZwierzeId { get; set; }
         public int GatunekId { get; set; }
+        public string UserId { get; set; }
+        public virtual ApplicationUser User { get; set; }
+
         public string Rasa { get; set; }
         [Required(ErrorMessage = "Wprowadz Nazwe Zwierza")]
         [StringLength(100)]

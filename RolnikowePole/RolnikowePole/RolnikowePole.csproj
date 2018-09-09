@@ -387,6 +387,18 @@
     <Compile Include="Migrations\201809031107225_Elmah.Designer.cs">
       <DependentUpon>201809031107225_Elmah.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809091246464_T.cs" />
+    <Compile Include="Migrations\201809091246464_T.Designer.cs">
+      <DependentUpon>201809091246464_T.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809091415221_M.cs" />
+    <Compile Include="Migrations\201809091415221_M.Designer.cs">
+      <DependentUpon>201809091415221_M.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809091557179_DodanieUserIdDoZwierzeModel.cs" />
+    <Compile Include="Migrations\201809091557179_DodanieUserIdDoZwierzeModel.Designer.cs">
+      <DependentUpon>201809091557179_DodanieUserIdDoZwierzeModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DaneUzytkownika.cs" />
     <Compile Include="Models\Gatunek.cs" />
@@ -445,7 +457,7 @@
     <Content Include="Views\Koszyk\PotwierdzenieZamowienia.cshtml" />
     <Content Include="Views\Manage\Index.cshtml" />
     <Content Include="Views\Shared\_ManageLayout.cshtml" />
-    <Content Include="Views\Manage\ListaZamowien.cshtml" />
+    <Content Include="Views\Manage\ListaWystawionychZwierzakow.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Enum.cshtml" />
     <Content Include="Views\Manage\DodajZwierze.cshtml" />
     <Content Include="Views\Emails\_ViewStart.cshtml" />
@@ -486,6 +498,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809031107225_Elmah.resx">
       <DependentUpon>201809031107225_Elmah.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809091246464_T.resx">
+      <DependentUpon>201809091246464_T.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809091415221_M.resx">
+      <DependentUpon>201809091415221_M.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809091557179_DodanieUserIdDoZwierzeModel.resx">
+      <DependentUpon>201809091557179_DodanieUserIdDoZwierzeModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
