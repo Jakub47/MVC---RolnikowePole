@@ -146,26 +146,27 @@ namespace RolnikowePole.Controllers
             AuthenticationManager.SignIn(new AuthenticationProperties { IsPersistent = isPersistent }, await user.GenerateUserIdentityAsync(UserManager));
         }
 
-        public ActionResult ListaZamowien()
+        public ActionResult ListaWystawionychZwierzakow()
         {
             //Check if current user is admin
             bool IsAdmin = User.IsInRole("Admin");
             ViewBag.UserIsAdmin = IsAdmin;
 
-            IEnumerable<Zamowienie> ZamowieniaUzytkownika;
+            List<Zwierze> WystawioneZwierzeta;
 
             //Dla administratorów zwracamy wszystkie zamowienia
             if (IsAdmin)
             {
-                ZamowieniaUzytkownika = db.Zamowienia.Include("PozycjeZamowienia").OrderByDescending(o => o.DataDodania).ToArray();
+                WystawioneZwierzeta = db.Zwierzeta.ToList();
             }
             else
             {
-                var userId = User.Identity.GetUserId();
-                ZamowieniaUzytkownika = db.Zamowienia.Where(o => o.UserId == userId).Include("PozycjeZamowienia").OrderByDescending(o => o.DataDodania).ToArray();
+                var user = UserManager.FindById(User.Identity.GetUserId());
+                WystawioneZwierzeta = db.Zwierzeta.Where(a => a.UserId == user.Id).ToList();
+                //ZamowieniaUzytkownika = db.Zamowienia.Where(o => o.UserId == userId).Include("PozycjeZamowienia").OrderByDescending(o => o.DataDodania).ToArray();
             }
 
-            return View(ZamowieniaUzytkownika);
+            return View(WystawioneZwierzeta);
         }
 
         [HttpPost]
@@ -258,9 +259,11 @@ namespace RolnikowePole.Controllers
 
                         model.Zwierze.NazwaPlikuObrazka = filename;
                         model.Zwierze.DataDodania = DateTime.Now;
-
+                        model.Zwierze.UserId = User.Identity.GetUserId();
                         //Oczywiscie mozna wykonac standardowa procedure db.Zwierze.Add(); db.SaveChanges(), ale...
                         db.Entry(model.Zwierze).State = EntityState.Added;
+                        var user = UserManager.FindById(User.Identity.GetUserId());
+                        
                         db.SaveChanges();
 
                         return RedirectToAction("DodajZwierze", new { potwierdzenie = true });

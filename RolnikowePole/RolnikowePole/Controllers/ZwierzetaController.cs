@@ -68,12 +68,14 @@ namespace RolnikowePole.Controllers
             }
 
             var zwierze = db.Zwierzeta.Find(int.Parse(id));
+            var user = zwierze.User;
 
             var vm = new HomeViewModel
             {
                 Nowe = nowosci,
                 Wyroznione = wyroznione,
-                Zwierze = zwierze
+                Zwierze = zwierze,
+                daneUzytkownika = user.DaneUzytkownika
             };
 
             return View(vm);

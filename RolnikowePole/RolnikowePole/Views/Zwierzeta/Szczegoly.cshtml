@@ -6,80 +6,113 @@
 }
 <!-- Page Content -->
 <div class="container">
-
     <div class="row">
+
+        <!-- col-lg-3 -->
         @Html.Action("GatunkiMenu", "Zwierzeta")
+        <!--/col-lg-3 -->
 
-        <div class="col-lg-9">
+        <div class="col-lg-5">
+            <img class="img-fluid" style="height: 400px;" src="@Url.ObrazkiSciezka(Model.Zwierze.NazwaPlikuObrazka)" alt="">
+        </div>
 
-            <div class="card mt-4 mb-4">
-                <img class="card-img-top img-fluid" style="height: 400px;" src="@Url.ObrazkiSciezka(Model.Zwierze.NazwaPlikuObrazka)" alt="">
-                <div class="card-body">
-                    <h3 class="card-title">@Model.Zwierze.Nazwa</h3>
-                    <h4>@string.Format("{0:0.##}", Model.Zwierze.CenaZwierza)<span>PLN</span></h4>
-                    <p class="card-text">@Model.Zwierze.OpisZwierza</p>
-                    <a href="@Url.Action("DodajDoKoszyka","Koszyk", new { id = Model.Zwierze.ZwierzeId })">Dodaj Do Koszyka</a>
+        <div class="col-lg-4">
+
+            <div class="card mb-2" style="width: 18rem;">
+                <h5 class="card-title">Dane Produktu</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">@Model.Zwierze.Nazwa</li>
+                    <li class="list-group-item">@string.Format("{0:0.##}", Model.Zwierze.CenaZwierza)<span>PLN</span></li>
+                    <li class="list-group-item">@Model.Zwierze.OpisZwierza</li>
+                    <li class="list-group-item"> <a href="@Url.Action("DodajDoKoszyka","Koszyk", new { id = Model.Zwierze.ZwierzeId })">Dodaj Do Koszyka</a></li>
                     @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                     {
-                        <a href="@Url.Action("DodajZwierze", "Manage", new { zwierzeId = Model.Zwierze.ZwierzeId })">Edytuj</a>
+                        <li class="list-group-item"> <a href="@Url.Action("DodajZwierze", "Manage", new { zwierzeId = Model.Zwierze.ZwierzeId })">Edytuj</a></li>
                     }
+                </ul>
+            </div>
+
+            <div class="card" style="width: 18rem;">
+                <h5 class="card-title">Dane Użytkownika</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">@Model.daneUzytkownika.Email</li>
+                    <li class="list-group-item">@Model.daneUzytkownika.Imie</li>
+                    <li class="list-group-item">@Model.daneUzytkownika.Nazwisko</li>
+                    <li class="list-group-item">@Model.daneUzytkownika.Telefon</li>
+                    <li class="list-group-item">@Model.daneUzytkownika.Adres</li>
+                    <li class="list-group-item">@Model.daneUzytkownika.KodPocztowy</li>
+                </ul>
+            </div>
+        </div>
+
+        @*<div class="card mt-4 mb-4">
+            <div class="card-body">
+                <h3 class="card-title">@Model.Zwierze.Nazwa</h3>
+                <h4>@string.Format("{0:0.##}", Model.Zwierze.CenaZwierza)<span>PLN</span></h4>
+                <p class="card-text">@Model.Zwierze.OpisZwierza</p>
+                <a href="@Url.Action("DodajDoKoszyka","Koszyk", new { id = Model.Zwierze.ZwierzeId })">Dodaj Do Koszyka</a>
+                @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                {
+                    <a href="@Url.Action("DodajZwierze", "Manage", new { zwierzeId = Model.Zwierze.ZwierzeId })">Edytuj</a>
+                }
+            </div>
+        </div>*@
+
+        <!-- /.col-lg-9 -->
+
+    </div>
+
+    <div class="row">
+        Nowości
+        <div class="row mb-4">
+
+            @foreach (var zwierze in Model.Nowe)
+            {
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100">
+                        <a href="@Url.Action("Szczegoly","Zwierzeta", new { id = zwierze.ZwierzeId })"><img class="card-img-top img-fluid" src="@Url.ObrazkiSciezka(zwierze.NazwaPlikuObrazka)" onerror="this.onerror=null;this.src='http://placehold.it/700x400';" alt=""></a>
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a href="@Url.Action("Szczegoly","Zwierzeta", new { id = zwierze.ZwierzeId })">@zwierze.Nazwa</a>
+                            </h4>
+                            <h5>@zwierze.CenaZwierza</h5>
+                            <p class="card-text">@zwierze.OpisZwierza</p>
+                        </div>
+
+                        <a class="dodajDoKoszykaLink" style="text-decoration: none;" href="@Url.Action("DodajDoKoszyka","Koszyk", new { id = zwierze.ZwierzeId })">
+                            <div class="card-footer bg-secondary d-flex justify-content-center">
+                                Dodaj Do Koszyka
+                            </div>
+                        </a>
+                    </div>
                 </div>
-            </div>
-
-            Nowości
-            <div class="row mb-4">
-
-                @foreach (var zwierze in Model.Nowe)
-                {
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="card h-100">
-                            <a href="@Url.Action("Szczegoly","Zwierzeta", new { id = zwierze.ZwierzeId })"><img class="card-img-top img-fluid" src="@Url.ObrazkiSciezka(zwierze.NazwaPlikuObrazka)" onerror="this.onerror=null;this.src='http://placehold.it/700x400';" alt=""></a>
-                            <div class="card-body">
-                                <h4 class="card-title">
-                                    <a href="@Url.Action("Szczegoly","Zwierzeta", new { id = zwierze.ZwierzeId })">@zwierze.Nazwa</a>
-                                </h4>
-                                <h5>@zwierze.CenaZwierza</h5>
-                                <p class="card-text">@zwierze.OpisZwierza</p>
-                            </div>
-
-                            <a class="dodajDoKoszykaLink" style="text-decoration: none;" href="@Url.Action("DodajDoKoszyka","Koszyk", new { id = zwierze.ZwierzeId })">
-                                <div class="card-footer bg-secondary d-flex justify-content-center">
-                                    Dodaj Do Koszyka
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                }
-            </div>
-
-            Wyróżnione
-            <div class="row mb-4">
-                @foreach (var zwierze in Model.Wyroznione)
-                {
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="card h-100">
-                            <a href="@Url.Action("Szczegoly","Zwierzeta", new { id = zwierze.ZwierzeId })"><img class="card-img-top img-fluid" src="@Url.ObrazkiSciezka(zwierze.NazwaPlikuObrazka)" onerror="this.onerror=null;this.src='http://placehold.it/700x400';" alt=""></a>
-                            <div class="card-body">
-                                <h4 class="card-title">
-                                    <a href="@Url.Action("Szczegoly","Zwierzeta", new { id = zwierze.ZwierzeId })">@zwierze.Nazwa</a>
-                                </h4>
-                                <h5>@zwierze.CenaZwierza</h5>
-                                <p class="card-text">@zwierze.OpisZwierza</p>
-                            </div>
-
-                            <a class="dodajDoKoszykaLink" style="text-decoration: none;" href="@Url.Action("DodajDoKoszyka","Koszyk", new { id = zwierze.ZwierzeId })">
-                                <div class="card-footer bg-secondary d-flex justify-content-center">
-                                    Dodaj Do Koszyka
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                }
-            </div>
-
+            }
         </div>
-            <!-- /.col-lg-9 -->
 
+        Wyróżnione
+        <div class="row mb-4">
+            @foreach (var zwierze in Model.Wyroznione)
+            {
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100">
+                        <a href="@Url.Action("Szczegoly","Zwierzeta", new { id = zwierze.ZwierzeId })"><img class="card-img-top img-fluid" src="@Url.ObrazkiSciezka(zwierze.NazwaPlikuObrazka)" onerror="this.onerror=null;this.src='http://placehold.it/700x400';" alt=""></a>
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a href="@Url.Action("Szczegoly","Zwierzeta", new { id = zwierze.ZwierzeId })">@zwierze.Nazwa</a>
+                            </h4>
+                            <h5>@zwierze.CenaZwierza</h5>
+                            <p class="card-text">@zwierze.OpisZwierza</p>
+                        </div>
+
+                        <a class="dodajDoKoszykaLink" style="text-decoration: none;" href="@Url.Action("DodajDoKoszyka","Koszyk", new { id = zwierze.ZwierzeId })">
+                            <div class="card-footer bg-secondary d-flex justify-content-center">
+                                Dodaj Do Koszyka
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            }
         </div>
+    </div>
 
 </div>
