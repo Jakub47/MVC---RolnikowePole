@@ -9,6 +9,7 @@ namespace RolnikowePole.ViewModels
     public class HomeViewModel
     {
         public Zwierze Zwierze { get; set; }
+        public DaneUzytkownika daneUzytkownika { get; set; }
         public IEnumerable<Zwierze> Wyroznione { get; set; }
         public IEnumerable<Zwierze> Nowe { get; set; }
     }
