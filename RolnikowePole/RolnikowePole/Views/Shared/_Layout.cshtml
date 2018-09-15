@@ -11,6 +11,8 @@
 
     <!-- Bootstrap core CSS + Custom styles for this template -->
     @System.Web.Optimization.Styles.Render("~/Content/BootstrapAndCssForHomepage")
+    
+
 
     <style>
         body {
@@ -83,6 +85,7 @@
     <!-- Footer -->
 
     @System.Web.Optimization.Scripts.Render("~/bundles/jqueryAndBootstrapBundle")
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
     @RenderSection("Scripts", required: false)
 
 </body>

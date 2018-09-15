@@ -1,9 +1,12 @@
 ﻿@model IEnumerable<RolnikowePole.Models.Zwierze>
 @using RolnikowePole.Infrastucture
-<div class="row">
+
+
+
+<div class="row" id="SekcjaListaZwierzat">
     @foreach (var zwierze in Model)
     {
-        <div class="col-lg-4 col-md-6 mb-4 mt-lg-5">
+        <div class="col-lg-4 col-md-6 mb-4 mt-lg-5" id="SekcjaListaZwierzat">
             <div class="card h-100">
                 <a href="@Url.Action("Szczegoly","Zwierzeta", new { id = zwierze.ZwierzeId })"><img class="card-img-top img-fluid" src="@Url.ObrazkiSciezka(zwierze.NazwaPlikuObrazka)" onerror="this.onerror=null;this.src='http://placehold.it/700x400';" alt=""></a>
                 <div class="card-body">
@@ -23,3 +26,4 @@
         </div>
     }
 </div>
+

@@ -5,7 +5,9 @@ using RolnikowePole.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace RolnikowePole.Controllers
@@ -20,7 +22,7 @@ namespace RolnikowePole.Controllers
             return View();
         }
 
-        public ActionResult Lista(string nazwaGatunku, string searchQuery = null)
+        public ActionResult Lista(string nazwaGatunku, string searchQuery = null, string nazwa = null)
         {
 
             var gatunki = db.Gatunki.Include("Zwierzeta").Where(k => k.NazwaGatunku.ToUpper() == nazwaGatunku.ToUpper()).Single();
@@ -28,9 +30,20 @@ namespace RolnikowePole.Controllers
             var zwierzeta = gatunki.Zwierzeta.Where(a => (searchQuery == null ||
                                                     a.Nazwa.ToLower().Contains(searchQuery.ToLower())) && !a.Ukryty);
 
-            if(Request.IsAjaxRequest())
+            var WszystkieZwierzeta = db.Zwierzeta.ToList();
+            List<string> wojewodztwa = new List<string>();
+            WszystkieZwierzeta.ForEach(a => wojewodztwa.Add(a.Wojewodztwo));
+            ViewBag.Wojewodztwa = wojewodztwa;
+
+            if (Request.IsAjaxRequest())
             {
-                return PartialView("_ZwierzetaList", zwierzeta);
+                return HttpNotFound();
+                if (nazwa != null)
+                {
+                    var NoweZwierzeta = gatunki.Zwierzeta.Where(a => a.Wojewodztwo.ToLower() == nazwa.ToLower()).ToList();
+                    ////zwierzeta = zwierzeta.Where(a => a.Wojewodztwo.ToLower() == nazwa.ToLower());
+                    return View(NoweZwierzeta);
+                }
             }
 
             return View(zwierzeta);
