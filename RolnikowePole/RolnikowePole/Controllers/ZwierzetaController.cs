@@ -88,7 +88,9 @@ namespace RolnikowePole.Controllers
                 Nowe = nowosci,
                 Wyroznione = wyroznione,
                 Zwierze = zwierze,
-                daneUzytkownika = user.DaneUzytkownika
+                //Since i am working on testing examples their' properties may not be set due to initialization. 
+                //Later on this line must be modify to : daneUzytkownika = user.DaneUzytkownika
+                daneUzytkownika = user.DaneUzytkownika == null ? user.DaneUzytkownika : new DaneUzytkownika()
             };
 
             return View(vm);

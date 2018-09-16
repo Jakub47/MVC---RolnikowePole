@@ -11,7 +11,7 @@ namespace RolnikowePole
     {
         public void Configuration(IAppBuilder app)
         {
-            ConfigureAuth(app);
+            //ConfigureAuth(app);
             //GlobalConfiguration.Configuration
             //    .UseSqlServerStorage("RolnikowePoleContext");
             //app.UseHangfireDashboard();
