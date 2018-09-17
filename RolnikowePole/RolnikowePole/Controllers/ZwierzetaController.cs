@@ -34,10 +34,10 @@ namespace RolnikowePole.Controllers
             List<string> wojewodztwa = new List<string>();
             WszystkieZwierzeta.ForEach(a => wojewodztwa.Add(a.Wojewodztwo));
             ViewBag.Wojewodztwa = wojewodztwa;
+            ViewBag.NazwaGatunku = nazwaGatunku;
 
             if (Request.IsAjaxRequest())
             {
-                return HttpNotFound();
                 if (nazwa != null)
                 {
                     var NoweZwierzeta = gatunki.Zwierzeta.Where(a => a.Wojewodztwo.ToLower() == nazwa.ToLower()).ToList();
@@ -90,7 +90,7 @@ namespace RolnikowePole.Controllers
                 Zwierze = zwierze,
                 //Since i am working on testing examples their' properties may not be set due to initialization. 
                 //Later on this line must be modify to : daneUzytkownika = user.DaneUzytkownika
-                daneUzytkownika = user.DaneUzytkownika == null ? user.DaneUzytkownika : new DaneUzytkownika()
+                daneUzytkownika = user.DaneUzytkownika 
             };
 
             return View(vm);
