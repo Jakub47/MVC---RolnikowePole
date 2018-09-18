@@ -24,6 +24,12 @@ namespace RolnikowePole.Controllers
 
         public ActionResult Lista(string nazwaGatunku, string searchQuery = null, string nazwa = null)
         {
+            //Sometimes a action is called with given name in case that will happen an error will ocur to avoid such thing
+            //Simply return empty result that will change litery nothing
+            if (Request.IsAjaxRequest() && nazwaGatunku == "bootstrap.bundle.min.js")
+            {
+                    return new EmptyResult();
+            }
 
             var gatunki = db.Gatunki.Include("Zwierzeta").Where(k => k.NazwaGatunku.ToUpper() == nazwaGatunku.ToUpper()).Single();
 
@@ -38,7 +44,14 @@ namespace RolnikowePole.Controllers
 
             if (Request.IsAjaxRequest())
             {
-                if (nazwa != null)
+                if(nazwa == "R")
+                {
+                    //var NoweZwierzeta = gatunki.Zwierzeta.OrderByDescending(a => a.DataDodania).ToList();
+                    var NoweZwierzeta = db.Zwierzeta.OrderByDescending(a => a.DataDodania).ToList();
+                    return View("_ZwierzetaList", NoweZwierzeta);
+                }
+
+                else if (nazwa != null)
                 {
                     var NoweZwierzeta = gatunki.Zwierzeta.Where(a => a.Wojewodztwo.ToLower() == nazwa.ToLower()).ToList();
                     ////zwierzeta = zwierzeta.Where(a => a.Wojewodztwo.ToLower() == nazwa.ToLower());
