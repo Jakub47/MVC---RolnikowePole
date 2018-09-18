@@ -42,7 +42,7 @@ namespace RolnikowePole.Controllers
                 {
                     var NoweZwierzeta = gatunki.Zwierzeta.Where(a => a.Wojewodztwo.ToLower() == nazwa.ToLower()).ToList();
                     ////zwierzeta = zwierzeta.Where(a => a.Wojewodztwo.ToLower() == nazwa.ToLower());
-                    return View(NoweZwierzeta);
+                    return View("_ZwierzetaList", NoweZwierzeta);
                 }
             }
 
