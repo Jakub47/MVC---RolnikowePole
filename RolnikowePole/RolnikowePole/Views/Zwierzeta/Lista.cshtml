@@ -44,7 +44,9 @@
                     type: "POST",
                      @*url: "@Url.Action("ZaktuazlizujWidok", "Zwierzeta")",*@
                     data: { nazwa: "R"},
-                success: function (result) {
+                success: function (result) 
+                {
+                    //TODO: jezeli p;usty to nie renderuj
                     console.log('Powinno zmienic');
                     $('#SekcjaListaZwierzat').html(result);
                 }
