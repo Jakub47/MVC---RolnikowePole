@@ -28,7 +28,7 @@ namespace RolnikowePole.Controllers
             //Simply return empty result that will change litery nothing
             if (Request.IsAjaxRequest() && nazwaGatunku == "bootstrap.bundle.min.js")
             {
-                    return new EmptyResult();
+                return new EmptyResult();
             }
 
             var gatunki = db.Gatunki.Include("Zwierzeta").Where(k => k.NazwaGatunku.ToUpper() == nazwaGatunku.ToUpper()).Single();
@@ -44,18 +44,49 @@ namespace RolnikowePole.Controllers
 
             if (Request.IsAjaxRequest())
             {
-                if(nazwa == "R")
+                if (nazwa == "Data")
                 {
                     //var NoweZwierzeta = gatunki.Zwierzeta.OrderByDescending(a => a.DataDodania).ToList();
-                    var NoweZwierzeta = db.Zwierzeta.OrderByDescending(a => a.DataDodania).ToList();
-                    return View("_ZwierzetaList", NoweZwierzeta);
+                    zwierzeta = zwierzeta.OrderByDescending(a => a.DataDodania).ToList();
+                    return View("_ZwierzetaList", zwierzeta);
+                }
+
+                else if (nazwa == "Cena")
+                {
+                    zwierzeta = zwierzeta.OrderByDescending(a => a.CenaZwierza).ToList();
+                    return View("_ZwierzetaList", zwierzeta);
+                }
+
+                else if (nazwa == "Wszystkie")
+                {
+                    zwierzeta = gatunki.Zwierzeta.Where(a => (searchQuery == null ||
+                                                    a.Nazwa.ToLower().Contains(searchQuery.ToLower())) && !a.Ukryty);
+                    return View("_ZwierzetaList", zwierzeta);
                 }
 
                 else if (nazwa != null)
                 {
-                    var NoweZwierzeta = gatunki.Zwierzeta.Where(a => a.Wojewodztwo.ToLower() == nazwa.ToLower()).ToList();
-                    ////zwierzeta = zwierzeta.Where(a => a.Wojewodztwo.ToLower() == nazwa.ToLower());
-                    return View("_ZwierzetaList", NoweZwierzeta);
+                    //zwierzeta = zwierzeta.Where(a => a.Wojewodztwo.ToLower() == nazwa.ToLower());
+                    //List<Zwierze> NewOnes = new List<Zwierze>();
+
+                    //foreach (var item in zwierzeta)
+                    //{
+                    //    string c = item.Wojewodztwo.ToLower();
+                    //    string g = nazwa.ToLower();
+
+                    //    if (c == g)
+                    //        NewOnes.Add(item);
+                    //}
+
+                    ////var NoweZwierzeta = gatunki.Zwierzeta.Where(a => !a.Ukryty && a.Wojewodztwo.ToLower() == nazwa.ToLower());
+
+                    //if (NewOnes.Count <= 0)
+                    //    return new EmptyResult();
+
+                    zwierzeta = zwierzeta.Where(a => a.Wojewodztwo.ToLower() == nazwa.ToLower());
+
+
+                    return View("_ZwierzetaList", zwierzeta);
                 }
             }
 
@@ -103,7 +134,7 @@ namespace RolnikowePole.Controllers
                 Zwierze = zwierze,
                 //Since i am working on testing examples their' properties may not be set due to initialization. 
                 //Later on this line must be modify to : daneUzytkownika = user.DaneUzytkownika
-                daneUzytkownika = user.DaneUzytkownika 
+                daneUzytkownika = user.DaneUzytkownika
             };
 
             return View(vm);
