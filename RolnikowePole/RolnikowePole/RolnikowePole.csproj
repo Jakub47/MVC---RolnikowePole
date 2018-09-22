@@ -481,7 +481,7 @@
     <Content Include="Views\Emails\Web.config" />
     <Content Include="Views\Emails\PotwierdzenieZamowienia.cshtml" />
     <Content Include="Views\Emails\PotwierdzenieZamowienia.Text.cshtml" />
-    <Content Include="Views\Manage\Wiadomosci.cshtml" />
+    <Content Include="Views\Manage\WyswietlWiadomosciUzytkownika.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

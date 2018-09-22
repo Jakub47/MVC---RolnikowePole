@@ -293,19 +293,40 @@ namespace RolnikowePole.Controllers
             }
         }
 
-        public ActionResult Wiadomosci()
+
+        public ActionResult WyswietlWiadomosciUzytkownika()
         {
             var user = UserManager.FindById(User.Identity.GetUserId());
-            var wiadomosciWyslane = user.SenderMessages.ToList();
-            var wiadomosciOtrzymane = user.ReceiverMessages.ToList();
 
-            var wiadomoscVM = new WiadomosciViewModel
+            var wiadomosciWyslane = user.SenderMessages.Select(a => a.ReceiverId).ToList();
+            var wiadomosciOtrzymane = user.ReceiverMessages.Select(a => a.ReceiverId).ToList();
+
+            var WszyscyUserzy = UserManager.Users;
+
+            foreach (var userr in UserManager.Users)
             {
-                WiadomosciWyslane = wiadomosciWyslane,
-                WiadomosciOtrzymane = wiadomosciOtrzymane
-            };
+                wiadomosciOtrzymane.ForEach(a =>
+                {
+                    
+                });
+            }
+
+            //Wziąć ostatnią wiadomość i id użytkownika innego niz zalogowany 
+            //Co wziac
+
+
+            //var wiadomoscVM = new WiadomosciViewModel
+            //{
+            //    WiadomosciWyslane = wiadomosciWyslane,
+            //    WiadomosciOtrzymane = wiadomosciOtrzymane
+            //};
 
             return View(wiadomoscVM);
+        }
+
+        public string WiadomosciLista()
+        {
+            return "";
         }
 
         [HttpPost]

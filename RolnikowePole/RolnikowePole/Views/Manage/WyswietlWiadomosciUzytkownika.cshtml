@@ -1,0 +1,34 @@
+﻿@model RolnikowePole.ViewModels.WiadomosciViewModel
+
+@{
+    ViewBag.Title = "WyswietlWiadomosciUzytkownika";
+}
+
+<h2>WyswietlWiadomosciUzytkownika</h2>
+
+
+@if (Model.WiadomosciOtrzymane.Count() > 0)
+{
+    <ul>
+        @foreach (var item in Model.WiadomosciOtrzymane)
+        {
+            <li>
+                @item.Body <hr />
+            </li>
+        }
+    </ul>
+}
+
+yugyhuohuoih
+
+@if (Model.WiadomosciWyslane.Count() > 0)
+{
+    <ul>
+        @foreach (var item in Model.WiadomosciWyslane)
+        {
+            <li>
+                @item.Body <hr />
+            </li>
+        }
+    </ul>
+}
