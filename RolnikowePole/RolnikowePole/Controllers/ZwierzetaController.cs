@@ -137,6 +137,7 @@ namespace RolnikowePole.Controllers
                 daneUzytkownika = user.DaneUzytkownika
             };
 
+            ViewBag.Id = user.Id;
             return View(vm);
         }
 

@@ -289,5 +289,26 @@ namespace RolnikowePole.Controllers
                 }
             }
         }
+
+        public ActionResult Wiadomosci()
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            var wiadomosciWyslane = user.SenderMessages.ToList();
+            var wiadomosciOtrzymane = user.ReceiverMessages.ToList();
+
+            var wiadomoscVM = new WiadomosciViewModel
+            {
+                WiadomosciWyslane = wiadomosciWyslane,
+                WiadomosciOtrzymane = wiadomosciOtrzymane
+            };
+
+            return View(wiadomoscVM);
+        }
+
+        public ActionResult WyslijWiadomosc(string userIdToSend)
+        {
+
+        }
+
     }
 }

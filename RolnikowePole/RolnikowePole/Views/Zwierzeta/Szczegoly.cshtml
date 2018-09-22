@@ -60,6 +60,18 @@
 
         <!-- /.col-lg-9 -->
 
+        <a href="@Url.Action("WyslijWiadomosc","Manage", new { userIdToSend = ViewBag.Id })">
+            Wyslij Wiadomosc
+        </a>
+
+        Napisac wiadomosc tutaj jakies asynchroniczne gowno dac i git
+        @using (@Html.BeginForm("WyslijWiadomosc", "Manage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+
+        }
+
     </div>
 
     <div class="row">

@@ -403,12 +403,17 @@
     <Compile Include="Migrations\201809091557179_DodanieUserIdDoZwierzeModel.Designer.cs">
       <DependentUpon>201809091557179_DodanieUserIdDoZwierzeModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809212335573_ee1.cs" />
+    <Compile Include="Migrations\201809212335573_ee1.Designer.cs">
+      <DependentUpon>201809212335573_ee1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DaneUzytkownika.cs" />
     <Compile Include="Models\Gatunek.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\PozycjaKoszyka.cs" />
     <Compile Include="Models\PozycjaZamowienia.cs" />
+    <Compile Include="Models\Wiadomosc.cs" />
     <Compile Include="Models\Zamowienie.cs" />
     <Compile Include="Models\Zwierze.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -420,6 +425,7 @@
     <Compile Include="ViewModels\KoszykViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModel.cs" />
     <Compile Include="ViewModels\PotwierdzenieZamowieniaEmail.cs" />
+    <Compile Include="ViewModels\WiadomosciViewModel.cs" />
     <Compile Include="ViewModels\ZwierzetaGatunkiViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -468,6 +474,7 @@
     <Content Include="Views\Emails\Web.config" />
     <Content Include="Views\Emails\PotwierdzenieZamowienia.cshtml" />
     <Content Include="Views\Emails\PotwierdzenieZamowienia.Text.cshtml" />
+    <Content Include="Views\Manage\Wiadomosci.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -511,6 +518,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809091557179_DodanieUserIdDoZwierzeModel.resx">
       <DependentUpon>201809091557179_DodanieUserIdDoZwierzeModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809212335573_ee1.resx">
+      <DependentUpon>201809212335573_ee1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

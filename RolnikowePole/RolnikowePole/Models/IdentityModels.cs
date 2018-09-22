@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -16,7 +17,13 @@ namespace RolnikowePole.Models
 
         public virtual ICollection<Zwierze> ZwierzetaUzytkownika { get; set;}
 
+        [InverseProperty("Sender")]
+        public virtual ICollection<Wiadomosc> SenderMessages { get; set; }
+        [InverseProperty("Receiver")]
+        public virtual ICollection<Wiadomosc> ReceiverMessages { get; set; }
+
         public DaneUzytkownika DaneUzytkownika { get; set; } 
+
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
