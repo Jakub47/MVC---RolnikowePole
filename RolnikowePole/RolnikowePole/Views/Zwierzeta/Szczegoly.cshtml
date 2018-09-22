@@ -1,5 +1,7 @@
 ﻿@model RolnikowePole.ViewModels.HomeViewModel
 @using RolnikowePole.Infrastucture
+@using Microsoft.AspNet.Identity;
+
 
 @{
     ViewBag.Title = "Szczegoly";
@@ -46,32 +48,58 @@
         </div>
 
         @*<div class="card mt-4 mb-4">
-            <div class="card-body">
-                <h3 class="card-title">@Model.Zwierze.Nazwa</h3>
-                <h4>@string.Format("{0:0.##}", Model.Zwierze.CenaZwierza)<span>PLN</span></h4>
-                <p class="card-text">@Model.Zwierze.OpisZwierza</p>
-                <a href="@Url.Action("DodajDoKoszyka","Koszyk", new { id = Model.Zwierze.ZwierzeId })">Dodaj Do Koszyka</a>
-                @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-                {
-                    <a href="@Url.Action("DodajZwierze", "Manage", new { zwierzeId = Model.Zwierze.ZwierzeId })">Edytuj</a>
-                }
-            </div>
-        </div>*@
+                <div class="card-body">
+                    <h3 class="card-title">@Model.Zwierze.Nazwa</h3>
+                    <h4>@string.Format("{0:0.##}", Model.Zwierze.CenaZwierza)<span>PLN</span></h4>
+                    <p class="card-text">@Model.Zwierze.OpisZwierza</p>
+                    <a href="@Url.Action("DodajDoKoszyka","Koszyk", new { id = Model.Zwierze.ZwierzeId })">Dodaj Do Koszyka</a>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <a href="@Url.Action("DodajZwierze", "Manage", new { zwierzeId = Model.Zwierze.ZwierzeId })">Edytuj</a>
+                    }
+                </div>
+            </div>*@
 
         <!-- /.col-lg-9 -->
+        @*<a href="@Url.Action("WyslijWiadomosc","Manage", new { userIdToSend = ViewBag.Id })">
+                Wyslij Wiadomosc
+            </a>*@
 
-        <a href="@Url.Action("WyslijWiadomosc","Manage", new { userIdToSend = ViewBag.Id })">
-            Wyslij Wiadomosc
-        </a>
+        @*@using (@Html.BeginForm("WyslijWiadomosc", "Manage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
 
-        Napisac wiadomosc tutaj jakies asynchroniczne gowno dac i git
-        @using (@Html.BeginForm("WyslijWiadomosc", "Manage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+            }*@
+
+        <div id="Dziekuj">
+            
+        </div>
+
+        @if (User.Identity.IsAuthenticated)
         {
-            @Html.AntiForgeryToken()
 
+            using (Ajax.BeginForm("WyslijWiadomosc", "Manage",
+                    new AjaxOptions
+                    {
+                        UpdateTargetId = "Dziekuj",
+                        HttpMethod = "POST",
+                        Confirm = "Potwierdz wyslanie wiadomosci",
+                        OnSuccess = "alert('Pomyslnie wyslano wiadomosc')"
+                    }))
+            {
+                { Model.wiadomosc.DateAndTimeOfSend = DateTime.Now; }
 
+                @Html.HiddenFor(m => m.wiadomosc.ReceiverId)
+                @Html.HiddenFor(m => m.wiadomosc.SenderId)
+                @Html.HiddenFor(m => m.wiadomosc.DateAndTimeOfSend)
+
+                <label>Wyslij wiadomosc</label>
+                @Html.TextAreaFor(m => m.wiadomosc.Body, new { @class = "form-control", rows = "3" })
+
+                <input type="submit" value="Wyslij kurwa" />
+            }
         }
-
     </div>
 
     <div class="row">

@@ -5,7 +5,9 @@ using RolnikowePole.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Migrations;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 
@@ -55,6 +57,40 @@ namespace RolnikowePole.DAL
 
             zwierzeta.ForEach(i => context.Zwierzeta.AddOrUpdate(i));
             context.SaveChanges();
+
+            //var wiadomosc = new Wiadomosc
+            //{
+            //    Body = "cs",
+            //    ReceiverId = "85bf5117-9b6e-44d6-9272-da03d68fd2b6",
+            //    SenderId = "78845096-3f5f-4e24-a1be-20736739fd20",
+            //    DateAndTimeOfSend = DateTime.Now
+            //};
+
+            //context.Wiadomosci.AddOrUpdate(wiadomosc);
+            //try
+            //{
+            //    context.SaveChanges();
+            //}
+            //catch (DbEntityValidationException ex)
+            //{
+            //    foreach (DbEntityValidationResult item in ex.EntityValidationErrors)
+            //    {
+            //        // Get entry
+
+            //        DbEntityEntry entry = item.Entry;
+            //        string entityTypeName = entry.Entity.GetType().Name;
+
+            //        // Display or log error messages
+
+            //        foreach (DbValidationError subItem in item.ValidationErrors)
+            //        {
+            //            string message = string.Format("Error '{0}' occurred in {1} at {2}",
+            //                     subItem.ErrorMessage, entityTypeName, subItem.PropertyName);
+            //            //Console.WriteLine(message);
+            //            System.Diagnostics.Debug.WriteLine(message);
+            //        }
+            //    }
+            //}
         }
 
         public static void SeedUzytkownicy(RolnikowePoleContext db)

@@ -9,6 +9,9 @@ using RolnikowePole.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Migrations;
+using System.Data.Entity.Validation;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -305,9 +308,42 @@ namespace RolnikowePole.Controllers
             return View(wiadomoscVM);
         }
 
-        public ActionResult WyslijWiadomosc(string userIdToSend)
+        [HttpPost]
+        public string WyslijWiadomosc(Wiadomosc wiadomosc)
         {
 
+            //db.Users.Find(wiadomosc.ReceiverId).ReceiverMessages.Add(wiadomosc);
+            //db.Users.Find(wiadomosc.SenderId).SenderMessages.Add(wiadomosc);
+
+            db.Wiadomosci.AddOrUpdate(wiadomosc);
+
+            try
+            {
+                db.SaveChanges();
+
+            }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (DbEntityValidationResult item in ex.EntityValidationErrors)
+                {
+                    // Get entry
+
+                    DbEntityEntry entry = item.Entry;
+                    string entityTypeName = entry.Entity.GetType().Name;
+
+                    // Display or log error messages
+
+                    foreach (DbValidationError subItem in item.ValidationErrors)
+                    {
+                        string message = string.Format("Error '{0}' occurred in {1} at {2}",
+                                 subItem.ErrorMessage, entityTypeName, subItem.PropertyName);
+                        //Console.WriteLine(message);
+                        System.Diagnostics.Debug.WriteLine(message);
+                    }
+                }
+            }
+
+            return "dzieki stary cwelu";
         }
 
     }

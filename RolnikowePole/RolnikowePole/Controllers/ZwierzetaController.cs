@@ -1,4 +1,5 @@
-﻿using RolnikowePole.DAL;
+﻿using Microsoft.AspNet.Identity;
+using RolnikowePole.DAL;
 using RolnikowePole.Infrastucture;
 using RolnikowePole.Models;
 using RolnikowePole.ViewModels;
@@ -126,7 +127,14 @@ namespace RolnikowePole.Controllers
 
             var zwierze = db.Zwierzeta.Find(int.Parse(id));
             var user = zwierze.User;
+            var W = new Wiadomosc();
 
+            if (User.Identity.IsAuthenticated)
+            {
+                W.ReceiverId = user.Id;
+                W.SenderId = User.Identity.GetUserId();
+            }
+            
             var vm = new HomeViewModel
             {
                 Nowe = nowosci,
@@ -134,7 +142,8 @@ namespace RolnikowePole.Controllers
                 Zwierze = zwierze,
                 //Since i am working on testing examples their' properties may not be set due to initialization. 
                 //Later on this line must be modify to : daneUzytkownika = user.DaneUzytkownika
-                daneUzytkownika = user.DaneUzytkownika
+                daneUzytkownika = user.DaneUzytkownika,
+                wiadomosc = W
             };
 
             ViewBag.Id = user.Id;
