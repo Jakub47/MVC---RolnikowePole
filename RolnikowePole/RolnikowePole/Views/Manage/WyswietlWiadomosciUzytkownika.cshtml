@@ -1,34 +1,68 @@
-﻿@model RolnikowePole.ViewModels.WiadomosciViewModel
+﻿@model RolnikowePole.ViewModels.WiadomosciOdzieloneViewModel
 
 @{
     ViewBag.Title = "WyswietlWiadomosciUzytkownika";
+    Layout = "~/Views/Shared/_ManageLayout.cshtml";
 }
 
 <h2>WyswietlWiadomosciUzytkownika</h2>
 
-
-@if (Model.WiadomosciOtrzymane.Count() > 0)
+@if (Model.WiadomosciOtrzymane.Count > 0)
 {
-    <ul>
-        @foreach (var item in Model.WiadomosciOtrzymane)
-        {
-            <li>
-                @item.Body <hr />
-            </li>
-        }
-    </ul>
+    foreach (var item in Model.WiadomosciOtrzymane)
+    {
+        <div class="media">
+            <img class="mr-3" src="~/Content/img.png" alt="Generic placeholder image">
+            <div class="media-body">
+                <h5 class="mt-0">@item.NazwaUzytkownika + <text style="margin-left: 2px;">@item.DataWyslania</text></h5>
+                @item.TrescWiadomosci
+            </div>
+        </div>
+    }
 }
 
-yugyhuohuoih
-
-@if (Model.WiadomosciWyslane.Count() > 0)
+@if (Model.WiadomosciWyslane.Count > 0)
 {
-    <ul>
-        @foreach (var item in Model.WiadomosciWyslane)
-        {
-            <li>
-                @item.Body <hr />
-            </li>
-        }
-    </ul>
+    foreach (var item in Model.WiadomosciWyslane)
+    {
+        <div class="media">
+            <img class="mr-3" src="~/Content/img.png" alt="Generic placeholder image">
+            <div class="media-body">
+                <h5 class="mt-0">@item.NazwaUzytkownika + <text style="margin-left: 2px;">@item.DataWyslania</text></h5>
+                @item.TrescWiadomosci
+            </div>
+        </div>
+    }
 }
+
+
+@*@foreach (var item in Model)
+    {
+        <p>@item.ReceiverId</p>
+    }*@
+
+
+@*@if (Model.WiadomosciOtrzymane.Count() > 0)
+    {
+        <ul>
+            @foreach (var item in Model.WiadomosciOtrzymane)
+            {
+                <li>
+                    @item.Body <hr />
+                </li>
+            }
+        </ul>
+    }*@
+
+
+@*@if (Model.WiadomosciWyslane.Count() > 0)
+    {
+        <ul>
+            @foreach (var item in Model.WiadomosciWyslane)
+            {
+                <li>
+                    @item.Body <hr />
+                </li>
+            }
+        </ul>
+    }*@

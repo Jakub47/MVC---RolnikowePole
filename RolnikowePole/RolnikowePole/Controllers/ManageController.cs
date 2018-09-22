@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using MoreLinq;
 using RolnikowePole.App_Start;
 using RolnikowePole.DAL;
 using RolnikowePole.Infrastucture;
 using RolnikowePole.Models;
 using RolnikowePole.ViewModels;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
@@ -293,23 +295,75 @@ namespace RolnikowePole.Controllers
             }
         }
 
-
         public ActionResult WyswietlWiadomosciUzytkownika()
         {
             var user = UserManager.FindById(User.Identity.GetUserId());
 
-            var wiadomosciWyslane = user.SenderMessages.Select(a => a.ReceiverId).ToList();
-            var wiadomosciOtrzymane = user.ReceiverMessages.Select(a => a.ReceiverId).ToList();
+            //Jak ja wysyłam to mnie nie obchodzi wysyłający tylko odbiorca
+            //Jak ja odbieram to mnie nie obchodzi odbierający tylko wysyłający
 
-            var WszyscyUserzy = UserManager.Users;
+            //List of all users id !
+            var GetUsersIDSended = user.SenderMessages.Where(a => a.ReceiverId != user.Id).Select(b => b.ReceiverId).ToList();
+            var GetUsersIDRetrived = user.ReceiverMessages.Where(a => a.SenderId != user.Id).Select(b => b.SenderId).ToList();
 
-            foreach (var userr in UserManager.Users)
+
+            //Potrzebuje nazwyUzytkownika + Daty + Tresci kazdej wiadomosci
+            var wiadomosci = new List<WiadomosciViewModel>();
+            var w = new WiadomosciOdzieloneViewModel();
+
+            var wiadomosciWyslane = user.SenderMessages.Where(a => a.ReceiverId != user.Id).DistinctBy(c => c.ReceiverId).ToList();
+            var wiadomosciOtrzymane = user.ReceiverMessages.Where(a => a.ReceiverId != user.Id).DistinctBy(c => c.SenderId).ToList();
+
+            wiadomosciWyslane.ForEach(a =>
             {
-                wiadomosciOtrzymane.ForEach(a =>
+                //wiadomosci.Add(new WiadomosciViewModel()
+                //{
+                //    NazwaUzytkownika = a.Receiver.DaneUzytkownika.Imie + " " +  a.Receiver.DaneUzytkownika.Nazwisko,
+                //    DataWyslania = a.DateAndTimeOfSend,
+                //    TrescWiadomosci = a.Body
+                //});
+
+                var z = new WiadomosciViewModel()
                 {
+                    NazwaUzytkownika = a.Receiver.DaneUzytkownika.Imie + " " + a.Receiver.DaneUzytkownika.Nazwisko,
+                    DataWyslania = a.DateAndTimeOfSend,
+                    TrescWiadomosci = a.Body
+                };
+
+                w.WiadomosciWyslane.Add(z);
+            });
+
+            wiadomosciOtrzymane.ForEach(a =>
+            {
+                //wiadomosci.Add(new WiadomosciViewModel()
+                //{
+                //    NazwaUzytkownika = a.Receiver.DaneUzytkownika.Imie + " " + a.Receiver.DaneUzytkownika.Nazwisko,
+                //    DataWyslania = a.DateAndTimeOfSend,
+                //    TrescWiadomosci = a.Body
+                //});
+
+                var z = new WiadomosciViewModel()
+                {
+                    NazwaUzytkownika = a.Receiver.DaneUzytkownika.Imie + " " + a.Receiver.DaneUzytkownika.Nazwisko,
+                    DataWyslania = a.DateAndTimeOfSend,
+                    TrescWiadomosci = a.Body
+                };
+
+                w.WiadomosciOtrzymane.Add(z);
+            });
+
+
+            return View(w);
+
+            //var WszyscyUserzy = UserManager.Users;
+
+            //foreach (var userr in UserManager.Users)
+            //{
+            //    wiadomosciOtrzymane.ForEach(a =>
+            //    {
                     
-                });
-            }
+            //    });
+            //}
 
             //Wziąć ostatnią wiadomość i id użytkownika innego niz zalogowany 
             //Co wziac
@@ -321,7 +375,7 @@ namespace RolnikowePole.Controllers
             //    WiadomosciOtrzymane = wiadomosciOtrzymane
             //};
 
-            return View(wiadomoscVM);
+            //return View(wiadomoscVM);
         }
 
         public string WiadomosciLista()

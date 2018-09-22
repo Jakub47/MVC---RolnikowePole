@@ -8,7 +8,8 @@ namespace RolnikowePole.ViewModels
 {
     public class WiadomosciViewModel
     {
-        public IEnumerable<Wiadomosc> WiadomosciWyslane { get; set; }
-        public IEnumerable<Wiadomosc> WiadomosciOtrzymane { get; set; }
+        public string NazwaUzytkownika { get; set; }
+        public DateTime DataWyslania { get; set; }
+        public string TrescWiadomosci { get; set; }
     }
 }
