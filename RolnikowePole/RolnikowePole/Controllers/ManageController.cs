@@ -311,8 +311,10 @@ namespace RolnikowePole.Controllers
             var wiadomosci = new List<WiadomosciViewModel>();
             var w = new WiadomosciOdzieloneViewModel();
 
-            var wiadomosciWyslane = user.SenderMessages.Where(a => a.ReceiverId != user.Id).ToList();
-            var wiadomosciOtrzymane = user.ReceiverMessages.Where(a => a.ReceiverId != user.Id).ToList();
+            var wiadomosciWyslane = user.SenderMessages.Where(a => a.SenderId == user.Id).ToList();
+
+            //GIT
+            var wiadomosciOtrzymane = user.ReceiverMessages.Where(a => a.ReceiverId == user.Id).ToList();
 
             wiadomosciWyslane.ForEach(a =>
             {
