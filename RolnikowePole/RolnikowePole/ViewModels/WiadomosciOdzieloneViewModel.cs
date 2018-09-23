@@ -9,5 +9,10 @@ namespace RolnikowePole.ViewModels
     {
         public List<WiadomosciViewModel> WiadomosciWyslane { get; set; }
         public List<WiadomosciViewModel> WiadomosciOtrzymane { get; set; }
+
+        public WiadomosciOdzieloneViewModel()
+        {
+            WiadomosciWyslane = new List<WiadomosciViewModel>(); WiadomosciOtrzymane = new List<WiadomosciViewModel>();
+        }
     }
 }
