@@ -11,13 +11,20 @@
 {
     foreach (var item in Model.WiadomosciOtrzymane)
     {
-        <div class="media">
-            <img class="mr-3" src="~/Content/img.png" alt="Generic placeholder image">
-            <div class="media-body">
-                <h5 class="mt-0">@item.NazwaUzytkownika + <text style="margin-left: 2px;">@item.DataWyslania</text></h5>
-                @item.TrescWiadomosci
+        <a href="@Url.Action("WiadomosciKonwersacja", item.Id)">
+            <div class="media">
+                <img class="mr-3" src="~/Content/img.png" alt="Generic placeholder image">
+                <div class="media-body">
+                    <h5 class="mt-0">@item.NazwaUzytkownika + <text style="margin-left: 2px;">@item.DataWyslania</text></h5>
+                    @item.TrescWiadomosci
+                    @if (item.Zwierze != null)
+                    {
+                        <p>@item.Zwierze.Nazwa</p>
+                        <p>@item.Zwierze.NazwaPlikuObrazka</p>
+                    }
+                </div>
             </div>
-        </div>
+        </a>
     }
 }
 
@@ -25,13 +32,21 @@
 {
     foreach (var item in Model.WiadomosciWyslane)
     {
-        <div class="media">
-            <img class="mr-3" src="~/Content/img.png" alt="Generic placeholder image">
-            <div class="media-body">
-                <h5 class="mt-0">@item.NazwaUzytkownika + <text style="margin-left: 2px;">@item.DataWyslania</text></h5>
-                @item.TrescWiadomosci
+        <a href="@Url.Action("WiadomosciKonwersacja", item.Id)">
+            <div class="media">
+                <img class="mr-3" src="~/Content/img.png" alt="Generic placeholder image">
+                <div class="media-body">
+                    <h5 class="mt-0">@item.NazwaUzytkownika + <text style="margin-left: 2px;">@item.DataWyslania</text></h5>
+                    @item.TrescWiadomosci
+
+                    @if (item.Zwierze != null)
+                    {
+                    <p>@item.Zwierze.Nazwa</p>
+                    <p>@item.Zwierze.NazwaPlikuObrazka</p>
+                    }
+                </div>
             </div>
-        </div>
+        </a>
     }
 }
 

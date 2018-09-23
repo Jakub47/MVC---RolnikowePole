@@ -88,11 +88,12 @@
                         OnSuccess = "alert('Pomyslnie wyslano wiadomosc')"
                     }))
             {
-                { Model.wiadomosc.DateAndTimeOfSend = DateTime.Now; }
+                { Model.wiadomosc.DateAndTimeOfSend = DateTime.Now; Model.wiadomosc.ZwierzeId = Model.Zwierze.ZwierzeId; }
 
                 @Html.HiddenFor(m => m.wiadomosc.ReceiverId)
                 @Html.HiddenFor(m => m.wiadomosc.SenderId)
                 @Html.HiddenFor(m => m.wiadomosc.DateAndTimeOfSend)
+                @Html.HiddenFor(m => m.wiadomosc.ZwierzeId)
 
                 <label>Wyslij wiadomosc</label>
                 @Html.TextAreaFor(m => m.wiadomosc.Body, new { @class = "form-control", rows = "3" })

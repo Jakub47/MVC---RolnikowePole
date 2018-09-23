@@ -37,5 +37,7 @@ namespace RolnikowePole.Models
 
         public bool Read { get; set; }
 
-}
+        public int ZwierzeId { get; set; }
+
+    }
 }
