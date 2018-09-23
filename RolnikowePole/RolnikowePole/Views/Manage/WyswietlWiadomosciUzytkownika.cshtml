@@ -1,55 +1,49 @@
 ﻿@model RolnikowePole.ViewModels.WiadomosciOdzieloneViewModel
+@using RolnikowePole.Infrastucture
 
 @{
     ViewBag.Title = "WyswietlWiadomosciUzytkownika";
     Layout = "~/Views/Shared/_ManageLayout.cshtml";
 }
-
-<h2>WyswietlWiadomosciUzytkownika</h2>
+<h2>Wiadomości otrzymane : </h2>
+<hr />
 
 @if (Model.WiadomosciOtrzymane.Count > 0)
 {
     foreach (var item in Model.WiadomosciOtrzymane)
     {
-        <a href="@Url.Action("WiadomosciKonwersacja", item.Id)">
-            <div class="media">
-                <img class="mr-3" src="~/Content/img.png" alt="Generic placeholder image">
+        <a href="@Url.Action("WiadomosciKonwersacja", item.Id)" style="text-decoration: none; color:white;">
+            <div class="media bg-info">
+                <img class="mr-3" style="width:64px; height: 64px;" src="@Url.ObrazkiSciezka(item.Zwierze.NazwaPlikuObrazka)" alt="Generic placeholder image">
                 <div class="media-body">
-                    <h5 class="mt-0">@item.NazwaUzytkownika + <text style="margin-left: 2px;">@item.DataWyslania</text></h5>
-                    @item.TrescWiadomosci
-                    @if (item.Zwierze != null)
-                    {
-                        <p>@item.Zwierze.Nazwa</p>
-                        <p>@item.Zwierze.NazwaPlikuObrazka</p>
-                    }
+                    <h5 class="mt-0">@item.NazwaUzytkownika | @item.Zwierze.Nazwa | <text style="margin-left: 2px;">@item.DataWyslania</text></h5>
+                    <strong>@item.TrescWiadomosci</strong>
                 </div>
             </div>
         </a>
     }
 }
 
+
+<hr />
+<h2>Wiadomości wysłane:</h2>
+<hr />
 @if (Model.WiadomosciWyslane.Count > 0)
 {
     foreach (var item in Model.WiadomosciWyslane)
     {
-        <a href="@Url.Action("WiadomosciKonwersacja", item.Id)">
-            <div class="media">
-                <img class="mr-3" src="~/Content/img.png" alt="Generic placeholder image">
+        <a href="@Url.Action("WiadomosciKonwersacja", item.Id)" style="text-decoration: none; color:white;">
+            <div class="media bg-dark">
+                <img class="mr-3" style="width:64px; height: 64px;" src="@Url.ObrazkiSciezka(item.Zwierze.NazwaPlikuObrazka)" alt="Generic placeholder image">
                 <div class="media-body">
-                    <h5 class="mt-0">@item.NazwaUzytkownika + <text style="margin-left: 2px;">@item.DataWyslania</text></h5>
-                    @item.TrescWiadomosci
-
-                    @if (item.Zwierze != null)
-                    {
-                    <p>@item.Zwierze.Nazwa</p>
-                    <p>@item.Zwierze.NazwaPlikuObrazka</p>
-                    }
+                    <h5 class="mt-0">@item.NazwaUzytkownika | @item.Zwierze.Nazwa | <text style="margin-left: 2px;">@item.DataWyslania</text></h5>
+                    <strong>@item.TrescWiadomosci</strong>
                 </div>
             </div>
         </a>
     }
 }
-
+<hr />
 
 @*@foreach (var item in Model)
     {

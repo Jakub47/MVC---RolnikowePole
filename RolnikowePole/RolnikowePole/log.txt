@@ -4290,3 +4290,4 @@
 2018-09-24 00:40:11.8348|INFO|RolnikowePole.Controllers.HomeController|Jestes na stronie glownej
 2018-09-24 00:40:22.8776|INFO|RolnikowePole.Controllers.HomeController|Jestes na stronie glownej
 2018-09-24 00:48:04.5629|INFO|RolnikowePole.Controllers.HomeController|Jestes na stronie glownej
+2018-09-24 00:58:46.6922|INFO|RolnikowePole.Controllers.HomeController|Jestes na stronie glownej
