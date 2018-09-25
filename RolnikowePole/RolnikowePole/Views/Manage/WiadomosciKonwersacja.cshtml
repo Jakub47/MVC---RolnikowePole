@@ -1,4 +1,4 @@
-﻿@model List<RolnikowePole.Models.Wiadomosc>
+﻿@model RolnikowePole.ViewModels.WiadomoscViewModel
 @using RolnikowePole.Infrastucture
 
 @{
@@ -9,9 +9,9 @@
 <h2>WiadomosciKonwersacja</h2>
 
 <div class="container bg-info">
-    <div class="row">
+    <div class="row" id="SekcjaListaWiadomosci">
         <div class="col-12">
-            @foreach (var item in Model)
+            @foreach (var item in Model.ListaWiadomosci)
             {
                 <div class="media ">
                     <div class="media-body">
@@ -21,7 +21,27 @@
                 </div>
             }
 
+            @using (Ajax.BeginForm("WyslijWiadomosc", "Manage",
+            new AjaxOptions
+            {
+                HttpMethod = "POST",
+                Confirm = "Potwierdz wyslanie wiadomosci",
+                OnSuccess = "alert('Pomyslnie wyslano wiadomosc')",
+                UpdateTargetId = "SekcjaListaWiadomosci"
+            }))
+            {
+                { Model.wiadomosc.DateAndTimeOfSend = DateTime.Now; Model.wiadomosc.ReceiverId = Model.ListaWiadomosci.ElementAt(0).ReceiverId;  }
 
+                @Html.HiddenFor(m => m.wiadomosc.ReceiverId)
+                @Html.HiddenFor(m => m.wiadomosc.SenderId)
+                @Html.HiddenFor(m => m.wiadomosc.DateAndTimeOfSend)
+                @Html.HiddenFor(m => m.wiadomosc.ZwierzeId)
+
+                <label>Wyslij wiadomosc</label>
+                @Html.TextAreaFor(m => m.wiadomosc.Body, new { @class = "form-control", rows = "3" })
+
+                <input type="submit" value="Wyslij kurwa" />
+            }
         </div>
     </div>
 </div>

@@ -48,7 +48,7 @@
                             Wiadomości
                         </a>
                     </li>
-                    
+
 
                     @if (User.IsInRole("Admin"))
                     {
@@ -96,8 +96,10 @@
     <!-- Footer -->
 
     @System.Web.Optimization.Scripts.Render("~/bundles/jqueryAndBootstrapBundle")
-
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/MicrosoftAjax.js"></script>
+    <script src="~/Scripts/MicrosoftMvcAjax.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

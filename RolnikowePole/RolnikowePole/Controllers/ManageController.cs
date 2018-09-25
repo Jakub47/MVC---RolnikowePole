@@ -389,22 +389,25 @@ namespace RolnikowePole.Controllers
             //Chcę wziąć wszystkie wiadmości odnośnie konkretnego zwierza i od określonej osoby
             var listaWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && (a.ReceiverId.Equals(idReceiverId, StringComparison.CurrentCultureIgnoreCase) 
                                                      || (a.SenderId.Equals(idSenderID, StringComparison.CurrentCultureIgnoreCase)))).ToList();
-            //var listaWiadomosci = db.Wiadomosci.ToList();
-            //foreach (var item in listaWiadomosci)
-            //{
-            //    var c = item.ZwierzeId;
-            //    var g = item.ReceiverId;
 
-            //    if()
-            //}
+            var wWiadomosc = new Wiadomosc
+            {
+                ZwierzeId = idZwierza,
+                SenderId = User.Identity.GetUserId(),
+            };
 
-            return View(listaWiadomosci);
+            var vm = new WiadomoscViewModel
+            {
+                ListaWiadomosci = listaWiadomosci,
+                wiadomosc = wWiadomosc
+            }; 
+
+            return View(vm);
         }
 
         [HttpPost]
-        public string WyslijWiadomosc(Wiadomosc wiadomosc)
+        public IEnumerable<Wiadomosc> WyslijWiadomosc(Wiadomosc wiadomosc)
         {
-
             //db.Users.Find(wiadomosc.ReceiverId).ReceiverMessages.Add(wiadomosc);
             //db.Users.Find(wiadomosc.SenderId).SenderMessages.Add(wiadomosc);
 
@@ -413,7 +416,6 @@ namespace RolnikowePole.Controllers
             try
             {
                 db.SaveChanges();
-
             }
             catch (DbEntityValidationException ex)
             {
@@ -435,8 +437,15 @@ namespace RolnikowePole.Controllers
                     }
                 }
             }
+            var idZwierza = wiadomosc.ZwierzeId;
+            string idReceiverId = wiadomosc.ReceiverId;
+            string idSenderID = wiadomosc.SenderId;
 
-            return "dzieki stary cwelu";
+            //Chcę wziąć wszystkie wiadmości odnośnie konkretnego zwierza i od określonej osoby
+            var listaWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && (a.ReceiverId.Equals(idReceiverId, StringComparison.CurrentCultureIgnoreCase)
+                                                     || (a.SenderId.Equals(idSenderID, StringComparison.CurrentCultureIgnoreCase)))).ToList();
+            
+            return listaWiadomosci;
         }
 
     }
