@@ -1,0 +1,27 @@
+﻿@model List<RolnikowePole.Models.Wiadomosc>
+@using RolnikowePole.Infrastucture
+
+@{
+    ViewBag.Title = "WiadomosciKonwersacja";
+    Layout = "~/Views/Shared/_ManageLayout.cshtml";
+}
+
+<h2>WiadomosciKonwersacja</h2>
+
+<div class="container bg-info">
+    <div class="row">
+        <div class="col-12">
+            @foreach (var item in Model)
+            {
+                <div class="media ">
+                    <div class="media-body">
+                        <h5 class="mt-0">@item.ReceiverId | @item.DateAndTimeOfSend </h5>
+                        <strong>@item.Body</strong>
+                    </div>
+                </div>
+            }
+
+
+        </div>
+    </div>
+</div>

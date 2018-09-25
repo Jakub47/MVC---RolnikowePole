@@ -384,9 +384,21 @@ namespace RolnikowePole.Controllers
             //return View(wiadomoscVM);
         }
 
-        public string WiadomosciLista()
+        public ActionResult WiadomosciKonwersacja(int idZwierza, string idReceiverId = null , string idSenderID = null )
         {
-            return "";
+            //Chcę wziąć wszystkie wiadmości odnośnie konkretnego zwierza i od określonej osoby
+            var listaWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && (a.ReceiverId.Equals(idReceiverId, StringComparison.CurrentCultureIgnoreCase) 
+                                                     || (a.SenderId.Equals(idSenderID, StringComparison.CurrentCultureIgnoreCase)))).ToList();
+            //var listaWiadomosci = db.Wiadomosci.ToList();
+            //foreach (var item in listaWiadomosci)
+            //{
+            //    var c = item.ZwierzeId;
+            //    var g = item.ReceiverId;
+
+            //    if()
+            //}
+
+            return View(listaWiadomosci);
         }
 
         [HttpPost]

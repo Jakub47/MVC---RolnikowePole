@@ -12,7 +12,7 @@
 {
     foreach (var item in Model.WiadomosciOtrzymane)
     {
-        <a href="@Url.Action("WiadomosciKonwersacja", item.Id)" style="text-decoration: none; color:white;">
+        <a href="@Url.Action("WiadomosciKonwersacja", new { idZwierza = item.Zwierze.ZwierzeId , idSenderID =  item.Id })" style="text-decoration: none; color:white;">
             <div class="media bg-info">
                 <img class="mr-3" style="width:64px; height: 64px;" src="@Url.ObrazkiSciezka(item.Zwierze.NazwaPlikuObrazka)" alt="Generic placeholder image">
                 <div class="media-body">
@@ -32,7 +32,7 @@
 {
     foreach (var item in Model.WiadomosciWyslane)
     {
-        <a href="@Url.Action("WiadomosciKonwersacja", item.Id)" style="text-decoration: none; color:white;">
+        <a href="@Url.Action("WiadomosciKonwersacja", new { idZwierza = item.Zwierze.ZwierzeId , idReceiverId =  item.Id })" style="text-decoration: none; color:white;">
             <div class="media bg-dark">
                 <img class="mr-3" style="width:64px; height: 64px;" src="@Url.ObrazkiSciezka(item.Zwierze.NazwaPlikuObrazka)" alt="Generic placeholder image">
                 <div class="media-body">
