@@ -384,12 +384,43 @@ namespace RolnikowePole.Controllers
             //return View(wiadomoscVM);
         }
 
-        public ActionResult WiadomosciKonwersacja(int idZwierza, string idReceiverId = null , string idSenderID = null )
+        public ActionResult WiadomosciKonwersacja(int idZwierza, string idUser, bool czyIdUzytkownika)
         {
-            //Chcę wziąć wszystkie wiadmości odnośnie konkretnego zwierza i od określonej osoby
-            var listaWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && (a.ReceiverId.Equals(idReceiverId, StringComparison.CurrentCultureIgnoreCase) 
-                                                     || (a.SenderId.Equals(idSenderID, StringComparison.CurrentCultureIgnoreCase)))).ToList();
+            //  Jezeli jest to id uzytkownika wiemy ze powinnismy zwrococ wiadomosci tego uzytkownika a jesli chodzi o 
+            //innych uzytkownikow to tam przekazujemy sernderID = isUser
 
+            var listaMoichWiadomosci = new List<Wiadomosc>();
+            var listaInnychWiadomosci = new List<Wiadomosc>();
+            var userId = User.Identity.GetUserId();
+
+            var l = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && a.ReceiverId == idUser && a.SenderId == userId)
+                                        .ToList();
+
+            //idUser == gosc do ktorego sie wysyla ... userId == mojeId
+
+            //if (czyIdUzytkownika)
+            //{
+            //   listaMoichWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && a.SenderId == idUser).ToList();
+            //   listaInnychWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && a.Re
+            //}
+            //else
+            //{
+            //    var listaMoichWiadomos
+            //}
+
+
+
+
+
+            //Chcę wziąć wszystkie wiadmości odnośnie konkretnego zwierza i od określonej osoby
+
+            //a.ReceiverId.Equals(idReceiverId, StringComparison.CurrentCultureIgnoreCase)
+            //|| (a.SenderId.Equals(idSenderID, StringComparison.CurrentCultureIgnoreCase)))).ToList();
+
+            //Pobierz wiadomosci które ja wysłałem do tej osoby
+            //var listaWiadomosciOsobyWysylającej = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && )
+
+            //Pobierz wiadomosci które ona wysłałą do mnie!
             var wWiadomosc = new Wiadomosc
             {
                 ZwierzeId = idZwierza,
@@ -400,13 +431,13 @@ namespace RolnikowePole.Controllers
             {
                 ListaWiadomosci = listaWiadomosci,
                 wiadomosc = wWiadomosc
-            }; 
+            };
 
             return View(vm);
         }
 
         [HttpPost]
-        public IEnumerable<Wiadomosc> WyslijWiadomosc(Wiadomosc wiadomosc)
+        public ActionResult WyslijWiadomosc(Wiadomosc wiadomosc)
         {
             //db.Users.Find(wiadomosc.ReceiverId).ReceiverMessages.Add(wiadomosc);
             //db.Users.Find(wiadomosc.SenderId).SenderMessages.Add(wiadomosc);
@@ -445,7 +476,7 @@ namespace RolnikowePole.Controllers
             var listaWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && (a.ReceiverId.Equals(idReceiverId, StringComparison.CurrentCultureIgnoreCase)
                                                      || (a.SenderId.Equals(idSenderID, StringComparison.CurrentCultureIgnoreCase)))).ToList();
             
-            return listaWiadomosci;
+            return View("_Wiadomosci", listaWiadomosci);
         }
 
     }

@@ -504,6 +504,7 @@
     <Content Include="Views\Emails\PotwierdzenieZamowienia.Text.cshtml" />
     <Content Include="Views\Manage\WyswietlWiadomosciUzytkownika.cshtml" />
     <Content Include="Views\Manage\WiadomosciKonwersacja.cshtml" />
+    <Content Include="Views\Manage\_Wiadomosci.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

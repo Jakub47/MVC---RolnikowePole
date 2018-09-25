@@ -9,39 +9,44 @@
 <h2>WiadomosciKonwersacja</h2>
 
 <div class="container bg-info">
-    <div class="row" id="SekcjaListaWiadomosci">
+    <div class="row" >
         <div class="col-12">
-            @foreach (var item in Model.ListaWiadomosci)
-            {
-                <div class="media ">
-                    <div class="media-body">
-                        <h5 class="mt-0">@item.ReceiverId | @item.DateAndTimeOfSend </h5>
-                        <strong>@item.Body</strong>
+            <div class="col-12" id="SekcjaListaWiadomosci">
+                @foreach (var item in Model.ListaWiadomosci)
+                {
+                    <div class="media ">
+                        <div class="media-body">
+                            <h5 class="mt-0">@item.ReceiverId | @item.DateAndTimeOfSend </h5>
+                            <strong>@item.Body</strong>
+                        </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
+            <div class="col-12">
+                @using (Ajax.BeginForm("WyslijWiadomosc", "Manage",
+                new AjaxOptions
+                {
+                    HttpMethod = "POST",
+                    Confirm = "Potwierdz wyslanie wiadomosci",
+                    OnSuccess = "alert('Pomyslnie wyslano wiadomosc')",
+                    UpdateTargetId = "SekcjaListaWiadomosci"
+                }))
+                {
+                    { Model.wiadomosc.DateAndTimeOfSend = DateTime.Now;
+                        
+                        Model.wiadomosc.ReceiverId = Model.ListaWiadomosci.ElementAt(0).ReceiverId; }
 
-            @using (Ajax.BeginForm("WyslijWiadomosc", "Manage",
-            new AjaxOptions
-            {
-                HttpMethod = "POST",
-                Confirm = "Potwierdz wyslanie wiadomosci",
-                OnSuccess = "alert('Pomyslnie wyslano wiadomosc')",
-                UpdateTargetId = "SekcjaListaWiadomosci"
-            }))
-            {
-                { Model.wiadomosc.DateAndTimeOfSend = DateTime.Now; Model.wiadomosc.ReceiverId = Model.ListaWiadomosci.ElementAt(0).ReceiverId;  }
+                    @Html.HiddenFor(m => m.wiadomosc.ReceiverId)
+                    @Html.HiddenFor(m => m.wiadomosc.SenderId)
+                    @Html.HiddenFor(m => m.wiadomosc.DateAndTimeOfSend)
+                    @Html.HiddenFor(m => m.wiadomosc.ZwierzeId)
 
-                @Html.HiddenFor(m => m.wiadomosc.ReceiverId)
-                @Html.HiddenFor(m => m.wiadomosc.SenderId)
-                @Html.HiddenFor(m => m.wiadomosc.DateAndTimeOfSend)
-                @Html.HiddenFor(m => m.wiadomosc.ZwierzeId)
+                    <label>Wyslij wiadomosc</label>
+                    @Html.TextAreaFor(m => m.wiadomosc.Body, new { @class = "form-control", rows = "3" })
 
-                <label>Wyslij wiadomosc</label>
-                @Html.TextAreaFor(m => m.wiadomosc.Body, new { @class = "form-control", rows = "3" })
-
-                <input type="submit" value="Wyslij kurwa" />
-            }
+                    <input type="submit" value="Wyslij kurwa" />
+                }
+            </div>
         </div>
     </div>
 </div>

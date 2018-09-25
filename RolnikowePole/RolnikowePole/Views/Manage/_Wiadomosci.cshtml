@@ -1,0 +1,15 @@
+﻿@model List<RolnikowePole.Models.Wiadomosc>
+
+@{ 
+    Layout = null;
+}
+
+@foreach (var item in Model)
+{
+    <div class="media ">
+        <div class="media-body">
+            <h5 class="mt-0">@item.ReceiverId | @item.DateAndTimeOfSend </h5>
+            <strong>@item.Body</strong>
+        </div>
+    </div>
+}
