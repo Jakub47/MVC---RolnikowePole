@@ -303,18 +303,18 @@ namespace RolnikowePole.Controllers
             //Jak ja odbieram to mnie nie obchodzi odbierający tylko wysyłający
 
             //List of all users id !
-            var GetUsersIDSended = user.SenderMessages.Where(a => a.ReceiverId != user.Id).Select(b => b.ReceiverId).ToList();
-            var GetUsersIDRetrived = user.ReceiverMessages.Where(a => a.SenderId != user.Id).Select(b => b.SenderId).ToList();
+            //var GetUsersIDSended = user.SenderMessages.Where(a => a.ReceiverId != user.Id).Select(b => b.ReceiverId).ToList();
+            //var GetUsersIDRetrived = user.ReceiverMessages.Where(a => a.SenderId != user.Id).Select(b => b.SenderId).ToList();
 
 
             //Potrzebuje nazwyUzytkownika + Daty + Tresci kazdej wiadomosci
             var wiadomosci = new List<WiadomosciViewModel>();
             var w = new WiadomosciOdzieloneViewModel();
 
-            var wiadomosciWyslane = user.SenderMessages.Where(a => a.SenderId == user.Id).OrderByDescending(a => a.DateAndTimeOfSend).DistinctBy(a => a.ReceiverId).ToList();
+            var wiadomosciWyslane = user.SenderMessages.Where(a => a.SenderId == user.Id).OrderByDescending(a => a.DateAndTimeOfSend).DistinctBy(a => a.ZwierzeId).ToList();
 
             //GIT
-            var wiadomosciOtrzymane = user.ReceiverMessages.Where(a => a.ReceiverId == user.Id).OrderByDescending(a => a.DateAndTimeOfSend).DistinctBy(a => a.SenderId).ToList();
+            var wiadomosciOtrzymane = user.ReceiverMessages.Where(a => a.ReceiverId == user.Id).OrderByDescending(a => a.DateAndTimeOfSend).DistinctBy(a => a.ZwierzeId).ToList();
 
             wiadomosciWyslane.ForEach(a =>
             {
@@ -384,17 +384,38 @@ namespace RolnikowePole.Controllers
             //return View(wiadomoscVM);
         }
 
-        public ActionResult WiadomosciKonwersacja(int idZwierza, string idUser, bool czyIdUzytkownika)
+        public ActionResult WiadomosciKonwersacja(int idZwierza, string idUser, bool Otrzymane = false)
         {
             //  Jezeli jest to id uzytkownika wiemy ze powinnismy zwrococ wiadomosci tego uzytkownika a jesli chodzi o 
             //innych uzytkownikow to tam przekazujemy sernderID = isUser
+            var userLogged = UserManager.FindById(User.Identity.GetUserId());
+            var userDiffrent = UserManager.FindById(idUser);
+            var wszystkieWiadomosci = new List<Wiadomosc>();
 
-            var listaMoichWiadomosci = new List<Wiadomosc>();
-            var listaInnychWiadomosci = new List<Wiadomosc>();
-            var userId = User.Identity.GetUserId();
+            if (Otrzymane)
+            {
+                //var mojeWiadomosci = userLogged.SenderMessages.Where(a => a.ZwierzeId == idZwierza && a.ReceiverId == idUser).ToList();
+                //var inneWiadomosci = userDiffrent.ReceiverMessages.Where(a => a.ZwierzeId == idZwierza && a.SenderId == userLogged.Id).ToList();
+                //mojeWiadomosci.ForEach(a => wszystkieWiadomosci.Add(a)); inneWiadomosci.ForEach(a => wszystkieWiadomosci.Add(a));
 
-            var l = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && a.ReceiverId == idUser && a.SenderId == userId)
-                                        .ToList();
+                wszystkieWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && (a.ReceiverId == userLogged.Id
+                                                     && a.SenderId == userDiffrent.Id)).ToList();
+            }
+            else
+            {
+                //var mojeWiadomosci = userLogged.SenderMessages.Where(a => a.ZwierzeId == idZwierza && a.ReceiverId == idUser).ToList();
+                //var inneWiadomosci = userDiffrent.SenderMessages.Where(a => a.ZwierzeId == idZwierza && a.SenderId == userLogged.Id).ToList();
+                //mojeWiadomosci.ForEach(a => wszystkieWiadomosci.Add(a)); inneWiadomosci.ForEach(a => wszystkieWiadomosci.Add(a));
+                wszystkieWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && (a.ReceiverId == userDiffrent.Id
+                                                     && a.SenderId == userLogged.Id)).ToList();
+            }
+            
+            //var listaMoichWiadomosci = new List<Wiadomosc>();
+            //var listaInnychWiadomosci = new List<Wiadomosc>();
+            //var userId = User.Identity.GetUserId();
+
+            //var listaWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && a.ReceiverId == idUser && a.SenderId == userId)
+            //                            .ToList();
 
             //idUser == gosc do ktorego sie wysyla ... userId == mojeId
 
@@ -407,11 +428,7 @@ namespace RolnikowePole.Controllers
             //{
             //    var listaMoichWiadomos
             //}
-
-
-
-
-
+            
             //Chcę wziąć wszystkie wiadmości odnośnie konkretnego zwierza i od określonej osoby
 
             //a.ReceiverId.Equals(idReceiverId, StringComparison.CurrentCultureIgnoreCase)
@@ -424,12 +441,13 @@ namespace RolnikowePole.Controllers
             var wWiadomosc = new Wiadomosc
             {
                 ZwierzeId = idZwierza,
-                SenderId = User.Identity.GetUserId(),
+                SenderId = userLogged.Id,
+                ReceiverId = userDiffrent.Id
             };
 
             var vm = new WiadomoscViewModel
             {
-                ListaWiadomosci = listaWiadomosci,
+                ListaWiadomosci = wszystkieWiadomosci,
                 wiadomosc = wWiadomosc
             };
 
@@ -441,6 +459,7 @@ namespace RolnikowePole.Controllers
         {
             //db.Users.Find(wiadomosc.ReceiverId).ReceiverMessages.Add(wiadomosc);
             //db.Users.Find(wiadomosc.SenderId).SenderMessages.Add(wiadomosc);
+            wiadomosc.DateAndTimeOfSend = DateTime.Now;
 
             db.Wiadomosci.AddOrUpdate(wiadomosc);
 
@@ -475,8 +494,13 @@ namespace RolnikowePole.Controllers
             //Chcę wziąć wszystkie wiadmości odnośnie konkretnego zwierza i od określonej osoby
             var listaWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && (a.ReceiverId.Equals(idReceiverId, StringComparison.CurrentCultureIgnoreCase)
                                                      || (a.SenderId.Equals(idSenderID, StringComparison.CurrentCultureIgnoreCase)))).ToList();
-            
-            return View("_Wiadomosci", listaWiadomosci);
+
+            //var mojeWiadomosci = userLogged.SenderMessages.Where(a => a.ZwierzeId == idZwierza && a.ReceiverId == idUser).ToList();
+            //var inneWiadomosci = userDiffrent.SenderMessages.Where(a => a.ZwierzeId == idZwierza && a.SenderId == userLogged.Id).ToList();
+            var wszystkieWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && (a.ReceiverId == idReceiverId && 
+                                                     a.SenderId == idSenderID)).ToList();
+            //var inneWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && a.SenderId == idSenderID).ToList();
+            return View("_Wiadomosci", wszystkieWiadomosci);
         }
 
     }

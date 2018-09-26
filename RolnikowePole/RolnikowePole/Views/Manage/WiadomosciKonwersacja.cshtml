@@ -32,9 +32,7 @@
                     UpdateTargetId = "SekcjaListaWiadomosci"
                 }))
                 {
-                    { Model.wiadomosc.DateAndTimeOfSend = DateTime.Now;
-                        
-                        Model.wiadomosc.ReceiverId = Model.ListaWiadomosci.ElementAt(0).ReceiverId; }
+                    { Model.wiadomosc.DateAndTimeOfSend = DateTime.Now;}
 
                     @Html.HiddenFor(m => m.wiadomosc.ReceiverId)
                     @Html.HiddenFor(m => m.wiadomosc.SenderId)

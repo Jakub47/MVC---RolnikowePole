@@ -82,7 +82,6 @@
             using (Ajax.BeginForm("WyslijWiadomosc", "Manage",
                     new AjaxOptions
                     {
-                        UpdateTargetId = "Dziekuj",
                         HttpMethod = "POST",
                         Confirm = "Potwierdz wyslanie wiadomosci",
                         OnSuccess = "alert('Pomyslnie wyslano wiadomosc')"
