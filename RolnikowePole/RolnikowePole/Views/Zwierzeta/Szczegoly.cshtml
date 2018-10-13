@@ -20,21 +20,7 @@
 
         <div class="col-lg-4">
 
-            <div class="card mb-2" style="width: 18rem;">
-                <h5 class="card-title">Dane Produktu</h5>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">@Model.Zwierze.Nazwa</li>
-                    <li class="list-group-item">@string.Format("{0:0.##}", Model.Zwierze.CenaZwierza)<span>PLN</span></li>
-                    <li class="list-group-item">@Model.Zwierze.OpisZwierza</li>
-                    <li class="list-group-item"> <a href="@Url.Action("DodajDoKoszyka","Koszyk", new { id = Model.Zwierze.ZwierzeId })">Dodaj Do Koszyka</a></li>
-                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-                    {
-                        <li class="list-group-item"> <a href="@Url.Action("DodajZwierze", "Manage", new { zwierzeId = Model.Zwierze.ZwierzeId })">Edytuj</a></li>
-                    }
-                </ul>
-            </div>
-
-            <div class="card" style="width: 18rem;">
+            <div class="card  mb-2" style="width: 18rem;">
                 <h5 class="card-title">Dane Użytkownika</h5>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">@Model.daneUzytkownika.Email</li>
@@ -45,6 +31,23 @@
                     <li class="list-group-item">@Model.daneUzytkownika.KodPocztowy</li>
                 </ul>
             </div>
+
+
+            <div class="card" style="width: 18rem;">
+                <h5 class="card-title">Dane Produktu</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">@Model.Zwierze.Nazwa</li>
+                    <li class="list-group-item">@string.Format("{0:0.##}", Model.Zwierze.CenaZwierza)<span>PLN</span></li>
+                    <li class="list-group-item">@Model.Zwierze.OpisZwierza</li>
+                    <li class="list-group-item"> <a href="@Url.Action("DodajDoKoszyka","Koszyk", new { id = Model.Zwierze.ZwierzeId })">Dodaj Do Obserwowanych</a></li>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <li class="list-group-item"> <a href="@Url.Action("DodajZwierze", "Manage", new { zwierzeId = Model.Zwierze.ZwierzeId })">Edytuj</a></li>
+                    }
+                </ul>
+            </div>
+
+
         </div>
 
         @*<div class="card mt-4 mb-4">

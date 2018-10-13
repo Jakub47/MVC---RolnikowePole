@@ -64,7 +64,7 @@ namespace RolnikowePole.Controllers
                     return View("_ZwierzetaList", zwierzeta);
                 }
 
-                else if (nazwa == "Wszystkie")
+                else if (nazwa == "Wszystkie Województwa")
                 {
                     zwierzeta = gatunki.Zwierzeta.Where(a => (searchQuery == null ||
                                                     a.Nazwa.ToLower().Contains(searchQuery.ToLower())) && !a.Ukryty);

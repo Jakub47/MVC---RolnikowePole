@@ -18,11 +18,13 @@
                         <div class="card-body">
                             <h5 class="card-title"><strong></strong>@pozycjaZamowienia.Nazwa</h5>
                             <p class="card-text">
-                                <strong>Opis: </strong> @pozycjaZamowienia.OpisZwierza
-                                <strong>Opis skrócony: </strong> @pozycjaZamowienia.OpisSkrocony
+                                @pozycjaZamowienia.OpisZwierza
                             </p>
                         </div>
                         <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <strong>Opis skrócony: </strong> @pozycjaZamowienia.OpisSkrocony
+                            </li>
                             <li class="list-group-item">
                                 <strong>Cena: </strong> @pozycjaZamowienia.CenaZwierza
                             </li>
@@ -42,8 +44,8 @@
                                 <strong>Miasto:  </strong> @pozycjaZamowienia.Miasto
                             </li>
                             <li class="list-group-item">
-                                <strong>Ukryty </strong> 
-                                @if(pozycjaZamowienia.Ukryty)
+                                <strong>Ukryty </strong>
+                                @if (pozycjaZamowienia.Ukryty)
                                 {
                                     @: TAK
                                 }
@@ -54,7 +56,7 @@
                             </li>
 
                             <li class="list-group-item">
-                                <strong>Wyróżniony: </strong> 
+                                <strong>Wyróżniony: </strong>
                                 @if (pozycjaZamowienia.Wyrozniony)
                                 {
                                     @: TAK
