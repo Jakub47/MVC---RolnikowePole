@@ -39,9 +39,15 @@ namespace RolnikowePole.Controllers
 
             var WszystkieZwierzeta = db.Zwierzeta.ToList();
             List<string> wojewodztwa = new List<string>();
-            WszystkieZwierzeta.ForEach(a => wojewodztwa.Add(a.Wojewodztwo));
-            ViewBag.Wojewodztwa = wojewodztwa;
-            ViewBag.NazwaGatunku = nazwaGatunku;
+            WszystkieZwierzeta.ForEach(a =>
+                {
+                    //When launching delete a.Wojewodztwo != null
+                    if ( a.Wojewodztwo != null && !a.Wojewodztwo.Equals(String.Empty))
+                        wojewodztwa.Add(a.Wojewodztwo);
+                });
+
+            ViewBag.Wojewodztwa = wojewodztwa.Distinct();
+            ViewBag.NazwaGatunku = char.ToUpper(nazwaGatunku[0]) + nazwaGatunku.Substring(1);
 
             if (Request.IsAjaxRequest())
             {

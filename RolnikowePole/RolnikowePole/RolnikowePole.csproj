@@ -212,6 +212,7 @@
     <Content Include="Content\Images\koszyk_white.png" />
     <Content Include="Content\Images\logo.png" />
     <Content Include="Content\Images\new.png" />
+    <Content Include="Content\Images\rsz_lg.png" />
     <Content Include="Content\Images\searchlogo.png" />
     <Content Include="Content\Images\upload.png" />
     <Content Include="Content\img.png" />

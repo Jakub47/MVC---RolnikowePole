@@ -43,7 +43,6 @@
                                     </h4>
                                     <h5>@pozycjaKoszyka.Zwierze.CenaZwierza</h5>
                                     <p class="card-text">@pozycjaKoszyka.Zwierze.OpisZwierza</p>
-                                    <p class="btn btn-dark">Ilość: <span id="koszyk-id-pozycji-@pozycjaKoszyka.Zwierze.ZwierzeId">@pozycjaKoszyka.Ilosc</span></p>
                                     <p>@String.Format("{0:0.##}", pozycjaKoszyka.Wartosc) zł</p>
                                 </div>
 
@@ -58,20 +57,20 @@
                 </div>
                 <div class="row bg-dark text-white mb-sm-2">
 
-                    <div class="col-md-4" id="CenaCalkowita">
-                        <a class="btn btn-outline-primary btn-lg m-2 text-capitalize" href="link">Kontynułuj zakupy</a>
+                    <div class="col-md-6 text-center" id="CenaCalkowita">
+                        <a class="btn btn-outline-primary btn-lg m-2 text-capitalize" href="@Url.Action("Index", "Home")">Kontynuuj zakupy</a>
                     </div>
 
-                    <div class="col-md-4 text-center">
+                    @*<div class="col-md-4 text-center">
                         @if (Model.CenaCalkowita > 0)
                         {
 
                             <a class="btn btn-outline-success btn-lg m-2 text-capitalize" id="koszyk-button-zaplac" href="@Url.Action("Zaplac", "Koszyk")">Zapłać</a>
                         }
-                    </div>
+                    </div>*@
 
-                    <div class="col-md-4 text-right mt-3 " id="CenaCalkowita">
-                        <span class="btn-danger"> Razem: <span class="" id="calkowita-cena-wartosc">@String.Format("{0:0.##}", Model.CenaCalkowita)</span> zł </span>
+                    <div class="col-md-6 text-center mt-3 " id="CenaCalkowita">
+                        <span class="btn-danger lead"> Razem: <span id="calkowita-cena-wartosc">@String.Format("{0:0.##}", Model.CenaCalkowita)</span> zł </span>
                     </div>
 
                 </div>

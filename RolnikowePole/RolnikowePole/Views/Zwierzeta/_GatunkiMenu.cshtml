@@ -5,7 +5,7 @@
     <div class="list-group">
         @foreach (var gatunki in Model)
         {
-            <a href="@Url.Action("Lista","Zwierzeta", new { nazwaGatunku = gatunki.NazwaGatunku.ToLower() })" class="list-group-item " style="background-image: url(@Url.IkonyGatunkowSciezka(gatunki.NazwaPlikuIkony)); text-align: center;">
+            <a href="@Url.Action("Lista","Zwierzeta", new { nazwaGatunku = gatunki.NazwaGatunku.ToLower() })" class="list-group-item " style="text-align: center; background-color: dimgray; text-decoration: none;">
                 @gatunki.NazwaGatunku
             </a>
         }
