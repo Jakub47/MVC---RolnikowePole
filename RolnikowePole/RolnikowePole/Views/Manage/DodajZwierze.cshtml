@@ -60,15 +60,11 @@
         @Html.ValidationMessageFor(o => o.Zwierze.DataNarodzin, null, new { @class = "form-text text-danger" })
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(o => o.Zwierze.Wyrozniony, "Wyróżniony:")
-        @Html.CheckBoxFor(o => o.Zwierze.Wyrozniony)
-    </div>
 
     if (ViewBag.EditMode == null || !ViewBag.EditMode)
     {
         <div class="form-group">
-            <label for="exampleFormControlFile1">Wprowadź zdjęcia</label>
+            <label for="exampleFormControlFile1">Wprowadź zdjęcie</label>
             <input type="file" name="file" class="form-control-file">
         </div>
     }
