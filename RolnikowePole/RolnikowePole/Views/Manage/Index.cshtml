@@ -5,158 +5,114 @@
 }
 
 <div class="container">
-    <div class="row justify-content-center m-5">
-        <hr />
-        <h2 style="margin-bottom: 30px">Twoje dane</h2>
 
-        @using (@Html.BeginForm("ChangeProfile", "Manage" ))
-        {
-            @Html.AntiForgeryToken()
+    <h2 style="margin-bottom: 30px">Twoje dane</h2>
+
+    @using (@Html.BeginForm("ChangeProfile", "Manage"))
+    {
+        @Html.AntiForgeryToken()
 
         <div class="form-row">
-
             <div class="col-md-6 mb-3">
                 @Html.LabelFor(o => o.DaneUzytkownika.Imie, "Imię:")
-                @Html.TextBoxFor(o => o.DaneUzytkownika.Imie, new { @class = "form-control", placeholder = "First name" })
-                <div class="valid-feedback">
-                    @Html.ValidationMessageFor(o => o.DaneUzytkownika.Imie)
-                </div>
+                @Html.TextBoxFor(o => o.DaneUzytkownika.Imie, new { @class = "form-control", placeholder = "Imie " })
+                @Html.ValidationMessageFor(o => o.DaneUzytkownika.Imie)
             </div>
 
             <div class="col-md-6 mb-3">
                 @Html.LabelFor(o => o.DaneUzytkownika.Nazwisko, "Nazwisko")
-                @Html.TextBoxFor(o => o.DaneUzytkownika.Nazwisko, new { @class = "form-control", placeholder = "Second name" })
-                <div class="valid-feedback">
-                    @Html.ValidationMessageFor(o => o.DaneUzytkownika.Nazwisko)
-                </div>
+                @Html.TextBoxFor(o => o.DaneUzytkownika.Nazwisko, new { @class = "form-control", placeholder = "Nazwisko" })
+                @Html.ValidationMessageFor(o => o.DaneUzytkownika.Nazwisko)
             </div>
+        </div>
+
+        <div class="form-row">
 
             <div class="col-md-5 mb-3">
                 @Html.LabelFor(o => o.DaneUzytkownika.Adres, "Adres")
-                @Html.TextBoxFor(o => o.DaneUzytkownika.Adres, new { @class = "form-control", placeholder = "Adress" })
-                <input type="text" class="form-control" id="validationCustom02" placeholder="Last name" value="Otto" required>
-                <div class="valid-feedback">
-                    @Html.ValidationMessageFor(o => o.DaneUzytkownika.Adres)
-                </div>
+                @Html.TextBoxFor(o => o.DaneUzytkownika.Adres, new { @class = "form-control", placeholder = "Ulica" })
+                @Html.ValidationMessageFor(o => o.DaneUzytkownika.Adres)
             </div>
 
             <div class="col-md-4 mb-3">
                 @Html.LabelFor(o => o.DaneUzytkownika.Miasto, "Miasto")
-                @Html.TextBoxFor(o => o.DaneUzytkownika.Miasto, new { @class = "form-control", placeholder = "City" })
-                <input type="text" class="form-control" id="validationCustom02" placeholder="Last name" value="Otto" required>
-                <div class="valid-feedback">
-                    @Html.ValidationMessageFor(o => o.DaneUzytkownika.Miasto)
-                </div>
+                @Html.TextBoxFor(o => o.DaneUzytkownika.Miasto, new { @class = "form-control", placeholder = "Miasto" })
+                @Html.ValidationMessageFor(o => o.DaneUzytkownika.Miasto)
             </div>
 
             <div class="col-md-3 mb-3">
                 @Html.LabelFor(o => o.DaneUzytkownika.KodPocztowy, "Kod pocztowy")
-                @Html.TextBoxFor(o => o.DaneUzytkownika.KodPocztowy, new { @class = "form-control", placeholder = "Adress" })
-                <input type="text" class="form-control" id="validationCustom02" placeholder="Last name" value="Otto" required>
-                <div class="valid-feedback">
-                    @Html.ValidationMessageFor(o => o.DaneUzytkownika.Adres)
-                </div>
+                @Html.TextBoxFor(o => o.DaneUzytkownika.KodPocztowy, new { @class = "form-control", placeholder = "Kod" })
+                @Html.ValidationMessageFor(o => o.DaneUzytkownika.KodPocztowy)
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="col-md-6 mb-3">
+                @Html.LabelFor(o => o.DaneUzytkownika.Telefon, "Numer telefonu")
+                @Html.TextBoxFor(o => o.DaneUzytkownika.Telefon, new { @class = "form-control", placeholder = "Telefon" })
+                @Html.ValidationMessageFor(o => o.DaneUzytkownika.Telefon)
             </div>
 
-
-            <div style="text-align: center;">
-                <table id="userdata-address-table">
-
-                    <tr>
-                        <td></td>
-                        <td>@Html.TextBoxFor()</td>
-                        <td>@Html.ValidationMessageFor(o => o.DaneUzytkownika.KodPocztowy)</td>
-                    </tr>
-                    <tr>
-                        <td>@Html.LabelFor(o => o.DaneUzytkownika.Telefon, "Numer telefonu")</td>
-                        <td>@Html.TextBoxFor(o => o.DaneUzytkownika.Telefon)</td>
-                        <td>@Html.ValidationMessageFor(o => o.DaneUzytkownika.Telefon)</td>
-                    </tr>
-                    <tr>
-                        <td>@Html.LabelFor(o => o.DaneUzytkownika.Email, "Adres e-mail")</td>
-                        <td>@Html.TextBoxFor(o => o.DaneUzytkownika.Email)</td>
-                        <td>@Html.ValidationMessageFor(o => o.DaneUzytkownika.Email)</td>
-                    </tr>
-                    <tr style="text-align: right;">
-                        <td></td>
-                        <td colspan="3">
-                            <div class="checkbox" style="margin-bottom: 10px;">
-                            </div>
-
-                            <input type="submit" value="Potwierdź" class="submitLink" style="height: 40px; margin-right: 5px;" />
-                        </td>
-                    </tr>
-                </table>
+            <div class="col-md-6 mb-3">
+                @Html.LabelFor(o => o.DaneUzytkownika.Email, "Adres e-mail")
+                @Html.TextBoxFor(o => o.DaneUzytkownika.Email, new { @class = "form-control", placeholder = "E-mail" })
+                @Html.ValidationMessageFor(o => o.DaneUzytkownika.Email)
             </div>
-            }
+        </div>
 
-            <hr />
-            <h2 style="margin-bottom: 30px">Zmiana hasła</h2>
+        <input type="submit" value="Potwierdź" class="submitLink btn btn-primary" />
+    }
 
-            @using (Html.BeginForm("ChangePassword", "Manage", FormMethod.Post))
-            {
-                @Html.AntiForgeryToken()
 
-                <div class="manage-error">
-                    @Html.ValidationMessage("password-error", "")
-                </div>
+    <h2 style="margin-bottom: 30px; margin-top: 10px;">Zmiana hasła</h2>
 
-                if (Model.Message.HasValue)
+    @using (Html.BeginForm("ChangePassword", "Manage", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="invalid-feedback">
+            @Html.ValidationMessage("password-error", "")
+        </div>
+
+        if (Model.Message.HasValue)
+        {
+            <div class="invalid-feedback text-danger">
+                @switch (Model.Message)
                 {
-                    <div class="manage-message">
-                        @switch (Model.Message)
-                        {
-                            case RolnikowePole.Controllers.ManageController.ManageMessageId.ChangePasswordSuccess:
-                                @: Hasło zmienione pomyślnie!
-                                break;
-                            case RolnikowePole.Controllers.ManageController.ManageMessageId.Error:
-                                @: Wystąpił błąd
-                                break;
-                        }
-                    </div>
+                    case RolnikowePole.Controllers.ManageController.ManageMessageId.ChangePasswordSuccess:
+                        @: Hasło zmienione pomyślnie!
+                        break;
+                    case RolnikowePole.Controllers.ManageController.ManageMessageId.Error:
+                        @: Wystąpił błąd
+                        break;
                 }
+            </div>
+        }
 
-                <table id="password-table" style="margin-left: 10px; margin-right: auto;">
-                    <tr>
-                        <td>@Html.LabelFor(o => o.ChangePasswordViewModel.OldPassword, "Stare hasło:")</td>
-                        <td>
-                            @Html.PasswordFor(o => o.ChangePasswordViewModel.OldPassword)
-                            <div class="login-validation-message">
-                                @Html.ValidationMessageFor(o => o.ChangePasswordViewModel.OldPassword)
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>@Html.LabelFor(o => o.ChangePasswordViewModel.NewPassword, "Nowe hasło:")</td>
-                        <td>
-                            @Html.PasswordFor(o => o.ChangePasswordViewModel.NewPassword)
-                            <div class="login-validation-message">
-                                @Html.ValidationMessageFor(o => o.ChangePasswordViewModel.NewPassword)
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>@Html.LabelFor(o => o.ChangePasswordViewModel.ConfirmPassword, "Potwierdź hasło:")</td>
-                        <td>
-                            @Html.PasswordFor(o => o.ChangePasswordViewModel.ConfirmPassword)
-                            <div class="login-validation-message">
-                                @Html.ValidationMessageFor(o => o.ChangePasswordViewModel.ConfirmPassword)
-                            </div>
-                        </td>
-                    </tr>
-                    <tr style="text-align: right;">
-                        <td></td>
-                        <td colspan="3">
-                            <div class="checkbox" style="margin-bottom: 10px;">
-                            </div>
+        <div class="form-row">
+            <div class="col-md-4 mb-3">
+                @Html.LabelFor(o => o.ChangePasswordViewModel.OldPassword, "Obecne hasło:")
+                @Html.PasswordFor(o => o.ChangePasswordViewModel.OldPassword, new { @class = "form-control", placeholder = "Obecne hasło" })
+                @Html.ValidationMessageFor(o => o.ChangePasswordViewModel.OldPassword)
+            </div>
 
-                            <input type="submit" value="Zmień" class="submitLink" style="height: 40px;" />
-                        </td>
-                    </tr>
-                </table>
-            }
+            <div class="col-md-4 mb-3">
+                @Html.LabelFor(o => o.ChangePasswordViewModel.NewPassword, "Nowe hasło:")
+                @Html.PasswordFor(o => o.ChangePasswordViewModel.NewPassword, new { @class = "form-control", placeholder = "Nowe hasło" })
+                @Html.ValidationMessageFor(o => o.ChangePasswordViewModel.NewPassword)
+            </div>
+
+            <div class="col-md-4 mb-3">
+                @Html.LabelFor(o => o.ChangePasswordViewModel.ConfirmPassword, "Potwierdź hasło:")
+                @Html.PasswordFor(o => o.ChangePasswordViewModel.ConfirmPassword, new { @class = "form-control", placeholder = "Wpisz ponownie nowe hasło" })
+                @Html.ValidationMessageFor(o => o.ChangePasswordViewModel.ConfirmPassword)
+            </div>
         </div>
-        </div>
+        <input type="submit" value="Zmień" class="submitLink btn btn-primary" />
+    }
+</div>
+
 
 @section Scripts
 {
