@@ -9,14 +9,16 @@
     <link href="@Url.Content("~/Content/themes/base/jquery-ui.css")" rel="stylesheet" />
     @System.Web.Optimization.Styles.Render("~/Content/BootstrapAndCssForHomepage")
 
+    <!-- Jezeli nie dziala usunac -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <style>
         body {
-            padding-top: 100px;
+            padding-top: 80px;
         }
 
         @@media (max-width: 979px) {
             body {
-                padding-top: 100px;
+                padding-top: 80px;
             }
         }
     </style>
@@ -88,8 +90,8 @@
                             <input class="btn btn-outline-danger btn-sm" type="submit" value="Wyloguj się" />
                         }
                         @*<a class="nav-link" href="@Url.(" Logoff", "Account" )" id="logoutForm">
-            Wyloguj
-        </a>*@
+                                Wyloguj
+                            </a>*@
 
                     </li>
                 </ul>
@@ -101,7 +103,7 @@
     @RenderBody()
 
     <!--Footer -->
-    <footer class="py-5 bg-dark">
+    <footer class="py-2 bg-dark">
         <div class="container">
             <p class="m-0 text-center text-success">Rolnikowe Pole Od 2018!</p>
         </div>

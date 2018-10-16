@@ -226,7 +226,8 @@ namespace RolnikowePole.Controllers
                 ViewBag.EditMode = false;
                 zwierze = new Zwierze();
             }
-
+            
+            zwierze.DataNarodzin = DateTime.Now;
             var result = new EditZwierzeViewModel()
             {
                 Gatunki = db.Gatunki.ToList(),
