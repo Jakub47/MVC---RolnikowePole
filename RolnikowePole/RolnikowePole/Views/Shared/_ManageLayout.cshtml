@@ -79,15 +79,18 @@
                         <a class="nav-link" href="#">Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="@Url.Action("Index","Koszyk")">Koszyk [ @Html.Action("PobierzIloscElementowKoszyka", "Koszyk") ]</a>
+                        <a class="nav-link" href="@Url.Action("Index","Koszyk")">Obserwowane[@Html.Action("PobierzIloscElementowKoszyka", "Koszyk")]</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Konto
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            @Html.Partial("_LoginPartial")
-                        </div>
+                    <li class="nav-item">
+                        @using (Html.BeginForm("Logoff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "nav-link" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input class="btn btn-outline-danger btn-sm" type="submit" value="Wyloguj się" />
+                        }
+                        @*<a class="nav-link" href="@Url.(" Logoff", "Account" )" id="logoutForm">
+            Wyloguj
+        </a>*@
+
                     </li>
                 </ul>
             </div>

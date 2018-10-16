@@ -1,21 +1,29 @@
 ﻿@using Microsoft.AspNet.Identity
 
-    @if (Request.IsAuthenticated)
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("Logoff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "nav-link" }))
     {
-        using (Html.BeginForm("Logoff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "nav-link" }))
-        {
-            @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
-                @Html.ActionLink("Zarządzaj", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" , @class = "dropdown-item" })
+        @Html.ActionLink("Zarządzaj", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "dropdown-item" })
 
-            <a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">
-                Wyloguj
-            </a>
-        }
+        @Html.ActionLink("Dodaj Zwierze", "DodajZwierze", "Manage", routeValues: null, htmlAttributes: new {
+        title = "Dodaj Zwierze", @class = "dropdown-item"})
+
+        @Html.ActionLink("Twoje Zwierzęta", "ListaWystawionychZwierzakow", "Manage", routeValues: null, htmlAttributes: new {
+        title = "Twoje Zwierzęta", @class = "dropdown-item"})
+
+        @Html.ActionLink("Wiadomości", "WyswietlWiadomosciUzytkownika", "Manage", routeValues: null, htmlAttributes: new { title = "Wiadomosci", @class = "dropdown-item"})
+
+        <a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">
+            Wyloguj
+        </a>
     }
-    else
-    {
-            @Html.ActionLink("Rejestracja", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" , @class = "dropdown-item" })
-           
-            @Html.ActionLink("Zaloguj", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" , @class = "dropdown-item" })
-    }
+}
+else
+{
+    @Html.ActionLink("Rejestracja", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "dropdown-item" })
+
+    @Html.ActionLink("Zaloguj", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "dropdown-item" })
+}
