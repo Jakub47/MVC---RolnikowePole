@@ -8,7 +8,7 @@
 
 @if (Model.Potwierdzenie.HasValue && Model.Potwierdzenie.Value)
 {
-    <div style="text-align: center; margin: 50px;">
+    <div class="form-group text-success">
         Pomyślnie wprowadzono zmiany!
     </div>
 }
@@ -17,7 +17,7 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="error-summary-centered">
+    <div class="form-group text-danger">
         @Html.ValidationSummary()
     </div>
 
@@ -57,7 +57,7 @@
     <div class="form-group">
         <div class='input-group date'>
             @Html.LabelFor(o => o.Zwierze.DataNarodzin, "Data Narodzin: ")
-            @Html.TextBoxFor(o => o.Zwierze.DataNarodzin.ToString("dd/MM/yyyy HH:mm:ss"), new { @id = "d1" })
+            @Html.TextBoxFor(o => o.Zwierze.DataNarodzin, new { @id = "d1" })
             @Html.ValidationMessageFor(o => o.Zwierze.DataNarodzin, null, new { @class = "form-text text-danger" })
         </div>
     </div>
