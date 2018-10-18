@@ -16,29 +16,32 @@
                             <img class="card-img-top" src="@Url.Content("~/Content/Kursy/" + pozycjaZamowienia.NazwaPlikuObrazka)" alt="Card image cap" />
                         </a>
                         <div class="card-body">
-                            <h5 class="card-title"><strong></strong>@pozycjaZamowienia.Nazwa</h5>
-                            <p class="card-text">
-                                @pozycjaZamowienia.OpisZwierza
-                            </p>
+                            <h5 class="card-title"> @Html.TextBoxFor(m => pozycjaZamowienia.Nazwa)</h5>
+                            @*<p class="card-text">
+                                    @pozycjaZamowienia.OpisZwierza
+                                </p>*@
+                            @Html.TextAreaFor(m => pozycjaZamowienia.OpisZwierza)
                         </div>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
-                                <strong>Opis skrócony: </strong> @pozycjaZamowienia.OpisSkrocony
+                                <strong>Opis skrócony: </strong> @Html.TextBoxFor(m => pozycjaZamowienia.OpisSkrocony)
                             </li>
                             <li class="list-group-item">
-                                <strong>Cena: </strong> @pozycjaZamowienia.CenaZwierza
+                                <strong>Cena: </strong> @Html.TextBoxFor(m => pozycjaZamowienia.CenaZwierza)
                             </li>
                             <li class="list-group-item">
-                                <strong>Data Dodania: </strong> @pozycjaZamowienia.DataDodania
+                                <strong>Data Dodania: </strong> @Html.TextBoxFor(m => pozycjaZamowienia.DataDodania)
                             </li>
                             <li class="list-group-item">
-                                <strong>Data Narodzin: </strong> @pozycjaZamowienia.DataNarodzin
+                                <strong>Data Narodzin: </strong>@Html.TextBoxFor(m => pozycjaZamowienia.DataNarodzin)
                             </li>
                             <li class="list-group-item">
-                                <strong>Gatunek: </strong> @pozycjaZamowienia.Gatunek.NazwaGatunku
+                                <strong>Gatunek: </strong>
+                                @Html.DropDownListFor(m => pozycjaZamowienia.Gatunek, new SelectList(ViewBag.Gatunki), pozycjaZamowienia.Gatunek)
                             </li>
                             <li class="list-group-item">
-                                <strong>Województwo:  </strong> @pozycjaZamowienia.Wojewodztwo
+                                <strong>Województwo:  </strong>
+                                @Html.DropDownListFor(m => pozycjaZamowienia.Wojewodztwo,  new SelectList(ViewBag.Wojewodztwa), pozycjaZamowienia.Wojewodztwo, new { @class = "form-control" })
                             </li>
                             <li class="list-group-item">
                                 <strong>Miasto:  </strong> @pozycjaZamowienia.Miasto
@@ -75,7 +78,7 @@
         else
         {
             <div style="text-align: center; margin-top: 50px; margin-bottom: 50px;">
-                Brak Zwięrząt! Może chcesz dodać ?
+                Brak Zwięrząt! Może chcesz dodać?
                 <a class="btn btn-primary" href="@Url.Action("DodajZwierze","Manage")" role="button">
                     Dodaj Zwierze
                 </a>
@@ -86,45 +89,47 @@
 </div>
 
 @section scripts
-        {
+{
     <script>
-                //Odowłanie do stanuZamowienia i bedziemy odwoływać się w momencie gdy nastąpi zmiana!
-                $(".StanZamowieniaZmien").on('change', function (e) {
-                        //e.preventDefault();
-                    var f = $(this);
-                    var tr = f.closest("div");
+                                                                                                                                                            //Odowłanie do stanuZamowienia i bedziemy odwoływać się w momencie gdy nastąpi zmiana!
+                                                                                                                                                            $(".StanZamowieniaZmien").on('change', function (e) {
+                                    //e.preventDefault();
+                                    var f = $(this);
+                                    var tr = f.closest("div");
 
 
-                    $.ajax({
-                        type: "POST",
-                        data: f.serialize(),
-                        success: function (data) {
-                            if (data == '@RolnikowePole.Models.StanZamowienia.Nowy.ToString()') {
-                                alert('tak');
-                                tr.addClass("background-color", "black")
-                            }
-                            else {
-                                alert(data)
-                                tr.parent.css("background-color", "#9431d1;");
-                            }
-                        }
-                    });
+                                                                                                                                                                $.ajax({
+                                    type: "POST",
+                                                                                                                                                                    data: f.serialize(),
+                                                                                                                                                                    success: function(data) {
+                                            if (data == '@RolnikowePole.Models.StanZamowienia.Nowy.ToString()')
+                                            {
+                                                alert('tak');
+                                                tr.addClass("background-color", "black")
+                                                                                                                                                                        }
+                                            else
+                                            {
+                                                alert(data)
+                                                                                                                                                                            tr.parent.css("background-color", "#9431d1;");
+                                            }
+                                        }
+                                    });
 
 
 
-                @*var f = $(this);
-                var action = f.attr("action");
-                var serializedForm = f.serialize();
+                                    @*var f = $(this);
+            var action = f.attr("action");
+            var serializedForm = f.serialize();
 
-                $.post(action, serializedForm).done(function (data) {
-                    if (data == '@RolnikowePole.Models.StanZamowienia.Nowy.ToString()') {
-                        f.css("background-color", "#92a8d1;");
-                    }
-                    else {
-                        f.css("background-color", "");
-                    }
-                  });*@
-            });
+            $.post(action, serializedForm).done(function (data) {
+                if (data == '@RolnikowePole.Models.StanZamowienia.Nowy.ToString()') {
+                    f.css("background-color", "#92a8d1;");
+                }
+                else {
+                    f.css("background-color", "");
+                }
+              });*@
+                                });
 
     </script>
 }

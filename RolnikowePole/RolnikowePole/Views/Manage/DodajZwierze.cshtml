@@ -49,6 +49,17 @@
     </div>
 
     <div class="form-group">
+        @Html.LabelFor(o => o.Zwierze.Miasto, "Miasto:")
+        @Html.TextBoxFor(o => o.Zwierze.Miasto, new { @class = "form-control" })
+        @Html.ValidationMessageFor(o => o.Zwierze.Miasto, null, new { @class = "form-text text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(o => o.Zwierze.Wojewodztwo, "Województwo:")
+        @Html.DropDownListFor(m => m.Zwierze.Wojewodztwo, new SelectList(ViewBag.Wojewodztwa), new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
         @Html.LabelFor(o => o.Zwierze.CenaZwierza, "Cena:")
         @Html.TextBoxFor(o => o.Zwierze.CenaZwierza, new { @class = "form-control" })
         @Html.ValidationMessageFor(o => o.Zwierze.CenaZwierza, null, new { @class = "form-text text-danger" })
@@ -98,19 +109,19 @@
 @section Scripts
 {
     @*<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
-    <script type="text/javascript">
-        $(function () {
-            // This will make every element with the class "date-picker" into a DatePicker element
-            $('#d1').daterangepicker({
-                singleDatePicker: true,
-                showDropdowns: true,
-                timePicker: true,
-                minYear: 1981
+        <script type="text/javascript">
+            $(function () {
+                // This will make every element with the class "date-picker" into a DatePicker element
+                $('#d1').daterangepicker({
+                    singleDatePicker: true,
+                    showDropdowns: true,
+                    timePicker: true,
+                    minYear: 1981
+                });
             });
-        });
-    </script>*@
+        </script>*@
 
 }
 

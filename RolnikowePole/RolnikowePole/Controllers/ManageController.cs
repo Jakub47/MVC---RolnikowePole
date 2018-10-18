@@ -160,6 +160,18 @@ namespace RolnikowePole.Controllers
             bool IsAdmin = User.IsInRole("Admin");
             ViewBag.UserIsAdmin = IsAdmin;
 
+            var WszystkieZwierzeta = db.Zwierzeta.ToList();
+            List<string> wojewodztwa = new List<string>();
+            WszystkieZwierzeta.ForEach(a =>
+            {
+                //When launching delete a.Wojewodztwo != null
+                if (a.Wojewodztwo != null && !a.Wojewodztwo.Equals(String.Empty))
+                    wojewodztwa.Add(a.Wojewodztwo);
+            });
+
+            ViewBag.Wojewodztwa = wojewodztwa.Distinct();
+            ViewBag.Gatunki = db.Gatunki.ToList().Select(a => a.NazwaGatunku);
+
             List<Zwierze> WystawioneZwierzeta;
 
             //Dla administratorów zwracamy wszystkie zamowienia
@@ -176,6 +188,16 @@ namespace RolnikowePole.Controllers
 
             return View(WystawioneZwierzeta);
         }
+
+        [HttpPost]
+        public ActionResult ListaWystawionychZwierzakow(List<Zwierze> ZmodyfikowaneZwierzeta)
+        {
+
+
+
+            return View();
+        }
+
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
@@ -213,6 +235,19 @@ namespace RolnikowePole.Controllers
 
         public ActionResult DodajZwierze(int? zwierzeId, bool? potwierdzenie)
         {
+            var WszystkieZwierzeta = db.Zwierzeta.ToList();
+            List<string> wojewodztwa = new List<string>();
+            WszystkieZwierzeta.ForEach(a =>
+            {
+                //When launching delete a.Wojewodztwo != null
+                if (a.Wojewodztwo != null && !a.Wojewodztwo.Equals(String.Empty))
+                    wojewodztwa.Add(a.Wojewodztwo);
+            });
+
+            ViewBag.Wojewodztwa = wojewodztwa.Distinct();
+            ViewBag.PierwszeWojewodztwo = wojewodztwa.Distinct().First();
+
+
             Zwierze zwierze;
             if (zwierzeId.HasValue)
             {
