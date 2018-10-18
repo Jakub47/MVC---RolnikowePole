@@ -4,84 +4,93 @@
     Layout = "~/Views/Shared/_ManageLayout.cshtml";
 }
 
-<div id="listaElementow" class="container">
+<div class="container">
     <div class="row">
         @if (Model.Count() >= 0)
         {
-            using (Ajax.BeginForm("ListaWystawionychZwierzakow",null , new AjaxOptions
+            foreach (var pozycjaZamowienia in Model)
             {
-                UpdateTargetId = "listaElementow",
-                Confirm = "Potwierdź Zmiany",
+        <div class="col-lg-4 col-md-6 mb-4">
+            @using (Ajax.BeginForm("ListaWystawionychZwierzakow", pozycjaZamowienia, new AjaxOptions
+            {
+                Confirm = "Potwierdź zmodyfikowanie elementu",
                 OnSuccess = "alert('Pomyślnie wprowadzono zmiany')"
-            }, new { @class = "form-group" }))
+            }))
             {
-                foreach (var pozycjaZamowienia in Model)
-                {
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card" style="width: 18rem;">
-                        <a href="@Url.Action("Szczegoly", "Zwierzeta", new { id = pozycjaZamowienia.ZwierzeId })">
-                            <img class="card-img-top" src="@Url.Content("~/Content/Kursy/" + pozycjaZamowienia.NazwaPlikuObrazka)" alt="Card image cap" />
-                        </a>
-                        <div class="card-body">
-                            <h5 class="card-title"> @Html.TextBoxFor(m => pozycjaZamowienia.Nazwa)</h5>
-                            @*<p class="card-text">
-                                    @pozycjaZamowienia.OpisZwierza
-                                </p>*@
-                            @Html.TextAreaFor(m => pozycjaZamowienia.OpisZwierza)
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                <strong>Opis skrócony: </strong> @Html.TextBoxFor(m => pozycjaZamowienia.OpisSkrocony)
-                            </li>
-                            <li class="list-group-item">
-                                <strong>Cena: </strong> @Html.TextBoxFor(m => pozycjaZamowienia.CenaZwierza)
-                            </li>
-                            <li class="list-group-item">
-                                <strong>Data Dodania: </strong> @Html.TextBoxFor(m => pozycjaZamowienia.DataDodania)
-                            </li>
-                            <li class="list-group-item">
-                                <strong>Data Narodzin: </strong>@Html.TextBoxFor(m => pozycjaZamowienia.DataNarodzin)
-                            </li>
-                            <li class="list-group-item">
-                                <strong>Gatunek: </strong>
-                                @Html.DropDownListFor(m => pozycjaZamowienia.Gatunek, new SelectList(ViewBag.Gatunki), pozycjaZamowienia.Gatunek)
-                            </li>
-                            <li class="list-group-item">
-                                <strong>Województwo:  </strong>
-                                @Html.DropDownListFor(m => pozycjaZamowienia.Wojewodztwo, new SelectList(ViewBag.Wojewodztwa), pozycjaZamowienia.Wojewodztwo, new { @class = "form-control" })
-                            </li>
-                            <li class="list-group-item">
-                                <strong>Miasto:  </strong> @Html.TextBoxFor(m => pozycjaZamowienia.Miasto)
-                            </li>
-                            <li class="list-group-item">
-                                <strong>Ukryty </strong>
-                                @if (pozycjaZamowienia.Ukryty)
-                                {
-                                    @: TAK
-                                }
-                                else
-                                {
-                                    @: NIE
-                                }
-                            </li>
-
-                            <li class="list-group-item">
-                                <strong>Wyróżniony: </strong>
-                                @if (pozycjaZamowienia.Wyrozniony)
-                                {
-                                    @: TAK
-                                }
-                                else
-                                {
-                                    @: NIE
-                                }
-                            </li>
-                        </ul>
+                @Html.HiddenFor(a => pozycjaZamowienia.Gatunek)
+                @Html.HiddenFor(a => pozycjaZamowienia.GatunekId)
+                @Html.HiddenFor(a => pozycjaZamowienia.NazwaPlikuObrazka)
+                @Html.HiddenFor(a => pozycjaZamowienia.UserId)
+                @Html.HiddenFor(a => pozycjaZamowienia.ZwierzeId)
+                <div class="card" style="width: 18rem;">
+                    <a href="@Url.Action("Szczegoly", "Zwierzeta", new { id = pozycjaZamowienia.ZwierzeId })">
+                        <img class="card-img-top" src="@Url.Content("~/Content/Kursy/" + pozycjaZamowienia.NazwaPlikuObrazka)" alt="Card image cap" />
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title"> @Html.TextBoxFor(m => pozycjaZamowienia.Nazwa)</h5>
+                        @*<p class="card-text">
+                        @pozycjaZamowienia.OpisZwierza
+                    </p>*@
+                        @Html.TextAreaFor(m => pozycjaZamowienia.OpisZwierza)
                     </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <strong>Opis skrócony: </strong> @Html.TextBoxFor(m => pozycjaZamowienia.OpisSkrocony)
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Cena: </strong> @Html.TextBoxFor(m => pozycjaZamowienia.CenaZwierza)
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Data Dodania: </strong> @Html.TextBoxFor(m => pozycjaZamowienia.DataDodania)
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Data Narodzin: </strong>@Html.TextBoxFor(m => pozycjaZamowienia.DataNarodzin)
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Gatunek: </strong>
+                            @Html.DropDownListFor(m => pozycjaZamowienia.Gatunek, new SelectList(ViewBag.Gatunki), pozycjaZamowienia.Gatunek)
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Województwo:  </strong>
+                            @Html.DropDownListFor(m => pozycjaZamowienia.Wojewodztwo, new SelectList(ViewBag.Wojewodztwa), pozycjaZamowienia.Wojewodztwo, new { @class = "form-control" })
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Miasto:  </strong> @Html.TextBoxFor(m => pozycjaZamowienia.Miasto)
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Ukryty </strong>
+                            @if (pozycjaZamowienia.Ukryty)
+                            {
+                                @: TAK
+                            }
+                            else
+                            {
+                                @: NIE
+                            }
+                        </li>
+
+                        <li class="list-group-item">
+                            <strong>Wyróżniony: </strong>
+                            @if (pozycjaZamowienia.Wyrozniony)
+                            {
+                                @: TAK
+                            }
+                            else
+                            {
+                                @: NIE
+                            }
+                        </li>
+
+                        <li class="list-group-item text-center">
+                            <input type="submit" class="btn btn-warning btn-block" value="Zmień" />
+                        </li>
+                    </ul>
                 </div>
-                    }
-                }
             }
+        </div>
+            }
+
+        }
         else
         {
             <div style="text-align: center; margin-top: 50px; margin-bottom: 50px;">

@@ -14,6 +14,7 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Migrations;
 using System.Data.Entity.Validation;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -154,8 +155,32 @@ namespace RolnikowePole.Controllers
             AuthenticationManager.SignIn(new AuthenticationProperties { IsPersistent = isPersistent }, await user.GenerateUserIdentityAsync(UserManager));
         }
 
-        public ActionResult ListaWystawionychZwierzakow()
+        public ActionResult ListaWystawionychZwierzakow(Zwierze pozycjaZamowienia)
         {
+            if (Request.IsAjaxRequest())
+            {
+                db.Entry(pozycjaZamowienia).State = EntityState.Modified;
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (DbEntityValidationException e)
+                {
+                    foreach (var eve in e.EntityValidationErrors)
+                    {
+                        Debug.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                            eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                        foreach (var ve in eve.ValidationErrors)
+                        {
+                            Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                                ve.PropertyName, ve.ErrorMessage);
+                        }
+                    }
+                    throw;
+                }
+            }
+
+
             //Check if current user is admin
             bool IsAdmin = User.IsInRole("Admin");
             ViewBag.UserIsAdmin = IsAdmin;
@@ -188,16 +213,6 @@ namespace RolnikowePole.Controllers
 
             return View(WystawioneZwierzeta);
         }
-
-        [HttpPost]
-        public ActionResult ListaWystawionychZwierzakow(List<Zwierze> ZmodyfikowaneZwierzeta)
-        {
-
-
-
-            return View();
-        }
-
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
@@ -261,7 +276,7 @@ namespace RolnikowePole.Controllers
                 ViewBag.EditMode = false;
                 zwierze = new Zwierze();
             }
-            
+
             zwierze.DataNarodzin = DateTime.Now;
             var result = new EditZwierzeViewModel()
             {
@@ -312,7 +327,7 @@ namespace RolnikowePole.Controllers
                         //Oczywiscie mozna wykonac standardowa procedure db.Zwierze.Add(); db.SaveChanges(), ale...
                         db.Entry(model.Zwierze).State = EntityState.Added;
                         var user = UserManager.FindById(User.Identity.GetUserId());
-                        
+
                         db.SaveChanges();
 
                         return RedirectToAction("DodajZwierze", new { potwierdzenie = true });
@@ -444,7 +459,7 @@ namespace RolnikowePole.Controllers
             //{
             //    wiadomosciOtrzymane.ForEach(a =>
             //    {
-                    
+
             //    });
             //}
 
@@ -486,7 +501,7 @@ namespace RolnikowePole.Controllers
                 wszystkieWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && (a.ReceiverId == userDiffrent.Id
                                                      && a.SenderId == userLogged.Id)).ToList();
             }
-            
+
             //var listaMoichWiadomosci = new List<Wiadomosc>();
             //var listaInnychWiadomosci = new List<Wiadomosc>();
             //var userId = User.Identity.GetUserId();
@@ -505,7 +520,7 @@ namespace RolnikowePole.Controllers
             //{
             //    var listaMoichWiadomos
             //}
-            
+
             //Chcę wziąć wszystkie wiadmości odnośnie konkretnego zwierza i od określonej osoby
 
             //a.ReceiverId.Equals(idReceiverId, StringComparison.CurrentCultureIgnoreCase)
@@ -574,7 +589,7 @@ namespace RolnikowePole.Controllers
 
             //var mojeWiadomosci = userLogged.SenderMessages.Where(a => a.ZwierzeId == idZwierza && a.ReceiverId == idUser).ToList();
             //var inneWiadomosci = userDiffrent.SenderMessages.Where(a => a.ZwierzeId == idZwierza && a.SenderId == userLogged.Id).ToList();
-            var wszystkieWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && (a.ReceiverId == idReceiverId && 
+            var wszystkieWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && (a.ReceiverId == idReceiverId &&
                                                      a.SenderId == idSenderID)).ToList();
             //var inneWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && a.SenderId == idSenderID).ToList();
             return View("_Wiadomosci", wszystkieWiadomosci);
