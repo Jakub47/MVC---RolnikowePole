@@ -4,12 +4,19 @@
     Layout = "~/Views/Shared/_ManageLayout.cshtml";
 }
 
-<div class="container">
+<div id="listaElementow" class="container">
     <div class="row">
         @if (Model.Count() >= 0)
         {
-            foreach (var pozycjaZamowienia in Model)
+            using (Ajax.BeginForm("ListaWystawionychZwierzakow",null , new AjaxOptions
             {
+                UpdateTargetId = "listaElementow",
+                Confirm = "Potwierdź Zmiany",
+                OnSuccess = "alert('Pomyślnie wprowadzono zmiany')"
+            }, new { @class = "form-group" }))
+            {
+                foreach (var pozycjaZamowienia in Model)
+                {
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card" style="width: 18rem;">
                         <a href="@Url.Action("Szczegoly", "Zwierzeta", new { id = pozycjaZamowienia.ZwierzeId })">
@@ -41,10 +48,10 @@
                             </li>
                             <li class="list-group-item">
                                 <strong>Województwo:  </strong>
-                                @Html.DropDownListFor(m => pozycjaZamowienia.Wojewodztwo,  new SelectList(ViewBag.Wojewodztwa), pozycjaZamowienia.Wojewodztwo, new { @class = "form-control" })
+                                @Html.DropDownListFor(m => pozycjaZamowienia.Wojewodztwo, new SelectList(ViewBag.Wojewodztwa), pozycjaZamowienia.Wojewodztwo, new { @class = "form-control" })
                             </li>
                             <li class="list-group-item">
-                                <strong>Miasto:  </strong> @pozycjaZamowienia.Miasto
+                                <strong>Miasto:  </strong> @Html.TextBoxFor(m => pozycjaZamowienia.Miasto)
                             </li>
                             <li class="list-group-item">
                                 <strong>Ukryty </strong>
@@ -72,9 +79,9 @@
                         </ul>
                     </div>
                 </div>
+                    }
+                }
             }
-
-        }
         else
         {
             <div style="text-align: center; margin-top: 50px; margin-bottom: 50px;">
