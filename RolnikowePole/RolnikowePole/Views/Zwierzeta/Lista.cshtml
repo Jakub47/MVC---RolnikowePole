@@ -15,13 +15,25 @@
 
                 </div>
                 <div class="btn-group">
-                    <button type="button" class="btn btn-info" id="btnSortowanieDaty">
-                        Najnowsze
+                    <button type="button" class="btn btn-info" id="btnSortowanieDatyW">
+                        Najnowsze (Data Wstawienia)
+                    </button>
+                </div>
+
+                <div class="btn-group">
+                    <button type="button" class="btn btn-info" id="btnSortowanieDatyN">
+                        Najnowsze (Data Narodzin)
+                    </button>
+                </div>
+
+                <div class="btn-group">
+                    <button type="button" class="btn btn-info" id="btnSortowanieCenyNajt">
+                        Najtańsze
                     </button>
                 </div>
                 <div class="btn-group">
-                    <button type="button" class="btn btn-info" id="btnSortowanieCeny">
-                        Najtańsze
+                    <button type="button" class="btn btn-info" id="btnSortowanieCenyNajd">
+                        Najdroższe
                     </button>
                 </div>
 
@@ -39,32 +51,60 @@
     <script>
         $(document).ready(function ()
         {
-            $('#btnSortowanieDaty').click(function () {
-                $.ajax({
-                    type: "POST",
-                     @*url: "@Url.Action("ZaktuazlizujWidok", "Zwierzeta")",*@
-                    data: { nazwa: "Data"},
-                success: function (result)
-                {
-                    //TODO: jezeli p;usty to nie renderuj
-                    console.log('Powinno zmienic');
-                    $('#SekcjaListaZwierzat').html(result);
-                }
-                });
-            });
 
-            $('#btnSortowanieCeny').click(function () {
+            $('#btnSortowanieDatyW').click(function () {
                 $.ajax({
                     type: "POST",
                      @* url: "@Url.Action("ZaktuazlizujWidok", "Zwierzeta")",*@
-                data: { nazwa: "Cena" },
+                data: { nazwa: "DataW" },
                 success: function (result) {
                     //TODO: jezeli p;usty to nie renderuj
                     console.log('Powinno zmienic');
                     $('#SekcjaListaZwierzat').html(result);
                 }
             });
-        });
+            });
+
+            $('#btnSortowanieDatyN').click(function () {
+                $.ajax({
+                    type: "POST",
+                     @* url: "@Url.Action("ZaktuazlizujWidok", "Zwierzeta")",*@
+                data: { nazwa: "DataN" },
+                success: function (result) {
+                    //TODO: jezeli p;usty to nie renderuj
+                    console.log('Powinno zmienic');
+                    $('#SekcjaListaZwierzat').html(result);
+                }
+            });
+            });
+
+            
+
+            $('#btnSortowanieCenyNajt').click(function () {
+                $.ajax({
+                    type: "POST",
+                     @* url: "@Url.Action("ZaktuazlizujWidok", "Zwierzeta")",*@
+                data: { nazwa: "CenaNajt" },
+                success: function (result) {
+                    //TODO: jezeli p;usty to nie renderuj
+                    console.log('Powinno zmienic');
+                    $('#SekcjaListaZwierzat').html(result);
+                }
+            });
+            });
+
+            $('#btnSortowanieCenyNajd').click(function () {
+                $.ajax({
+                    type: "POST",
+                     @* url: "@Url.Action("ZaktuazlizujWidok", "Zwierzeta")",*@
+                    data: { nazwa: "CenaNajd" },
+                success: function (result) {
+                    //TODO: jezeli p;usty to nie renderuj
+                    console.log('Powinno zmienic');
+                    $('#SekcjaListaZwierzat').html(result);
+                }
+            });
+            });
 
 
             $('#Wojewodztwa').change(function ()

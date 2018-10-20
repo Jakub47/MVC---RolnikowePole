@@ -51,14 +51,26 @@ namespace RolnikowePole.Controllers
 
             if (Request.IsAjaxRequest())
             {
-                if (nazwa == "Data")
+                if (nazwa == "DataW")
                 {
                     //var NoweZwierzeta = gatunki.Zwierzeta.OrderByDescending(a => a.DataDodania).ToList();
                     zwierzeta = zwierzeta.OrderByDescending(a => a.DataDodania).ToList();
                     return View("_ZwierzetaList", zwierzeta);
                 }
 
-                else if (nazwa == "Cena")
+                else if (nazwa == "DataN")
+                {
+                    zwierzeta = zwierzeta.OrderByDescending(a => a.DataNarodzin).ToList();
+                    return View("_ZwierzetaList", zwierzeta);
+                }
+
+                else if (nazwa == "CenaNajt")
+                {
+                    zwierzeta = zwierzeta.OrderBy(a => a.CenaZwierza).ToList();
+                    return View("_ZwierzetaList", zwierzeta);
+                }
+
+                else if (nazwa == "CenaNajd")
                 {
                     zwierzeta = zwierzeta.OrderByDescending(a => a.CenaZwierza).ToList();
                     return View("_ZwierzetaList", zwierzeta);

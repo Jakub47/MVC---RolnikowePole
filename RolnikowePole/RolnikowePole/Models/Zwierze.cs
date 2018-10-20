@@ -27,6 +27,7 @@ namespace RolnikowePole.Models
         [StringLength(200)]
         public string OpisZwierza { get; set; }
         [Required(ErrorMessage = "Wprowadz Cene")]
+        [Range(0,100000, ErrorMessage = "Cena powinna być większa od 0 oraz mniejsza niż 100000")]
         public decimal CenaZwierza { get; set; }
         public string Wojewodztwo { get; set; }
         [Required(ErrorMessage = "Wprowadz Miasto")]
