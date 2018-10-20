@@ -434,6 +434,10 @@
     <Compile Include="Migrations\201809232244475_ZmianaPolaZwierzeDoWiadomosciNaINT.Designer.cs">
       <DependentUpon>201809232244475_ZmianaPolaZwierzeDoWiadomosciNaINT.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810201916017_Zmodyfikowanie modelu zwierza!.cs" />
+    <Compile Include="Migrations\201810201916017_Zmodyfikowanie modelu zwierza!.Designer.cs">
+      <DependentUpon>201810201916017_Zmodyfikowanie modelu zwierza!.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DaneUzytkownika.cs" />
     <Compile Include="Models\Gatunek.cs" />
@@ -562,6 +566,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809232244475_ZmianaPolaZwierzeDoWiadomosciNaINT.resx">
       <DependentUpon>201809232244475_ZmianaPolaZwierzeDoWiadomosciNaINT.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810201916017_Zmodyfikowanie modelu zwierza!.resx">
+      <DependentUpon>201810201916017_Zmodyfikowanie modelu zwierza!.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

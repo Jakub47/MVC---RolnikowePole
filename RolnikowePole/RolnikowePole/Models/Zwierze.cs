@@ -21,12 +21,15 @@ namespace RolnikowePole.Models
         public DateTime DataNarodzin { get; set; }
         public DateTime DataDodania { get; set; }
         [StringLength(100)]
+        [Required(ErrorMessage = "Wprowadz Plik")]
         public string NazwaPlikuObrazka { get; set; }
         [Required(ErrorMessage = "Wprowadz Opis Zwierza")]
+        [StringLength(200)]
         public string OpisZwierza { get; set; }
         [Required(ErrorMessage = "Wprowadz Cene")]
         public decimal CenaZwierza { get; set; }
         public string Wojewodztwo { get; set; }
+        [Required(ErrorMessage = "Wprowadz Miasto")]
         public string Miasto { get; set; }
 
         public bool Odrobaczony { get; set; }
@@ -34,6 +37,8 @@ namespace RolnikowePole.Models
         public bool Wykastrowany { get; set; }
         public bool Wyrozniony { get; set; }
         public bool Ukryty { get; set; }
+        [Required(ErrorMessage = "Wprowadz Opis Skrócony")]
+        [StringLength(50)]
         public string OpisSkrocony { get; set; }
 
         public virtual Gatunek Gatunek { get; set; }

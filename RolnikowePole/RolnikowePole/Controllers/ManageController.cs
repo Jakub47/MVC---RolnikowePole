@@ -302,8 +302,30 @@ namespace RolnikowePole.Controllers
             }
             else
             {
+                
+                //Co gdy użytkownik nie wybral pliku
+                if (file == null)
+                {
+                    var WszystkieZwierzeta = db.Zwierzeta.ToList();
+                    List<string> wojewodztwa = new List<string>();
+                    WszystkieZwierzeta.ForEach(a =>
+                    {
+                        //When launching delete a.Wojewodztwo != null
+                        if (a.Wojewodztwo != null && !a.Wojewodztwo.Equals(String.Empty))
+                            wojewodztwa.Add(a.Wojewodztwo);
+                    });
+
+                    ViewBag.Wojewodztwa = wojewodztwa.Distinct();
+                    ViewBag.PierwszeWojewodztwo = wojewodztwa.Distinct().First();
+                    ModelState.AddModelError("", "Nie wskazano pliku");
+                    //Model zostanie zwrocony, ponieważ w drpodown liście nie zostaną wyświetlone elementy! stąd musimy je jeszcze
+                    //raz pobrać żeby poprostu zostały pokazane!
+                    var gatunki = db.Gatunki.ToList();
+                    model.Gatunki = gatunki;
+                    return View(model);
+                }
                 //Sprawdzenie czy uzytkownik wybral plik
-                if (file != null || file.ContentLength > 0)
+                else
                 {
                     //Czy Pozostałe pola zostały wypełnione poprawnie
                     if (ModelState.IsValid)
@@ -341,16 +363,6 @@ namespace RolnikowePole.Controllers
 
                 }
 
-                //Co gdy użytkownik nie wybral pliku
-                else
-                {
-                    ModelState.AddModelError("", "Nie wskazano pliku");
-                    //Model zostanie zwrocony, ponieważ w drpodown liście nie zostaną wyświetlone elementy! stąd musimy je jeszcze
-                    //raz pobrać żeby poprostu zostały pokazane!
-                    var gatunki = db.Gatunki.ToList();
-                    model.Gatunki = gatunki;
-                    return View(model);
-                }
             }
         }
 
