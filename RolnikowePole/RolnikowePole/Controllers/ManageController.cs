@@ -317,7 +317,6 @@ namespace RolnikowePole.Controllers
 
                     ViewBag.Wojewodztwa = wojewodztwa.Distinct();
                     ViewBag.PierwszeWojewodztwo = wojewodztwa.Distinct().First();
-                    ModelState.AddModelError("", "Nie wskazano pliku");
                     //Model zostanie zwrocony, ponieważ w drpodown liście nie zostaną wyświetlone elementy! stąd musimy je jeszcze
                     //raz pobrać żeby poprostu zostały pokazane!
                     var gatunki = db.Gatunki.ToList();
