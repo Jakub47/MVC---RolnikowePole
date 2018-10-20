@@ -8,7 +8,13 @@
 
     <h2 style="margin-bottom: 30px">Twoje dane</h2>
 
-    @using (@Html.BeginForm("ChangeProfile", "Manage"))
+    @*@using (@Html.BeginForm("ChangeProfile", "Manage"))*@
+    @using (Ajax.BeginForm("ChangeProfile", "Manage", new AjaxOptions {
+
+        Confirm = "Potwierdź wprowadzone dane",
+        OnSuccess = "alert('Pomyslnie wprowadzono zmiany')"
+
+    }))
     {
         @Html.AntiForgeryToken()
 
