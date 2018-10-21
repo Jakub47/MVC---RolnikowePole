@@ -456,6 +456,7 @@
     <Compile Include="ViewModels\AccountViewModel.cs" />
     <Compile Include="ViewModels\DaneDoWyslaniaWiadomosciViewModel.cs" />
     <Compile Include="ViewModels\EditZwierzeViewModel.cs" />
+    <Compile Include="ViewModels\EmailDoAdmina.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\KoszykUsuwanieViewModel.cs" />
     <Compile Include="ViewModels\KoszykViewModel.cs" />
@@ -516,6 +517,7 @@
     <Content Include="Views\Manage\WiadomosciKonwersacja.cshtml" />
     <Content Include="Views\Manage\_Wiadomosci.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\EmailDoAdmina.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

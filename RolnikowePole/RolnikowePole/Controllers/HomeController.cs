@@ -1,4 +1,5 @@
 ﻿using NLog;
+using Postal;
 using RolnikowePole.DAL;
 using RolnikowePole.Infrastucture;
 using RolnikowePole.Models;
@@ -58,8 +59,20 @@ namespace RolnikowePole.Controllers
             return View(zwierzeta);
         }
 
-        public ActionResult Contact()
+        public ActionResult Contact(FormCollection formCollection = null)
         {
+            if(Request.IsAjaxRequest())
+            {
+                var email = new EmailDoAdmina
+                {
+                    To = "jakub7249@gmail.com",
+                    From = formCollection["Email"],
+                    Content = formCollection["Tresc"],
+                    Subject = formCollection["Temat"]
+                };
+                email.Send();
+            }
+
             return View();
         }
 
