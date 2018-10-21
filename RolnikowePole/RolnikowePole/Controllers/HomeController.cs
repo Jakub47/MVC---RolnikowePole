@@ -58,6 +58,11 @@ namespace RolnikowePole.Controllers
             return View(zwierzeta);
         }
 
+        public ActionResult Contact()
+        {
+            return View();
+        }
+
         public ActionResult StronyStatyczne(string nazwa)
         {
             return View(nazwa);
