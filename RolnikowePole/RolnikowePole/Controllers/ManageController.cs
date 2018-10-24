@@ -507,23 +507,29 @@ namespace RolnikowePole.Controllers
             var userDiffrent = UserManager.FindById(idUser);
             var wszystkieWiadomosci = new List<Wiadomosc>();
 
-            if (Otrzymane)
-            {
-                //var mojeWiadomosci = userLogged.SenderMessages.Where(a => a.ZwierzeId == idZwierza && a.ReceiverId == idUser).ToList();
-                //var inneWiadomosci = userDiffrent.ReceiverMessages.Where(a => a.ZwierzeId == idZwierza && a.SenderId == userLogged.Id).ToList();
-                //mojeWiadomosci.ForEach(a => wszystkieWiadomosci.Add(a)); inneWiadomosci.ForEach(a => wszystkieWiadomosci.Add(a));
+            wszystkieWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && ((a.ReceiverId == idUser && a.SenderId == userLogged.Id)
+                                                     || (a.SenderId == idUser && a.ReceiverId == userLogged.Id))).ToList();
 
-                wszystkieWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && (a.ReceiverId == userLogged.Id
-                                                     && a.SenderId == userDiffrent.Id)).ToList();
-            }
-            else
-            {
-                //var mojeWiadomosci = userLogged.SenderMessages.Where(a => a.ZwierzeId == idZwierza && a.ReceiverId == idUser).ToList();
-                //var inneWiadomosci = userDiffrent.SenderMessages.Where(a => a.ZwierzeId == idZwierza && a.SenderId == userLogged.Id).ToList();
-                //mojeWiadomosci.ForEach(a => wszystkieWiadomosci.Add(a)); inneWiadomosci.ForEach(a => wszystkieWiadomosci.Add(a));
-                wszystkieWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && (a.ReceiverId == userDiffrent.Id
-                                                     && a.SenderId == userLogged.Id)).ToList();
-            }
+                                    ///Tutaj zmiana
+            //if (Otrzymane)
+            //{
+            //    //var mojeWiadomosci = userLogged.SenderMessages.Where(a => a.ZwierzeId == idZwierza && a.ReceiverId == idUser).ToList();
+            //    //var inneWiadomosci = userDiffrent.ReceiverMessages.Where(a => a.ZwierzeId == idZwierza && a.SenderId == userLogged.Id).ToList();
+            //    //mojeWiadomosci.ForEach(a => wszystkieWiadomosci.Add(a)); inneWiadomosci.ForEach(a => wszystkieWiadomosci.Add(a));
+
+            //    wszystkieWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && (a.ReceiverId == userLogged.Id
+            //                                         && a.SenderId == userDiffrent.Id)).ToList();
+            //}
+            //else
+            //{
+            //    //var mojeWiadomosci = userLogged.SenderMessages.Where(a => a.ZwierzeId == idZwierza && a.ReceiverId == idUser).ToList();
+            //    //var inneWiadomosci = userDiffrent.SenderMessages.Where(a => a.ZwierzeId == idZwierza && a.SenderId == userLogged.Id).ToList();
+            //    //mojeWiadomosci.ForEach(a => wszystkieWiadomosci.Add(a)); inneWiadomosci.ForEach(a => wszystkieWiadomosci.Add(a));
+            //    wszystkieWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && (a.ReceiverId == userDiffrent.Id
+            //                                         && a.SenderId == userLogged.Id)).ToList();
+            //}
+
+
 
             //var listaMoichWiadomosci = new List<Wiadomosc>();
             //var listaInnychWiadomosci = new List<Wiadomosc>();
