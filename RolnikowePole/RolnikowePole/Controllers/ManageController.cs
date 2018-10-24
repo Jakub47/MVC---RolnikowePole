@@ -419,50 +419,53 @@ namespace RolnikowePole.Controllers
             //GIT
             var wiadomosciOtrzymane = user.ReceiverMessages.Where(a => a.ReceiverId == user.Id).OrderByDescending(a => a.DateAndTimeOfSend).DistinctBy(a => a.ZwierzeId).ToList();
 
-            wiadomosciWyslane.ForEach(a =>
-            {
-                //wiadomosci.Add(new WiadomosciViewModel()
-                //{
-                //    NazwaUzytkownika = a.Receiver.DaneUzytkownika.Imie + " " +  a.Receiver.DaneUzytkownika.Nazwisko,
-                //    DataWyslania = a.DateAndTimeOfSend,
-                //    TrescWiadomosci = a.Body
-                //});
+            var wiadomosciUzytkownika = db.Wiadomosci.Where(a => a.ReceiverId == user.Id || a.SenderId == user.Id).OrderByDescending(a => a.DateAndTimeOfSend).DistinctBy(a =>
+                                                                                                                                     a.ZwierzeId).ToList();
 
-                var z = new WiadomosciViewModel()
-                {
-                    NazwaUzytkownika = a.Receiver.DaneUzytkownika.Imie + " " + a.Receiver.DaneUzytkownika.Nazwisko,
-                    DataWyslania = a.DateAndTimeOfSend,
-                    TrescWiadomosci = a.Body,
-                    Id = a.ReceiverId,
-                    Zwierze = db.Zwierzeta.Where(b => b.ZwierzeId == a.ZwierzeId).FirstOrDefault()
-                };
+            //wiadomosciWyslane.ForEach(a =>
+            //{
+            //    //wiadomosci.Add(new WiadomosciViewModel()
+            //    //{
+            //    //    NazwaUzytkownika = a.Receiver.DaneUzytkownika.Imie + " " +  a.Receiver.DaneUzytkownika.Nazwisko,
+            //    //    DataWyslania = a.DateAndTimeOfSend,
+            //    //    TrescWiadomosci = a.Body
+            //    //});
 
-                w.WiadomosciWyslane.Add(z);
-            });
+            //    var z = new WiadomosciViewModel()
+            //    {
+            //        NazwaUzytkownika = a.Receiver.DaneUzytkownika.Imie + " " + a.Receiver.DaneUzytkownika.Nazwisko,
+            //        DataWyslania = a.DateAndTimeOfSend,
+            //        TrescWiadomosci = a.Body,
+            //        Id = a.ReceiverId,
+            //        Zwierze = db.Zwierzeta.Where(b => b.ZwierzeId == a.ZwierzeId).FirstOrDefault()
+            //    };
 
-            wiadomosciOtrzymane.ForEach(a =>
-            {
-                //wiadomosci.Add(new WiadomosciViewModel()
-                //{
-                //    NazwaUzytkownika = a.Receiver.DaneUzytkownika.Imie + " " + a.Receiver.DaneUzytkownika.Nazwisko,
-                //    DataWyslania = a.DateAndTimeOfSend,
-                //    TrescWiadomosci = a.Body
-                //});
+            //    w.WiadomosciWyslane.Add(z);
+            //});
 
-                var z = new WiadomosciViewModel()
-                {
-                    NazwaUzytkownika = a.Receiver.DaneUzytkownika.Imie + " " + a.Receiver.DaneUzytkownika.Nazwisko,
-                    DataWyslania = a.DateAndTimeOfSend,
-                    TrescWiadomosci = a.Body,
-                    Id = a.SenderId,
-                    Zwierze = db.Zwierzeta.Where(b => b.ZwierzeId == a.ZwierzeId).FirstOrDefault()
-                };
+            //wiadomosciOtrzymane.ForEach(a =>
+            //{
+            //    //wiadomosci.Add(new WiadomosciViewModel()
+            //    //{
+            //    //    NazwaUzytkownika = a.Receiver.DaneUzytkownika.Imie + " " + a.Receiver.DaneUzytkownika.Nazwisko,
+            //    //    DataWyslania = a.DateAndTimeOfSend,
+            //    //    TrescWiadomosci = a.Body
+            //    //});
 
-                w.WiadomosciOtrzymane.Add(z);
-            });
+            //    var z = new WiadomosciViewModel()
+            //    {
+            //        NazwaUzytkownika = a.Receiver.DaneUzytkownika.Imie + " " + a.Receiver.DaneUzytkownika.Nazwisko,
+            //        DataWyslania = a.DateAndTimeOfSend,
+            //        TrescWiadomosci = a.Body,
+            //        Id = a.SenderId,
+            //        Zwierze = db.Zwierzeta.Where(b => b.ZwierzeId == a.ZwierzeId).FirstOrDefault()
+            //    };
+
+            //    w.WiadomosciOtrzymane.Add(z);
+            //});
 
 
-            return View(w);
+            return View(wiadomosciUzytkownika);
 
             //var WszyscyUserzy = UserManager.Users;
 

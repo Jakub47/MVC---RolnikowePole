@@ -1,4 +1,5 @@
-﻿@model RolnikowePole.ViewModels.WiadomosciOdzieloneViewModel
+﻿@model List<RolnikowePole.Models.Wiadomosc>
+
 @using RolnikowePole.Infrastucture
 
 @{
@@ -8,16 +9,16 @@
 <h2>Wiadomości otrzymane : </h2>
 <hr />
 
-@if (Model.WiadomosciOtrzymane.Count > 0)
+@if (Model.Count > 0)
 {
-    foreach (var item in Model.WiadomosciOtrzymane)
+    foreach (var item in Model)
     {
-        <a href="@Url.Action("WiadomosciKonwersacja", new { idZwierza = item.Zwierze.ZwierzeId , idUser =  item.Id, Otrzymane = true})" style="text-decoration: none; color:white;">
+        <a href="@Url.Action("WiadomosciKonwersacja", new { idZwierza = item.ZwierzeId , idUser =  item.SenderId, Otrzymane = true})" style="text-decoration: none; color:white;">
             <div class="media bg-info">
-                <img class="mr-3" style="width:64px; height: 64px;" src="@Url.ObrazkiSciezka(item.Zwierze.NazwaPlikuObrazka)" alt="Generic placeholder image">
+                
                 <div class="media-body">
-                    <h5 class="mt-0">@item.NazwaUzytkownika | @item.Zwierze.Nazwa | <text style="margin-left: 2px;">@item.DataWyslania</text></h5>
-                    <strong>@item.TrescWiadomosci</strong>
+                    <h5 class="mt-0">@item.Sender.Email | @item.ZwierzeId | <text style="margin-left: 2px;">@item.DateAndTimeOfSend</text></h5>
+                    <strong>@item.Body</strong>
                 </div>
             </div>
         </a>
@@ -25,7 +26,7 @@
 }
 
 
-<hr />
+@*<hr />
 <h2>Wiadomości wysłane:</h2>
 <hr />
 @if (Model.WiadomosciWyslane.Count > 0)
@@ -43,7 +44,7 @@
         </a>
     }
 }
-<hr />
+<hr />*@
 
 @*@foreach (var item in Model)
     {
