@@ -411,8 +411,8 @@ namespace RolnikowePole.Controllers
 
 
             //Potrzebuje nazwyUzytkownika + Daty + Tresci kazdej wiadomosci
-            var wiadomosci = new List<WiadomosciViewModel>();
-            var w = new WiadomosciOdzieloneViewModel();
+            var wiadomosci = new List<WiadomoscZIdViewModel>();
+            var w = new WiadomoscZIdViewModel();
 
             var wiadomosciWyslane = user.SenderMessages.Where(a => a.SenderId == user.Id).OrderByDescending(a => a.DateAndTimeOfSend).DistinctBy(a => a.ZwierzeId).ToList();
 
@@ -420,7 +420,16 @@ namespace RolnikowePole.Controllers
             var wiadomosciOtrzymane = user.ReceiverMessages.Where(a => a.ReceiverId == user.Id).OrderByDescending(a => a.DateAndTimeOfSend).DistinctBy(a => a.ZwierzeId).ToList();
 
             var wiadomosciUzytkownika = db.Wiadomosci.Where(a => a.ReceiverId == user.Id || a.SenderId == user.Id).OrderByDescending(a => a.DateAndTimeOfSend).DistinctBy(a =>
-                                                                                                                                     a.ZwierzeId).ToList();
+                                                                                                                               a.ZwierzeId).ToList();
+            wiadomosciUzytkownika.ForEach(a =>
+            {
+                wiadomosci.Add(new WiadomoscZIdViewModel()
+                {
+                    Wiadomosc = a,
+                    UserID = a.ReceiverId == user.Id ? a.SenderId : a.ReceiverId
+                });
+            });
+
 
             //wiadomosciWyslane.ForEach(a =>
             //{
@@ -465,7 +474,7 @@ namespace RolnikowePole.Controllers
             //});
 
 
-            return View(wiadomosciUzytkownika);
+            return View(wiadomosci);
 
             //var WszyscyUserzy = UserManager.Users;
 

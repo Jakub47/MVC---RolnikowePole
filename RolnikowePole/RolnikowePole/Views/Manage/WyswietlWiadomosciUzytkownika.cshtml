@@ -1,4 +1,4 @@
-﻿@model List<RolnikowePole.Models.Wiadomosc>
+﻿@model List<RolnikowePole.ViewModels.WiadomoscZIdViewModel>
 
 @using RolnikowePole.Infrastucture
 
@@ -13,12 +13,12 @@
 {
     foreach (var item in Model)
     {
-        <a href="@Url.Action("WiadomosciKonwersacja", new { idZwierza = item.ZwierzeId , idUser =  item.SenderId, Otrzymane = true})" style="text-decoration: none; color:white;">
+        <a href="@Url.Action("WiadomosciKonwersacja", new { idZwierza = item.Wiadomosc.ZwierzeId , idUser =  item.UserID, Otrzymane = true})" style="text-decoration: none; color:white;">
             <div class="media bg-info">
                 
                 <div class="media-body">
-                    <h5 class="mt-0">@item.Sender.Email | @item.ZwierzeId | <text style="margin-left: 2px;">@item.DateAndTimeOfSend</text></h5>
-                    <strong>@item.Body</strong>
+                    <h5 class="mt-0">@item.Wiadomosc.Sender.Email | @item.Wiadomosc.ZwierzeId | <text style="margin-left: 2px;">@item.Wiadomosc.DateAndTimeOfSend</text></h5>
+                    <strong>@item.Wiadomosc.Body</strong>
                 </div>
             </div>
         </a>
