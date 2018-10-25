@@ -612,18 +612,24 @@ namespace RolnikowePole.Controllers
                     }
                 }
             }
+
             var idZwierza = wiadomosc.ZwierzeId;
             string idReceiverId = wiadomosc.ReceiverId;
-            string idSenderID = wiadomosc.SenderId;
-
-            //Chcę wziąć wszystkie wiadmości odnośnie konkretnego zwierza i od określonej osoby
-            var listaWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && (a.ReceiverId.Equals(idReceiverId, StringComparison.CurrentCultureIgnoreCase)
-                                                     || (a.SenderId.Equals(idSenderID, StringComparison.CurrentCultureIgnoreCase)))).ToList();
 
             //var mojeWiadomosci = userLogged.SenderMessages.Where(a => a.ZwierzeId == idZwierza && a.ReceiverId == idUser).ToList();
             //var inneWiadomosci = userDiffrent.SenderMessages.Where(a => a.ZwierzeId == idZwierza && a.SenderId == userLogged.Id).ToList();
-            var wszystkieWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && (a.ReceiverId == idReceiverId &&
-                                                     a.SenderId == idSenderID)).ToList();
+            //var wszystkieWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && (a.ReceiverId == idReceiverId &&
+            //                                         a.SenderId == idSenderID)).ToList();
+
+            var userLogged = UserManager.FindById(User.Identity.GetUserId());
+            var userDiffrent = UserManager.FindById(idReceiverId);
+
+            var wszystkieWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && ((a.ReceiverId == userLogged.Id && a.SenderId == userDiffrent.Id)
+                                                      || (a.SenderId == userDiffrent.Id && a.ReceiverId == userLogged.Id))).ToList();
+
+
+
+
             //var inneWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && a.SenderId == idSenderID).ToList();
             return View("_Wiadomosci", wszystkieWiadomosci);
         }
