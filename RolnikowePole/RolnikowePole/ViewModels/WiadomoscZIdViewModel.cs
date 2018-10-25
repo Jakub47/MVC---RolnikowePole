@@ -10,5 +10,9 @@ namespace RolnikowePole.ViewModels
     {
         public Wiadomosc Wiadomosc { get; set; }
         public string UserID { get; set; }
+        public string NazwaPliku { get; set; }
+        public string NazwaZwierza { get; set; }
+        public string ImieUzytkownika { get; set; }
+        public string NazwiskoUzytkownika { get; set; }
     }
 }

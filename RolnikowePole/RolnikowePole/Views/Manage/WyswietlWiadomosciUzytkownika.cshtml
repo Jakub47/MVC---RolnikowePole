@@ -6,7 +6,7 @@
     ViewBag.Title = "WyswietlWiadomosciUzytkownika";
     Layout = "~/Views/Shared/_ManageLayout.cshtml";
 }
-<h2>Wiadomości otrzymane : </h2>
+<h2>Wiadomości : </h2>
 <hr />
 
 @if (Model.Count > 0)
@@ -14,17 +14,17 @@
     foreach (var item in Model)
     {
         <a href="@Url.Action("WiadomosciKonwersacja", new { idZwierza = item.Wiadomosc.ZwierzeId , idUser =  item.UserID, Otrzymane = true})" style="text-decoration: none; color:white;">
-            <div class="media bg-info">
-                
+            <div class="media bg-dark">
+                <img class="mr-3" style="width:64px; height: 64px;" src="@Url.ObrazkiSciezka(item.NazwaPliku)" alt="Generic placeholder image">
                 <div class="media-body">
-                    <h5 class="mt-0">@item.Wiadomosc.Sender.Email | @item.Wiadomosc.ZwierzeId | <text style="margin-left: 2px;">@item.Wiadomosc.DateAndTimeOfSend</text></h5>
+                    <h5 class="mt-0">@item.ImieUzytkownika | @item.NazwiskoUzytkownika | @item.NazwaZwierza | <text style="margin-left: 2px;">@item.Wiadomosc.DateAndTimeOfSend</text></h5>
                     <strong>@item.Wiadomosc.Body</strong>
                 </div>
             </div>
         </a>
+        <hr />
     }
 }
-
 
 @*<hr />
 <h2>Wiadomości wysłane:</h2>

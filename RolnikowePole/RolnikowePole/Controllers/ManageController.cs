@@ -426,7 +426,11 @@ namespace RolnikowePole.Controllers
                 wiadomosci.Add(new WiadomoscZIdViewModel()
                 {
                     Wiadomosc = a,
-                    UserID = a.ReceiverId == user.Id ? a.SenderId : a.ReceiverId
+                    UserID = a.ReceiverId == user.Id ? a.SenderId : a.ReceiverId,
+                    NazwaPliku = db.Zwierzeta.Find(a.ZwierzeId).NazwaPlikuObrazka,
+                    NazwaZwierza = db.Zwierzeta.Find(a.ZwierzeId).Nazwa,
+                    ImieUzytkownika = db.Users.Find(a.ReceiverId == user.Id ? a.SenderId : a.ReceiverId).DaneUzytkownika.Imie,
+                    NazwiskoUzytkownika = db.Users.Find(a.ReceiverId == user.Id ? a.SenderId : a.ReceiverId).DaneUzytkownika.Nazwisko,
                 });
             });
 
