@@ -612,6 +612,14 @@ namespace RolnikowePole.Controllers
                     }
                 }
             }
+            var userLogged = UserManager.FindById(User.Identity.GetUserId());
+            var userDiffrent = UserManager.FindById(wiadomosc.ReceiverId);
+            var wszystkieWiadomosci = new List<Wiadomosc>();
+
+            wszystkieWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == wiadomosc.ZwierzeId 
+                                                     && ((a.ReceiverId == userDiffrent.Id && a.SenderId == userLogged.Id)
+                                                     || (a.SenderId == userDiffrent.Id && a.ReceiverId == userLogged.Id))).ToList();
+
 
             var idZwierza = wiadomosc.ZwierzeId;
             string idReceiverId = wiadomosc.ReceiverId;
@@ -620,15 +628,7 @@ namespace RolnikowePole.Controllers
             //var inneWiadomosci = userDiffrent.SenderMessages.Where(a => a.ZwierzeId == idZwierza && a.SenderId == userLogged.Id).ToList();
             //var wszystkieWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && (a.ReceiverId == idReceiverId &&
             //                                         a.SenderId == idSenderID)).ToList();
-
-            var userLogged = UserManager.FindById(User.Identity.GetUserId());
-            var userDiffrent = UserManager.FindById(idReceiverId);
-
-            var wszystkieWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && ((a.ReceiverId == userLogged.Id && a.SenderId == userDiffrent.Id)
-                                                      || (a.SenderId == userDiffrent.Id && a.ReceiverId == userLogged.Id))).ToList();
-
-
-
+            
 
             //var inneWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && a.SenderId == idSenderID).ToList();
             return View("_Wiadomosci", wszystkieWiadomosci);

@@ -4475,3 +4475,4 @@
 2018-10-25 13:06:57.6299|INFO|RolnikowePole.Controllers.HomeController|Jestes na stronie glownej
 2018-10-25 13:14:10.3242|INFO|RolnikowePole.Controllers.HomeController|Jestes na stronie glownej
 2018-10-25 13:14:57.9394|INFO|RolnikowePole.Controllers.HomeController|Jestes na stronie glownej
+2018-10-29 11:06:03.2932|INFO|RolnikowePole.Controllers.HomeController|Jestes na stronie glownej
