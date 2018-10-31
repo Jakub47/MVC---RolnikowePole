@@ -20,8 +20,6 @@ namespace RolnikowePole.Models
         [Required(ErrorMessage = "Wprowadz Date Narodzin Zwierza")]
         public DateTime DataNarodzin { get; set; }
         public DateTime DataDodania { get; set; }
-        [StringLength(100)]
-        [Required(ErrorMessage = "Wprowadz Plik")]
         public string NazwaPlikuObrazka { get; set; }
         [Required(ErrorMessage = "Wprowadz Opis Zwierza")]
         [StringLength(200)]

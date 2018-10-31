@@ -59,8 +59,11 @@ namespace RolnikowePole.Controllers
         }
 
         // GET: Manage
-        public async Task<ActionResult> Index(ManageMessageId? message)
+        public async Task<ActionResult> Index(ManageMessageId? message, string info = null)
         {
+            if (info != null)
+                ViewBag.Info = info;
+
             if (TempData["ViewData"] != null)
             {
                 ViewData = (ViewDataDictionary)TempData["ViewData"];
@@ -250,6 +253,12 @@ namespace RolnikowePole.Controllers
 
         public ActionResult DodajZwierze(int? zwierzeId, bool? potwierdzenie)
         {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+
+            if(user.DaneUzytkownika.Adres == null || user.DaneUzytkownika.Email == null || user.DaneUzytkownika.Imie == null || user.DaneUzytkownika.KodPocztowy == null ||
+               user.DaneUzytkownika.Miasto == null || user.DaneUzytkownika.Nazwisko == null || user.DaneUzytkownika.Telefon == null)
+                return RedirectToAction("Index", new { info = "Prosze wprowadzić swoje dane" });
+            
             var WszystkieZwierzeta = db.Zwierzeta.ToList();
             List<string> wojewodztwa = new List<string>();
             WszystkieZwierzeta.ForEach(a =>
@@ -292,6 +301,17 @@ namespace RolnikowePole.Controllers
         [HttpPost]
         public ActionResult DodajZwierze(EditZwierzeViewModel model, HttpPostedFileBase file)
         {
+            var WszystkieZwierzeta = db.Zwierzeta.ToList();
+            List<string> wojewodztwa = new List<string>();
+            WszystkieZwierzeta.ForEach(a =>
+            {
+                //When launching delete a.Wojewodztwo != null
+                if (a.Wojewodztwo != null && !a.Wojewodztwo.Equals(String.Empty))
+                    wojewodztwa.Add(a.Wojewodztwo);
+            });
+
+            ViewBag.Wojewodztwa = wojewodztwa.Distinct();
+            ViewBag.PierwszeWojewodztwo = wojewodztwa.Distinct().First();
             //Patrz pola ukryte w widoku
             if (model.Zwierze.ZwierzeId > 0)
             {
@@ -306,17 +326,6 @@ namespace RolnikowePole.Controllers
                 //Co gdy użytkownik nie wybral pliku
                 if (file == null)
                 {
-                    var WszystkieZwierzeta = db.Zwierzeta.ToList();
-                    List<string> wojewodztwa = new List<string>();
-                    WszystkieZwierzeta.ForEach(a =>
-                    {
-                        //When launching delete a.Wojewodztwo != null
-                        if (a.Wojewodztwo != null && !a.Wojewodztwo.Equals(String.Empty))
-                            wojewodztwa.Add(a.Wojewodztwo);
-                    });
-
-                    ViewBag.Wojewodztwa = wojewodztwa.Distinct();
-                    ViewBag.PierwszeWojewodztwo = wojewodztwa.Distinct().First();
                     //Model zostanie zwrocony, ponieważ w drpodown liście nie zostaną wyświetlone elementy! stąd musimy je jeszcze
                     //raz pobrać żeby poprostu zostały pokazane!
                     var gatunki = db.Gatunki.ToList();
@@ -401,6 +410,7 @@ namespace RolnikowePole.Controllers
         public ActionResult WyswietlWiadomosciUzytkownika()
         {
             var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewBag.ID = user.Id;
 
             //Jak ja wysyłam to mnie nie obchodzi wysyłający tylko odbiorca
             //Jak ja odbieram to mnie nie obchodzi odbierający tylko wysyłający
@@ -431,6 +441,7 @@ namespace RolnikowePole.Controllers
                     NazwaZwierza = db.Zwierzeta.Find(a.ZwierzeId).Nazwa,
                     ImieUzytkownika = db.Users.Find(a.ReceiverId == user.Id ? a.SenderId : a.ReceiverId).DaneUzytkownika.Imie,
                     NazwiskoUzytkownika = db.Users.Find(a.ReceiverId == user.Id ? a.SenderId : a.ReceiverId).DaneUzytkownika.Nazwisko,
+                    Email = db.Users.Find(a.ReceiverId == user.Id ? a.SenderId : a.ReceiverId).Email
                 });
             });
 
@@ -508,6 +519,7 @@ namespace RolnikowePole.Controllers
             //  Jezeli jest to id uzytkownika wiemy ze powinnismy zwrococ wiadomosci tego uzytkownika a jesli chodzi o 
             //innych uzytkownikow to tam przekazujemy sernderID = isUser
             var userLogged = UserManager.FindById(User.Identity.GetUserId());
+            ViewBag.ID = userLogged.Id;
             var userDiffrent = UserManager.FindById(idUser);
             var wszystkieWiadomosci = new List<Wiadomosc>();
 
@@ -613,6 +625,7 @@ namespace RolnikowePole.Controllers
                 }
             }
             var userLogged = UserManager.FindById(User.Identity.GetUserId());
+            ViewBag.ID = userLogged.Id;
             var userDiffrent = UserManager.FindById(wiadomosc.ReceiverId);
             var wszystkieWiadomosci = new List<Wiadomosc>();
 

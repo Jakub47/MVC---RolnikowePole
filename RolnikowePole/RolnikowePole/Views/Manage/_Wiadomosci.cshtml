@@ -8,7 +8,17 @@
 {
     <div class="media ">
         <div class="media-body">
-            <h5 class="mt-0">@item.ReceiverId | @item.DateAndTimeOfSend </h5>
+            <h5 class="mt-0">
+            @{ if(item.Sender.Id == ViewBag.ID)
+                {
+                    <text>@item.Receiver.Email</text>
+                }
+                else
+                {
+                    <text>@item.Sender.Email</text>
+                }
+            }
+            | @item.DateAndTimeOfSend </h5>
             <strong>@item.Body</strong>
         </div>
     </div>

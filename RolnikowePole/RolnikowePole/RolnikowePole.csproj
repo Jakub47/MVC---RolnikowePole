@@ -442,6 +442,10 @@
     <Compile Include="Migrations\201810201944356_Zmodyfilpwamoe Restrykcji na pole NazwaPlikuObrazka!.Designer.cs">
       <DependentUpon>201810201944356_Zmodyfilpwamoe Restrykcji na pole NazwaPlikuObrazka!.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810311607403_ds.cs" />
+    <Compile Include="Migrations\201810311607403_ds.Designer.cs">
+      <DependentUpon>201810311607403_ds.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DaneUzytkownika.cs" />
     <Compile Include="Models\Gatunek.cs" />
@@ -580,6 +584,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810201944356_Zmodyfilpwamoe Restrykcji na pole NazwaPlikuObrazka!.resx">
       <DependentUpon>201810201944356_Zmodyfilpwamoe Restrykcji na pole NazwaPlikuObrazka!.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810311607403_ds.resx">
+      <DependentUpon>201810311607403_ds.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

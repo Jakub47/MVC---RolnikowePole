@@ -14,5 +14,6 @@ namespace RolnikowePole.ViewModels
         public string NazwaZwierza { get; set; }
         public string ImieUzytkownika { get; set; }
         public string NazwiskoUzytkownika { get; set; }
+        public string Email { get; set; }
     }
 }

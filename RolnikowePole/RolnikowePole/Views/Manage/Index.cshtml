@@ -8,6 +8,11 @@
 
     <h2 style="margin-bottom: 30px">Twoje dane</h2>
 
+    @if(ViewBag.Info != null)
+    {
+        <p style="color:red">@ViewBag.Info</p>
+    }
+
     @using (Ajax.BeginForm("ChangeProfile", "Manage", new AjaxOptions {
 
         Confirm = "Potwierdź wprowadzone dane",
