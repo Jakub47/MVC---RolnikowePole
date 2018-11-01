@@ -1,5 +1,13 @@
 ﻿@using Microsoft.AspNet.Identity
 
+<script>
+    var item = '@(ViewBag.Klasa)';
+    if (item)
+    {
+        document.getElementById("wiadomosc").className += item;
+    }
+</script>
+
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("Logoff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "nav-link" }))
@@ -12,9 +20,9 @@
         title = "Dodaj Zwierze", @class = "dropdown-item"})
 
         @Html.ActionLink("Twoje Zwierzęta", "ListaWystawionychZwierzakow", "Manage", routeValues: null, htmlAttributes: new {
-        title = "Twoje Zwierzęta", @class = "dropdown-item"})
+        title = "Twoje Zwierzęta" , @class = "dropdown-item"})
 
-        @Html.ActionLink("Wiadomości", "WyswietlWiadomosciUzytkownika", "Manage", routeValues: null, htmlAttributes: new { title = "Wiadomosci", @class = "dropdown-item"})
+        @Html.ActionLink("Wiadomości", "WyswietlWiadomosciUzytkownika", "Manage", routeValues: null, htmlAttributes: new { title = "Wiadomosci", @id = "wiadomosc", @class = "dropdown-item"})
 
         <a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">
             Wyloguj

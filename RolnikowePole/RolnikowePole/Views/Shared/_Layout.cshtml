@@ -64,7 +64,8 @@
                             }
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            @Html.Partial("_LoginPartial")
+                            @*@Html.Partial("_LoginPartial")*@
+                            @Html.Action("GetLogin" , "Home")
                         </div>
                     </li>
                 </ul>

@@ -431,6 +431,7 @@ namespace RolnikowePole.Controllers
 
             var wiadomosciUzytkownika = db.Wiadomosci.Where(a => a.ReceiverId == user.Id || a.SenderId == user.Id).OrderByDescending(a => a.DateAndTimeOfSend).DistinctBy(a =>
                                                                                                                                a.ZwierzeId).ToList();
+
             wiadomosciUzytkownika.ForEach(a =>
             {
                 wiadomosci.Add(new WiadomoscZIdViewModel()
@@ -514,11 +515,21 @@ namespace RolnikowePole.Controllers
             //return View(wiadomoscVM);
         }
 
-        public ActionResult WiadomosciKonwersacja(int idZwierza, string idUser, bool Otrzymane = false)
+        public ActionResult WiadomosciKonwersacja(int idZwierza, string idUser, bool Otrzymane = false, int w = -1)
         {
             //  Jezeli jest to id uzytkownika wiemy ze powinnismy zwrococ wiadomosci tego uzytkownika a jesli chodzi o 
             //innych uzytkownikow to tam przekazujemy sernderID = isUser
             var userLogged = UserManager.FindById(User.Identity.GetUserId());
+
+            if (w != -1)
+            {
+                var wiadomosc = db.Wiadomosci.Find(w);
+                if (wiadomosc.ReceiverId == userLogged.Id)
+                {
+                    db.Wiadomosci.Find(w).Read = true;
+                    db.SaveChanges();
+                }
+            }
             ViewBag.ID = userLogged.Id;
             var userDiffrent = UserManager.FindById(idUser);
             var wszystkieWiadomosci = new List<Wiadomosc>();

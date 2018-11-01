@@ -1,5 +1,10 @@
-﻿using NLog;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using MoreLinq;
+using NLog;
 using Postal;
+using RolnikowePole.App_Start;
 using RolnikowePole.DAL;
 using RolnikowePole.Infrastucture;
 using RolnikowePole.Models;
@@ -16,7 +21,28 @@ namespace RolnikowePole.Controllers
     {
         RolnikowePoleContext db = new RolnikowePoleContext();
         private static Logger logger = LogManager.GetCurrentClassLogger();
-        
+        private ApplicationUserManager _userManager;
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+        private IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().Authentication;
+            }
+        }
+
+
         public ActionResult Index()
         {
             logger.Info("Jestes na stronie glownej");
@@ -84,6 +110,22 @@ namespace RolnikowePole.Controllers
         public ActionResult Index2()
         {
             return View();
+        }
+
+        [ChildActionOnly]
+        public PartialViewResult GetLogin()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = UserManager.FindById(User.Identity.GetUserId());
+                var wiadomosciUzytkownika = db.Wiadomosci.Where(a => a.ReceiverId == user.Id || a.SenderId == user.Id).OrderByDescending(a => a.DateAndTimeOfSend).DistinctBy(a =>
+                                                                                                                                   a.ZwierzeId).ToList();
+                if (wiadomosciUzytkownika.TrueForAll(a => a.Read == false))
+                {
+                    ViewBag.Klasa = "glyphicon glyphicon-star";
+                }
+            }
+            return PartialView("~/Views/Shared/_LoginPartial.cshtml");
         }
     }
 }
