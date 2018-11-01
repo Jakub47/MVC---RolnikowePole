@@ -1,12 +1,6 @@
 ﻿@using Microsoft.AspNet.Identity
 
-<script>
-    var item = '@(ViewBag.Klasa)';
-    if (item)
-    {
-        document.getElementById("wiadomosc").className += item;
-    }
-</script>
+
 
 @if (Request.IsAuthenticated)
 {
@@ -17,12 +11,12 @@
         @Html.ActionLink("Zarządzaj", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "dropdown-item" })
 
         @Html.ActionLink("Dodaj Zwierze", "DodajZwierze", "Manage", routeValues: null, htmlAttributes: new {
-        title = "Dodaj Zwierze", @class = "dropdown-item"})
-
+       title = "Dodaj Zwierze", @class = "dropdown-item"
+   })
         @Html.ActionLink("Twoje Zwierzęta", "ListaWystawionychZwierzakow", "Manage", routeValues: null, htmlAttributes: new {
         title = "Twoje Zwierzęta" , @class = "dropdown-item"})
 
-        @Html.ActionLink("Wiadomości", "WyswietlWiadomosciUzytkownika", "Manage", routeValues: null, htmlAttributes: new { title = "Wiadomosci", @id = "wiadomosc", @class = "dropdown-item"})
+        @Html.ActionLink("Wiadomości", "WyswietlWiadomosciUzytkownika", "Manage", routeValues: null, htmlAttributes: new { title = "Wiadomosci", @id = "wiadomosc", @class = "dropdown-item" })
 
         <a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">
             Wyloguj
@@ -35,3 +29,16 @@ else
 
     @Html.ActionLink("Zaloguj", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "dropdown-item" })
 }
+
+<script>
+    var item = '@(ViewBag.Klasa)';
+    if (item)
+    {
+        //var newNode = document.createElement('span');
+        //newNode.setAttribute("class", item);
+        //document.getElementById("wiadomosc").before(newNode);
+        item = item.trim();
+        document.getElementById('wiadomosc').className += " " + item;
+        document.getElementById('loginU').className = item;
+    }
+</script>

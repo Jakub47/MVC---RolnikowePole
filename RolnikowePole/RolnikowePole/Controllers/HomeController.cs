@@ -120,9 +120,9 @@ namespace RolnikowePole.Controllers
                 var user = UserManager.FindById(User.Identity.GetUserId());
                 var wiadomosciUzytkownika = db.Wiadomosci.Where(a => a.ReceiverId == user.Id || a.SenderId == user.Id).OrderByDescending(a => a.DateAndTimeOfSend).DistinctBy(a =>
                                                                                                                                    a.ZwierzeId).ToList();
-                if (wiadomosciUzytkownika.TrueForAll(a => a.Read == false))
+                if (wiadomosciUzytkownika.TrueForAll(a => a.Read == false && a.ReceiverId == user.Id))
                 {
-                    ViewBag.Klasa = "glyphicon glyphicon-star";
+                    ViewBag.Klasa = "fas fa-envelope";
                 }
             }
             return PartialView("~/Views/Shared/_LoginPartial.cshtml");

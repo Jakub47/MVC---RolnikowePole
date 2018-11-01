@@ -11,7 +11,9 @@
 
     <!-- Bootstrap core CSS + Custom styles for this template -->
     @System.Web.Optimization.Styles.Render("~/Content/BootstrapAndCssForHomepage")
-    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
+
+
 
 
     <style>
@@ -56,7 +58,7 @@
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             @if (Request.IsAuthenticated)
                             {
-                                <span>@User.Identity.GetUserName()</span>
+                                <span id="loginU">@User.Identity.GetUserName()</span>
                             }
                             else
                             {
