@@ -419,20 +419,72 @@ namespace RolnikowePole.Controllers
             //var GetUsersIDSended = user.SenderMessages.Where(a => a.ReceiverId != user.Id).Select(b => b.ReceiverId).ToList();
             //var GetUsersIDRetrived = user.ReceiverMessages.Where(a => a.SenderId != user.Id).Select(b => b.SenderId).ToList();
 
+            //var wiadomosciWyslane = user.SenderMessages.Where(a => a.SenderId == user.Id).OrderByDescending(a => a.DateAndTimeOfSend).DistinctBy(a => a.ZwierzeId).ToList();
+
+            ////GIT
+            //var wiadomosciOtrzymane = user.ReceiverMessages.Where(a => a.ReceiverId == user.Id).OrderByDescending(a => a.DateAndTimeOfSend).DistinctBy(a => a.ZwierzeId).ToList();
+
 
             //Potrzebuje nazwyUzytkownika + Daty + Tresci kazdej wiadomosci
             var wiadomosci = new List<WiadomoscZIdViewModel>();
             var w = new WiadomoscZIdViewModel();
+            var g = new List<Wiadomosc>();
 
-            var wiadomosciWyslane = user.SenderMessages.Where(a => a.SenderId == user.Id).OrderByDescending(a => a.DateAndTimeOfSend).DistinctBy(a => a.ZwierzeId).ToList();
+            var wiadomosciWyslane = user.SenderMessages.OrderByDescending(a => a.DateAndTimeOfSend).ToList();
 
             //GIT
-            var wiadomosciOtrzymane = user.ReceiverMessages.Where(a => a.ReceiverId == user.Id).OrderByDescending(a => a.DateAndTimeOfSend).DistinctBy(a => a.ZwierzeId).ToList();
+            var wiadomosciOtrzymane = user.ReceiverMessages.OrderByDescending(a => a.DateAndTimeOfSend).ToList();
+            
+            for(int i = 0;i<wiadomosciOtrzymane.Count;i++)
+            {
+                if(i == 0)
+                {
+                    if (wiadomosciOtrzymane[i + 1].ZwierzeId != wiadomosciOtrzymane[i].ZwierzeId
+                        || wiadomosciOtrzymane[i + 1].SenderId != wiadomosciOtrzymane[i].SenderId)
+                    {
+                        g.Add(wiadomosciOtrzymane[i]);
+                    }
+                }
 
-            var wiadomosciUzytkownika = db.Wiadomosci.Where(a => a.ReceiverId == user.Id || a.SenderId == user.Id).OrderByDescending(a => a.DateAndTimeOfSend).DistinctBy(a =>
-                                                                                                                               a.ZwierzeId).ToList();
+                if (i < wiadomosciOtrzymane.Count-1)
+                {
+                    if (wiadomosciOtrzymane[i + 1].ZwierzeId != wiadomosciOtrzymane[i].ZwierzeId
+                        || wiadomosciOtrzymane[i + 1].SenderId != wiadomosciOtrzymane[i].SenderId)
+                    {
+                        g.Add(wiadomosciOtrzymane[i+1]);
+                    }
+                }
+            }
+            for (int i = 0; i < wiadomosciWyslane.Count; i++)
+            {
+                if(i == 0)
+                {
+                    if (wiadomosciWyslane[i + 1].ZwierzeId != wiadomosciWyslane[i].ZwierzeId
+                        || wiadomosciWyslane[i + 1].SenderId != wiadomosciWyslane[i].SenderId)
+                    {
+                        g.Add(wiadomosciWyslane[i]);
+                    }
+                }
 
-            wiadomosciUzytkownika.ForEach(a =>
+                if (i < wiadomosciWyslane.Count-1)
+                {
+                    if (wiadomosciWyslane[i + 1].ZwierzeId != wiadomosciWyslane[i].ZwierzeId
+                        || wiadomosciWyslane[i + 1].SenderId != wiadomosciWyslane[i].SenderId)
+                    {
+                        g.Add(wiadomosciWyslane[i+1]);
+                    }
+                }
+            }
+
+            var c = g.ToList();
+
+            //Teraz wiem ze wiadomosciWyslane powinny miec unikalny na podstawie klucza otrzymane a otrzymane to klucz wys
+            var wiadomosciUzytkownika = db.Wiadomosci.Where(a => a.ReceiverId == user.Id || a.SenderId == user.Id)
+                .OrderByDescending(a => a.DateAndTimeOfSend).DistinctBy(a =>a.ZwierzeId ).ToList();
+
+            
+
+            g.ForEach(a =>
             {
                 wiadomosci.Add(new WiadomoscZIdViewModel()
                 {

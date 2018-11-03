@@ -81,16 +81,17 @@
 
         @if (User.Identity.IsAuthenticated)
         {
-
-            using (Ajax.BeginForm("WyslijWiadomosc", "Manage",
-                    new AjaxOptions
-                    {
-                        HttpMethod = "POST",
-                        Confirm = "Potwierdz wyslanie wiadomosci",
-                        OnSuccess = "alert('Pomyslnie wyslano wiadomosc')"
-                    }))
+            if (User.Identity.GetUserId() != Model.Zwierze.UserId)
             {
-                { Model.wiadomosc.DateAndTimeOfSend = DateTime.Now; Model.wiadomosc.ZwierzeId = Model.Zwierze.ZwierzeId; }
+                using (Ajax.BeginForm("WyslijWiadomosc", "Manage",
+                        new AjaxOptions
+                        {
+                            HttpMethod = "POST",
+                            Confirm = "Potwierdz wyslanie wiadomosci",
+                            OnSuccess = "alert('Pomyslnie wyslano wiadomosc')"
+                        }))
+                {
+                    { Model.wiadomosc.DateAndTimeOfSend = DateTime.Now; Model.wiadomosc.ZwierzeId = Model.Zwierze.ZwierzeId; }
 
                 @Html.HiddenFor(m => m.wiadomosc.ReceiverId)
                 @Html.HiddenFor(m => m.wiadomosc.SenderId)
@@ -101,6 +102,7 @@
                 @Html.TextAreaFor(m => m.wiadomosc.Body, new { @class = "form-control", rows = "3" })
 
                 <input type="submit" value="Wyslij kurwa" />
+                }
             }
         }
     </div>
