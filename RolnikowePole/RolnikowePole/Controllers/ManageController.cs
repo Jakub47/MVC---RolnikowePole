@@ -435,6 +435,11 @@ namespace RolnikowePole.Controllers
             //GIT
             var wiadomosciOtrzymane = user.ReceiverMessages.OrderByDescending(a => a.DateAndTimeOfSend).ToList();
             
+            //Działa,ale tylko dla wiadomosci jedna po drugiej!
+            //Spróbuj utworzyc pustą liste i dla kazdej wiadomosci w bazie (odseparowanej) sprawdz czy:
+            //1)W liscie znajduje sie taki obiekt z kluczem zwierza jezeli nie dodaj
+            //2)jezeli nastepny obiekt ma taki sam klucz zwierza ale inny klucz obcy idUser to dodaj
+            //Oczywiscie przypisz te wiadomosci z bazy do zmiennej a nastpenie posortuje OrderByDescending!
             for(int i = 0;i<wiadomosciOtrzymane.Count;i++)
             {
                 if(i == 0)
