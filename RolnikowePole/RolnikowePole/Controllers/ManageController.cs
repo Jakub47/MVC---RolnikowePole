@@ -434,52 +434,90 @@ namespace RolnikowePole.Controllers
 
             //GIT
             var wiadomosciOtrzymane = user.ReceiverMessages.OrderByDescending(a => a.DateAndTimeOfSend).ToList();
-            
+
             //Działa,ale tylko dla wiadomosci jedna po drugiej!
             //Spróbuj utworzyc pustą liste i dla kazdej wiadomosci w bazie (odseparowanej) sprawdz czy:
             //1)W liscie znajduje sie taki obiekt z kluczem zwierza jezeli nie dodaj
             //2)jezeli nastepny obiekt ma taki sam klucz zwierza ale inny klucz obcy idUser to dodaj
             //Oczywiscie przypisz te wiadomosci z bazy do zmiennej a nastpenie posortuje OrderByDescending!
-            for(int i = 0;i<wiadomosciOtrzymane.Count;i++)
-            {
-                if(i == 0)
-                {
-                    if (wiadomosciOtrzymane[i + 1].ZwierzeId != wiadomosciOtrzymane[i].ZwierzeId
-                        || wiadomosciOtrzymane[i + 1].SenderId != wiadomosciOtrzymane[i].SenderId)
-                    {
-                        g.Add(wiadomosciOtrzymane[i]);
-                    }
-                }
 
-                if (i < wiadomosciOtrzymane.Count-1)
-                {
-                    if (wiadomosciOtrzymane[i + 1].ZwierzeId != wiadomosciOtrzymane[i].ZwierzeId
-                        || wiadomosciOtrzymane[i + 1].SenderId != wiadomosciOtrzymane[i].SenderId)
-                    {
-                        g.Add(wiadomosciOtrzymane[i+1]);
-                    }
-                }
-            }
-            for (int i = 0; i < wiadomosciWyslane.Count; i++)
-            {
-                if(i == 0)
-                {
-                    if (wiadomosciWyslane[i + 1].ZwierzeId != wiadomosciWyslane[i].ZwierzeId
-                        || wiadomosciWyslane[i + 1].SenderId != wiadomosciWyslane[i].SenderId)
-                    {
-                        g.Add(wiadomosciWyslane[i]);
-                    }
-                }
 
-                if (i < wiadomosciWyslane.Count-1)
+
+
+            var w1 = new List<Wiadomosc>();
+            wiadomosciWyslane.ForEach((a, b) =>
+            {
+                if (!w1.Exists(q => q.ZwierzeId == a.ZwierzeId))
+                    w1.Add(a);
+                else
                 {
-                    if (wiadomosciWyslane[i + 1].ZwierzeId != wiadomosciWyslane[i].ZwierzeId
-                        || wiadomosciWyslane[i + 1].SenderId != wiadomosciWyslane[i].SenderId)
-                    {
-                        g.Add(wiadomosciWyslane[i+1]);
-                    }
+                    ///such value with given key exits 
+                    ///check his id
+                    if (!w1.Exists(n => (n.ZwierzeId == a.ZwierzeId) && (n.ReceiverId == a.ReceiverId)))
+                        w1.Add(a);
                 }
-            }
+            });
+
+            var w2 = new List<Wiadomosc>();
+            wiadomosciOtrzymane.ForEach((a, b) =>
+            {
+                if (!w2.Exists(q => q.ZwierzeId == a.ZwierzeId))
+                    w2.Add(a);
+                else
+                {
+                    ///such value with given key exits 
+                    ///check his id
+                    if (!w2.Exists(n => (n.ZwierzeId == a.ZwierzeId) && (n.SenderId == a.SenderId)))
+                        w2.Add(a);
+                }
+            });
+
+            //Dopre wartosci niemniej trzeba usunac duplikaty!
+
+
+            w1.AddRange(w2);
+            w1 = w1.OrderByDescending(a => a.DateAndTimeOfSend).Distinct().ToList();
+
+            //for(int i = 0;i<wiadomosciOtrzymane.Count;i++)
+            //{
+            //    if(i == 0)
+            //    {
+            //        if (wiadomosciOtrzymane[i + 1].ZwierzeId != wiadomosciOtrzymane[i].ZwierzeId
+            //            || wiadomosciOtrzymane[i + 1].SenderId != wiadomosciOtrzymane[i].SenderId)
+            //        {
+            //            g.Add(wiadomosciOtrzymane[i]);
+            //        }
+            //    }
+
+            //    if (i < wiadomosciOtrzymane.Count-1)
+            //    {
+            //        if (wiadomosciOtrzymane[i + 1].ZwierzeId != wiadomosciOtrzymane[i].ZwierzeId
+            //            || wiadomosciOtrzymane[i + 1].SenderId != wiadomosciOtrzymane[i].SenderId)
+            //        {
+            //            g.Add(wiadomosciOtrzymane[i+1]);
+            //        }
+            //    }
+            //}
+            //for (int i = 0; i < wiadomosciWyslane.Count; i++)
+            //{
+            //    if(i == 0)
+            //    {
+            //        if (wiadomosciWyslane[i + 1].ZwierzeId != wiadomosciWyslane[i].ZwierzeId
+            //            || wiadomosciWyslane[i + 1].SenderId != wiadomosciWyslane[i].SenderId)
+            //        {
+            //            g.Add(wiadomosciWyslane[i]);
+            //        }
+            //    }
+
+            //    if (i < wiadomosciWyslane.Count-1)
+            //    {
+            //        if (wiadomosciWyslane[i + 1].ZwierzeId != wiadomosciWyslane[i].ZwierzeId
+            //            || wiadomosciWyslane[i + 1].SenderId != wiadomosciWyslane[i].SenderId)
+            //        {
+            //            g.Add(wiadomosciWyslane[i+1]);
+            //        }
+            //    }
+            //}
 
             var c = g.ToList();
 
@@ -489,7 +527,7 @@ namespace RolnikowePole.Controllers
 
             
 
-            g.ForEach(a =>
+            w1.ForEach(a =>
             {
                 wiadomosci.Add(new WiadomoscZIdViewModel()
                 {
