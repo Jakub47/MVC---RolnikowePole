@@ -340,7 +340,7 @@ namespace RolnikowePole.Controllers
                     {
                         var sourceImage = Image.FromStream(file.InputStream);
 
-                        sourceImage = ResizeImage(sourceImage, 700, 400);
+                        sourceImage = ResizeImage(sourceImage, 500, 500);
 
                         //Generowanie plik
                         var fileExt = Path.GetExtension(file.FileName);
