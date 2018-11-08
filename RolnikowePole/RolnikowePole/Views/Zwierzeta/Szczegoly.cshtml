@@ -83,7 +83,7 @@
         {
             if (User.Identity.GetUserId() != Model.Zwierze.UserId)
             {
-                using (Ajax.BeginForm("WyslijWiadomosc", "Manage",
+                using (Ajax.BeginForm("WyslijWiadomosc", "Manage", new { FromSzczegoly = true },
                         new AjaxOptions
                         {
                             HttpMethod = "POST",
@@ -91,7 +91,7 @@
                             OnSuccess = "alert('Pomyslnie wyslano wiadomosc')"
                         }))
                 {
-                    { Model.wiadomosc.DateAndTimeOfSend = DateTime.Now; Model.wiadomosc.ZwierzeId = Model.Zwierze.ZwierzeId; }
+                { Model.wiadomosc.DateAndTimeOfSend = DateTime.Now; Model.wiadomosc.ZwierzeId = Model.Zwierze.ZwierzeId; }
 
                 @Html.HiddenFor(m => m.wiadomosc.ReceiverId)
                 @Html.HiddenFor(m => m.wiadomosc.SenderId)

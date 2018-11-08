@@ -478,6 +478,24 @@ namespace RolnikowePole.Controllers
             w1.AddRange(w2);
             w1 = w1.OrderByDescending(a => a.DateAndTimeOfSend).Distinct().ToList();
 
+            for (int i = 0; i < w1.Count; i++)
+            {
+                    for (int y = 0; y < w1.Count; y++)
+                    {
+                        var ww = w1[i];
+                        var cc = w1[y];
+
+                        if ((w1[i].ZwierzeId == w1[y].ZwierzeId) && (w1[i].ReceiverId == w1[y].SenderId &&
+                           w1[i].SenderId == w1[y].ReceiverId))
+                        {
+                            if (w1[i].DateAndTimeOfSend > w1[y].DateAndTimeOfSend)
+                                w1.Remove(w1[y]);
+                            else if (w1[i].DateAndTimeOfSend < w1[y].DateAndTimeOfSend)
+                            { w1.Remove(w1[i]); continue; }
+                        }
+                    }
+                
+            }
             //for(int i = 0;i<wiadomosciOtrzymane.Count;i++)
             //{
             //    if(i == 0)
@@ -487,7 +505,7 @@ namespace RolnikowePole.Controllers
             //        {
             //            g.Add(wiadomosciOtrzymane[i]);
             //        }
-            //    }
+            //    }0
 
             //    if (i < wiadomosciOtrzymane.Count-1)
             //    {
@@ -698,7 +716,7 @@ namespace RolnikowePole.Controllers
         }
 
         [HttpPost]
-        public ActionResult WyslijWiadomosc(Wiadomosc wiadomosc)
+        public ActionResult WyslijWiadomosc(Wiadomosc wiadomosc, bool FromSzczegoly = false)
         {
             //db.Users.Find(wiadomosc.ReceiverId).ReceiverMessages.Add(wiadomosc);
             //db.Users.Find(wiadomosc.SenderId).SenderMessages.Add(wiadomosc);
@@ -730,6 +748,10 @@ namespace RolnikowePole.Controllers
                     }
                 }
             }
+            if(FromSzczegoly)
+            {
+                return null;
+            }
             var userLogged = UserManager.FindById(User.Identity.GetUserId());
             ViewBag.ID = userLogged.Id;
             var userDiffrent = UserManager.FindById(wiadomosc.ReceiverId);
@@ -739,6 +761,18 @@ namespace RolnikowePole.Controllers
                                                      && ((a.ReceiverId == userDiffrent.Id && a.SenderId == userLogged.Id)
                                                      || (a.SenderId == userDiffrent.Id && a.ReceiverId == userLogged.Id))).ToList();
 
+            foreach (var item in wszystkieWiadomosci)
+            {
+                if (item.Sender == null)
+                {
+                    item.Sender = UserManager.FindById(item.SenderId);
+                }
+
+                if(item.Receiver == null)
+                {
+                    item.Receiver = UserManager.FindById(item.ReceiverId);
+                }
+            }
 
             var idZwierza = wiadomosc.ZwierzeId;
             string idReceiverId = wiadomosc.ReceiverId;
