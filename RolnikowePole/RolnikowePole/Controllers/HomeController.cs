@@ -118,11 +118,66 @@ namespace RolnikowePole.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 var user = UserManager.FindById(User.Identity.GetUserId());
-                var wiadomosciUzytkownika = db.Wiadomosci.Where(a => a.ReceiverId == user.Id || a.SenderId == user.Id).OrderByDescending(a => a.DateAndTimeOfSend).DistinctBy(a =>
-                                                                                                                                   a.ZwierzeId).ToList();
-                if (wiadomosciUzytkownika.TrueForAll(a => a.Read == false && a.ReceiverId == user.Id))
+                if (user.SenderMessages != null || user.ReceiverMessages != null)
                 {
-                    ViewBag.Klasa = "fas fa-envelope";
+                    var wiadomosciWyslane = user.SenderMessages.OrderByDescending(a => a.DateAndTimeOfSend).ToList();
+                    var wiadomosciOtrzymane = user.ReceiverMessages.OrderByDescending(a => a.DateAndTimeOfSend).ToList();
+                    var w1 = new List<Wiadomosc>();
+                    wiadomosciWyslane.ForEach((a, b) =>
+                    {
+                        if (!w1.Exists(q => q.ZwierzeId == a.ZwierzeId))
+                            w1.Add(a);
+                        else
+                        {
+                        ///such value with given key exits 
+                        ///check his id
+                        if (!w1.Exists(n => (n.ZwierzeId == a.ZwierzeId) && (n.ReceiverId == a.ReceiverId)))
+                                w1.Add(a);
+                        }
+                    });
+
+                    var w2 = new List<Wiadomosc>();
+                    wiadomosciOtrzymane.ForEach((a, b) =>
+                    {
+                        if (!w2.Exists(q => q.ZwierzeId == a.ZwierzeId))
+                            w2.Add(a);
+                        else
+                        {
+                        ///such value with given key exits 
+                        ///check his id
+                        if (!w2.Exists(n => (n.ZwierzeId == a.ZwierzeId) && (n.SenderId == a.SenderId)))
+                                w2.Add(a);
+                        }
+                    });
+
+                    w1.AddRange(w2);
+                    w1 = w1.OrderByDescending(a => a.DateAndTimeOfSend).Distinct().ToList();
+
+                    for (int i = 0; i < w1.Count; i++)
+                    {
+                        for (int y = 0; y < w1.Count; y++)
+                        {
+                            var ww = w1[i];
+                            var cc = w1[y];
+
+                            if ((w1[i].ZwierzeId == w1[y].ZwierzeId) && (w1[i].ReceiverId == w1[y].SenderId &&
+                               w1[i].SenderId == w1[y].ReceiverId))
+                            {
+                                if (w1[i].DateAndTimeOfSend > w1[y].DateAndTimeOfSend)
+                                    w1.Remove(w1[y]);
+                                else if (w1[i].DateAndTimeOfSend < w1[y].DateAndTimeOfSend)
+                                { w1.Remove(w1[i]); continue; }
+                            }
+                        }
+                    }
+
+                    foreach (var item in w1)
+                    {
+                        if (item.Read == false && (User.Identity.GetUserId() == item.ReceiverId))
+                        {
+                            ViewBag.Klasa = "fas fa-envelope";
+                        }
+                    }
                 }
             }
             return PartialView("~/Views/Shared/_LoginPartial.cshtml");

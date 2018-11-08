@@ -494,7 +494,6 @@ namespace RolnikowePole.Controllers
                             { w1.Remove(w1[i]); continue; }
                         }
                     }
-                
             }
             //for(int i = 0;i<wiadomosciOtrzymane.Count;i++)
             //{
