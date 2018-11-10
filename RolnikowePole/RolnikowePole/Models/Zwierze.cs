@@ -40,6 +40,6 @@ namespace RolnikowePole.Models
         [StringLength(50)]
         public string OpisSkrocony { get; set; }
 
-        public virtual Gatunek Gatunek { get; set; }
+        public virtual ICollection<string> NazwyPlikowObrazkow { get; set; }
     }
 }

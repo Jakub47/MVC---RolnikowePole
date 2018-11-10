@@ -299,7 +299,7 @@ namespace RolnikowePole.Controllers
 
 
         [HttpPost]
-        public ActionResult DodajZwierze(EditZwierzeViewModel model, HttpPostedFileBase file)
+        public ActionResult DodajZwierze(EditZwierzeViewModel model, IEnumerable<HttpPostedFileBase> file)
         {
             var WszystkieZwierzeta = db.Zwierzeta.ToList();
             List<string> wojewodztwa = new List<string>();
@@ -338,29 +338,90 @@ namespace RolnikowePole.Controllers
                     //Czy Pozostałe pola zostały wypełnione poprawnie
                     if (ModelState.IsValid)
                     {
-                        var sourceImage = Image.FromStream(file.InputStream);
+                        if (file.Count() == 1)
+                        {
+                            var sourceImage = Image.FromStream(file.ElementAt(0).InputStream);
 
-                        sourceImage = ResizeImage(sourceImage, 500, 500);
+                            sourceImage = ResizeImage(sourceImage, 500, 500);
 
-                        //Generowanie plik
-                        var fileExt = Path.GetExtension(file.FileName);
-                        var filename = Guid.NewGuid() + fileExt; // Unikalny identyfikator + rozszerzenie
+                            //Generowanie plik
+                            var fileExt = Path.GetExtension(file.ElementAt(0).FileName);
+                            var filename = Guid.NewGuid() + fileExt; // Unikalny identyfikator + rozszerzenie
 
-                        //W jakim folderze ma byc umiesczony dany plik oraz jego nazwa! Oraz zapis
-                        var path = Path.Combine(Server.MapPath(AppConfig.ObrazkiFolderWzgledny), filename);
-                        //file.SaveAs(path);
-                        sourceImage.Save(path);
+                            //W jakim folderze ma byc umiesczony dany plik oraz jego nazwa! Oraz zapis
+                            var path = Path.Combine(Server.MapPath(AppConfig.ObrazkiFolderWzgledny), filename);
+                            //file.SaveAs(path);
+                            sourceImage.Save(path);
 
-                        model.Zwierze.
-                            = filename;
-                        model.Zwierze.DataDodania = DateTime.Now;
-                        model.Zwierze.UserId = User.Identity.GetUserId();
-                        //Oczywiscie mozna wykonac standardowa procedure db.Zwierze.Add(); db.SaveChanges(), ale...
-                        db.Entry(model.Zwierze).State = EntityState.Added;
-                        var user = UserManager.FindById(User.Identity.GetUserId());
+                            model.Zwierze.NazwaPlikuObrazka = filename;
+                            model.Zwierze.DataDodania = DateTime.Now;
+                            model.Zwierze.UserId = User.Identity.GetUserId();
+                            //Oczywiscie mozna wykonac standardowa procedure db.Zwierze.Add(); db.SaveChanges(), ale...
+                            db.Entry(model.Zwierze).State = EntityState.Added;
+                            var user = UserManager.FindById(User.Identity.GetUserId());
 
-                        db.SaveChanges();
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            int licznik = 0;
+                            foreach (var item in file)
+                            {
+                                if (licznik == 0)
+                                {
+                                    var sourceImage = Image.FromStream(item.InputStream);
 
+                                    sourceImage = ResizeImage(sourceImage, 500, 500);
+
+                                    //Generowanie plik
+                                    var fileExt = Path.GetExtension(item.FileName);
+                                    var filename = Guid.NewGuid() + fileExt; // Unikalny identyfikator + rozszerzenie
+
+                                    //W jakim folderze ma byc umiesczony dany plik oraz jego nazwa! Oraz zapis
+                                    var path = Path.Combine(Server.MapPath(AppConfig.ObrazkiFolderWzgledny), filename);
+                                    //file.SaveAs(path);
+                                    sourceImage.Save(path);
+
+                                    model.Zwierze.NazwaPlikuObrazka = filename;
+                                    if(model.Zwierze.NazwyPlikowObrazkow == null)
+                                        model.Zwierze.NazwyPlikowObrazkow = new List<string>();
+
+                                    model.Zwierze.NazwyPlikowObrazkow.Add(filename);
+                                    model.Zwierze.DataDodania = DateTime.Now;
+                                    model.Zwierze.UserId = User.Identity.GetUserId();
+                                    //Oczywiscie mozna wykonac standardowa procedure db.Zwierze.Add(); db.SaveChanges(), ale...
+                                    db.Entry(model.Zwierze).State = EntityState.Added;
+                                    var user = UserManager.FindById(User.Identity.GetUserId());
+
+                                    db.SaveChanges();
+                                    licznik++;
+                                }
+                                else
+                                {
+                                    var sourceImage = Image.FromStream(item.InputStream);
+
+                                    sourceImage = ResizeImage(sourceImage, 500, 500);
+
+                                    //Generowanie plik
+                                    var fileExt = Path.GetExtension(item.FileName);
+                                    var filename = Guid.NewGuid() + fileExt; // Unikalny identyfikator + rozszerzenie
+
+                                    //W jakim folderze ma byc umiesczony dany plik oraz jego nazwa! Oraz zapis
+                                    var path = Path.Combine(Server.MapPath(AppConfig.ObrazkiFolderWzgledny), filename);
+                                    //file.SaveAs(path);
+                                    sourceImage.Save(path);
+
+                                    model.Zwierze.NazwyPlikowObrazkow.Add(filename);
+                                    //Oczywiscie mozna wykonac standardowa procedure db.Zwierze.Add(); db.SaveChanges(), ale...
+                                    db.Entry(model.Zwierze).State = EntityState.Modified;
+                                    var user = UserManager.FindById(User.Identity.GetUserId());
+
+                                    db.SaveChanges();
+                                }
+                            }
+                            licznik = 0;
+                        }
+                        
                         return RedirectToAction("DodajZwierze", new { potwierdzenie = true });
                     }
                     else

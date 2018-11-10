@@ -446,6 +446,18 @@
     <Compile Include="Migrations\201810311607403_ds.Designer.cs">
       <DependentUpon>201810311607403_ds.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811101903286_Kilka obrazkow.cs" />
+    <Compile Include="Migrations\201811101903286_Kilka obrazkow.Designer.cs">
+      <DependentUpon>201811101903286_Kilka obrazkow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811101908312_Kilka obrazkowo.cs" />
+    <Compile Include="Migrations\201811101908312_Kilka obrazkowo.Designer.cs">
+      <DependentUpon>201811101908312_Kilka obrazkowo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811102014222_Kilka obrazkowow.cs" />
+    <Compile Include="Migrations\201811102014222_Kilka obrazkowow.Designer.cs">
+      <DependentUpon>201811102014222_Kilka obrazkowow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DaneUzytkownika.cs" />
     <Compile Include="Models\Gatunek.cs" />
@@ -587,6 +599,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810311607403_ds.resx">
       <DependentUpon>201810311607403_ds.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811101903286_Kilka obrazkow.resx">
+      <DependentUpon>201811101903286_Kilka obrazkow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811101908312_Kilka obrazkowo.resx">
+      <DependentUpon>201811101908312_Kilka obrazkowo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811102014222_Kilka obrazkowow.resx">
+      <DependentUpon>201811102014222_Kilka obrazkowow.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
