@@ -78,7 +78,7 @@
     {
     <div class="form-group">
         <label for="exampleFormControlFile1">Wprowadź zdjęcie</label>
-        <input type="file" name="file" class="form-control-file">
+        <input type="file" name="file" class="form-control-file" multiple>
         @Html.ValidationMessageFor(o => o.Zwierze.NazwaPlikuObrazka, null, new { @class = "form-text text-danger" })
     </div>
     }

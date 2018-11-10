@@ -351,7 +351,8 @@ namespace RolnikowePole.Controllers
                         //file.SaveAs(path);
                         sourceImage.Save(path);
 
-                        model.Zwierze.NazwaPlikuObrazka = filename;
+                        model.Zwierze.
+                            = filename;
                         model.Zwierze.DataDodania = DateTime.Now;
                         model.Zwierze.UserId = User.Identity.GetUserId();
                         //Oczywiscie mozna wykonac standardowa procedure db.Zwierze.Add(); db.SaveChanges(), ale...
