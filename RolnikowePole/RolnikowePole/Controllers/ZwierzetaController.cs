@@ -161,7 +161,8 @@ namespace RolnikowePole.Controllers
                 //Since i am working on testing examples their' properties may not be set due to initialization. 
                 //Later on this line must be modify to : daneUzytkownika = user.DaneUzytkownika
                 daneUzytkownika = user.DaneUzytkownika,
-                wiadomosc = W
+                wiadomosc = W,
+                Zdjecia = db.Zdjecie.Where(a=> a.ZwierzeId == zwierze.ZwierzeId).ToList()
             };
 
             ViewBag.Id = user.Id;

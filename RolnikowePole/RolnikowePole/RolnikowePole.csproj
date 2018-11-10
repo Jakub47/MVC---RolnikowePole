@@ -458,6 +458,10 @@
     <Compile Include="Migrations\201811102014222_Kilka obrazkowow.Designer.cs">
       <DependentUpon>201811102014222_Kilka obrazkowow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811102100087_LogikaZdjec.cs" />
+    <Compile Include="Migrations\201811102100087_LogikaZdjec.Designer.cs">
+      <DependentUpon>201811102100087_LogikaZdjec.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DaneUzytkownika.cs" />
     <Compile Include="Models\Gatunek.cs" />
@@ -466,6 +470,7 @@
     <Compile Include="Models\PozycjaZamowienia.cs" />
     <Compile Include="Models\Wiadomosc.cs" />
     <Compile Include="Models\Zamowienie.cs" />
+    <Compile Include="Models\Zdjecie.cs" />
     <Compile Include="Models\Zwierze.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -608,6 +613,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811102014222_Kilka obrazkowow.resx">
       <DependentUpon>201811102014222_Kilka obrazkowow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811102100087_LogikaZdjec.resx">
+      <DependentUpon>201811102100087_LogikaZdjec.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

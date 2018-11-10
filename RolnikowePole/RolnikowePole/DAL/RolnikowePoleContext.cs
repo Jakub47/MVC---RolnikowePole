@@ -31,6 +31,7 @@ namespace RolnikowePole.DAL
         public DbSet<Zamowienie> Zamowienia { get; set; }
         public DbSet<PozycjaZamowienia> PozycjeZamowienia { get; set; }
         public DbSet<Wiadomosc> Wiadomosci { get; set; }
+        public DbSet<Zdjecie> Zdjecie { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

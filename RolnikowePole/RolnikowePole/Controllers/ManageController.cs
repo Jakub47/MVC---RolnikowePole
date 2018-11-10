@@ -359,7 +359,6 @@ namespace RolnikowePole.Controllers
                             //Oczywiscie mozna wykonac standardowa procedure db.Zwierze.Add(); db.SaveChanges(), ale...
                             db.Entry(model.Zwierze).State = EntityState.Added;
                             var user = UserManager.FindById(User.Identity.GetUserId());
-
                             db.SaveChanges();
                         }
                         else
@@ -383,16 +382,20 @@ namespace RolnikowePole.Controllers
                                     sourceImage.Save(path);
 
                                     model.Zwierze.NazwaPlikuObrazka = filename;
-                                    if(model.Zwierze.NazwyPlikowObrazkow == null)
-                                        model.Zwierze.NazwyPlikowObrazkow = new List<string>();
 
-                                    model.Zwierze.NazwyPlikowObrazkow.Add(filename);
+                                    //model.Zwierze.NazwyPlikowObrazkow.Add(filename);
                                     model.Zwierze.DataDodania = DateTime.Now;
                                     model.Zwierze.UserId = User.Identity.GetUserId();
                                     //Oczywiscie mozna wykonac standardowa procedure db.Zwierze.Add(); db.SaveChanges(), ale...
                                     db.Entry(model.Zwierze).State = EntityState.Added;
                                     var user = UserManager.FindById(User.Identity.GetUserId());
-
+                                    Zdjecie zdjecie = new Zdjecie
+                                    {
+                                        FilePath = filename,
+                                        ZwierzeId = model.Zwierze.ZwierzeId,
+                                        Zwierze = model.Zwierze
+                                    };
+                                    db.Zdjecie.AddOrUpdate(zdjecie);
                                     db.SaveChanges();
                                     licznik++;
                                 }
@@ -411,9 +414,15 @@ namespace RolnikowePole.Controllers
                                     //file.SaveAs(path);
                                     sourceImage.Save(path);
 
-                                    model.Zwierze.NazwyPlikowObrazkow.Add(filename);
+                                    //model.Zwierze.NazwyPlikowObrazkow.Add(filename);
                                     //Oczywiscie mozna wykonac standardowa procedure db.Zwierze.Add(); db.SaveChanges(), ale...
-                                    db.Entry(model.Zwierze).State = EntityState.Modified;
+                                    Zdjecie zdjecie = new Zdjecie
+                                    {
+                                        FilePath = filename,
+                                        ZwierzeId = model.Zwierze.ZwierzeId,
+                                        Zwierze = model.Zwierze
+                                    };
+                                    db.Zdjecie.AddOrUpdate(zdjecie);
                                     var user = UserManager.FindById(User.Identity.GetUserId());
 
                                     db.SaveChanges();

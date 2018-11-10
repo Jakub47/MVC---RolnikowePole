@@ -15,7 +15,47 @@
         <!--/col-lg-3 -->
 
         <div class="col-lg-5">
-            <img class="img-fluid mb-2" style="height: 400px;" src="@Url.ObrazkiSciezka(Model.Zwierze.NazwaPlikuObrazka)" alt="">
+
+            @if (Model.Zdjecia.Count() != 0)
+            {
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+                    @foreach (var zdjecie in Model.Zdjecia)
+                    {
+                        if (zdjecie == Model.Zdjecia.First())
+                        {
+                            <div class="carousel-item active">
+                                <img class="d-block w-100" src="@Url.ObrazkiSciezka(zdjecie.FilePath)" alt="First slide">
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="carousel-item">
+                                <img class="d-block w-100" src="@Url.ObrazkiSciezka(zdjecie.FilePath)" alt="First slide">
+                            </div>
+                        }
+
+                    }
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+            }else
+            {
+                <img class="img-fluid mb-2" style="height: 400px;" src="@Url.ObrazkiSciezka(Model.Zwierze.NazwaPlikuObrazka)" alt="">
+            }
+
             @if (User.Identity.IsAuthenticated)
             {
                 if (User.Identity.GetUserId() != Model.Zwierze.UserId)

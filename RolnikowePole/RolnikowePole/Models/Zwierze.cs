@@ -40,6 +40,9 @@ namespace RolnikowePole.Models
         [StringLength(50)]
         public string OpisSkrocony { get; set; }
 
-        public virtual ICollection<string> NazwyPlikowObrazkow { get; set; }
+        //virutal for leazy loading which means that EF Will only load data when try to access them
+        public virtual ICollection<Zdjecie> Zdjecia { get; set; }
+        public virtual Gatunek Gatunek { get; set; }
+
     }
 }

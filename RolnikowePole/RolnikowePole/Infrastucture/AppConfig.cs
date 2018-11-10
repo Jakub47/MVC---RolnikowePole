@@ -27,5 +27,6 @@ namespace RolnikowePole.Infrastucture
                 return _obrazkiFolderWzgledny;
             }
         }
+
     }
 }
