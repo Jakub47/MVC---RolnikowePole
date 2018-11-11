@@ -200,6 +200,9 @@ namespace RolnikowePole.Controllers
             ViewBag.Wojewodztwa = wojewodztwa.Distinct();
             ViewBag.Gatunki = db.Gatunki.ToList().Select(a => a.NazwaGatunku);
 
+
+            
+
             List<Zwierze> WystawioneZwierzeta;
 
             //Dla administratorów zwracamy wszystkie zamowienia
@@ -214,7 +217,19 @@ namespace RolnikowePole.Controllers
                 //ZamowieniaUzytkownika = db.Zamowienia.Where(o => o.UserId == userId).Include("PozycjeZamowienia").OrderByDescending(o => o.DataDodania).ToArray();
             }
 
-            return View(WystawioneZwierzeta);
+            var vm = new List<WystawioneZwierzetaViewModel>();
+            WystawioneZwierzeta.ForEach(a =>
+            {
+                vm.Add(new WystawioneZwierzetaViewModel()
+                {
+                    WystawioneZwierzeta = a,
+                    Zdjecia = db.Zdjecie.Where(b => b.ZwierzeId == a.ZwierzeId).ToList()
+                });
+            });
+
+           
+
+            return View(vm);
         }
 
         [HttpPost]

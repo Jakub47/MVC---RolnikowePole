@@ -487,6 +487,7 @@
     <Compile Include="ViewModels\WiadomosciViewModel.cs" />
     <Compile Include="ViewModels\WiadomoscViewModel.cs" />
     <Compile Include="ViewModels\WiadomoscZIdViewModel.cs" />
+    <Compile Include="ViewModels\WystawioneZwierzetaViewModel.cs" />
     <Compile Include="ViewModels\ZwierzetaGatunkiViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
