@@ -359,6 +359,13 @@ namespace RolnikowePole.Controllers
                             //Oczywiscie mozna wykonac standardowa procedure db.Zwierze.Add(); db.SaveChanges(), ale...
                             db.Entry(model.Zwierze).State = EntityState.Added;
                             var user = UserManager.FindById(User.Identity.GetUserId());
+                            Zdjecie zdjecie = new Zdjecie
+                            {
+                                FilePath = filename,
+                                ZwierzeId = model.Zwierze.ZwierzeId,
+                                Zwierze = model.Zwierze
+                            };
+                            db.Zdjecie.AddOrUpdate(zdjecie);
                             db.SaveChanges();
                         }
                         else
@@ -783,6 +790,58 @@ namespace RolnikowePole.Controllers
             };
 
             return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult UploadFiles(int id)
+        {
+            // Checking no of files injected in Request object  
+            if (Request.Files.Count > 0)
+            {
+                try
+                {
+                    //  Get all files from Request object  
+                    HttpFileCollectionBase files = Request.Files;
+                    for (int i = 0; i < files.Count; i++)
+                    {
+
+                        HttpPostedFileBase file = files[i];
+                        var sourceImage = Image.FromStream(file.InputStream);
+
+                        sourceImage = ResizeImage(sourceImage, 500, 500);
+
+                        //Generowanie plik
+                        var fileExt = Path.GetExtension(file.FileName);
+                        var filename = Guid.NewGuid() + fileExt; // Unikalny identyfikator + rozszerzenie
+
+                        //W jakim folderze ma byc umiesczony dany plik oraz jego nazwa! Oraz zapis
+                        var path = Path.Combine(Server.MapPath(AppConfig.ObrazkiFolderWzgledny), filename);
+                        //file.SaveAs(path);
+                        sourceImage.Save(path);
+
+                        var zwierze = db.Zwierzeta.Find(id);
+
+                        Zdjecie zdjecie = new Zdjecie
+                        {
+                            FilePath = filename,
+                            ZwierzeId = id,
+                            Zwierze = zwierze
+                        };
+                        db.Zdjecie.AddOrUpdate(zdjecie);
+                        db.SaveChanges();
+                    }
+                    // Returns message that successfully uploaded  
+                    return Json("File Uploaded Successfully!");
+                }
+                catch (Exception ex)
+                {
+                    return Json("Error occurred. Error details: " + ex.Message);
+                }
+            }
+            else
+            {
+                return Json("No files selected.");
+            }
         }
 
         [HttpPost]
