@@ -233,6 +233,58 @@ namespace RolnikowePole.Controllers
         }
 
         [HttpPost]
+        public JsonResult UsunZdjecie(int zdjecieId)
+        {
+            var Zdjecie = db.Zdjecie.Find(zdjecieId);
+            db.Entry(Zdjecie).State = EntityState.Deleted;
+            db.SaveChanges();
+            //Check if current user is admin
+            bool IsAdmin = User.IsInRole("Admin");
+            ViewBag.UserIsAdmin = IsAdmin;
+
+            var WszystkieZwierzeta = db.Zwierzeta.ToList();
+            List<string> wojewodztwa = new List<string>();
+            WszystkieZwierzeta.ForEach(a =>
+            {
+                //When launching delete a.Wojewodztwo != null
+                if (a.Wojewodztwo != null && !a.Wojewodztwo.Equals(String.Empty))
+                    wojewodztwa.Add(a.Wojewodztwo);
+            });
+
+            ViewBag.Wojewodztwa = wojewodztwa.Distinct();
+            ViewBag.Gatunki = db.Gatunki.ToList().Select(a => a.NazwaGatunku);
+
+
+
+
+            List<Zwierze> WystawioneZwierzeta;
+
+            //Dla administratorów zwracamy wszystkie zamowienia
+            if (IsAdmin)
+            {
+                WystawioneZwierzeta = db.Zwierzeta.ToList();
+            }
+            else
+            {
+                var user = UserManager.FindById(User.Identity.GetUserId());
+                WystawioneZwierzeta = db.Zwierzeta.Where(a => a.UserId == user.Id).ToList();
+                //ZamowieniaUzytkownika = db.Zamowienia.Where(o => o.UserId == userId).Include("PozycjeZamowienia").OrderByDescending(o => o.DataDodania).ToArray();
+            }
+
+            var vm = new List<WystawioneZwierzetaViewModel>();
+            WystawioneZwierzeta.ForEach(a =>
+            {
+                vm.Add(new WystawioneZwierzetaViewModel()
+                {
+                    WystawioneZwierzeta = a,
+                    Zdjecia = db.Zdjecie.Where(b => b.ZwierzeId == a.ZwierzeId).ToList()
+                });
+            });
+
+            return Json(vm, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
         [Authorize(Roles = "Admin")]
         public StanZamowienia ZmianaStanuZamowienia(Zamowienie zamowienie)
         {
