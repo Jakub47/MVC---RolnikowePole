@@ -236,6 +236,7 @@ namespace RolnikowePole.Controllers
         public JsonResult UsunZdjecie(int zdjecieId)
         {
             var Zdjecie = db.Zdjecie.Find(zdjecieId);
+            var ZwierzeId = Zdjecie.ZwierzeId;
             db.Entry(Zdjecie).State = EntityState.Deleted;
             db.SaveChanges();
             //Check if current user is admin
@@ -281,8 +282,10 @@ namespace RolnikowePole.Controllers
                 });
             });
 
-            return Json(vm, JsonRequestBehavior.AllowGet);
+            var result = new { Result = vm, ID = ZwierzeId };
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
+
 
         [HttpPost]
         [Authorize(Roles = "Admin")]

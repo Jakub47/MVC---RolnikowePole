@@ -6,12 +6,12 @@
 }
 
 <div class="container">
-    <div class="row" id="updateThis">
+    <div class="row">
         @if (Model.Count() >= 0)
         {
             foreach (var pozycjaZamowienia in Model)
             {
-                <div class="col-lg-4 col-md-6 mb-4">
+                <div class="col-lg-4 col-md-6 mb-4" id="@pozycjaZamowienia.WystawioneZwierzeta.ZwierzeId">
                     @using (Ajax.BeginForm("ListaWystawionychZwierzakow", pozycjaZamowienia, new AjaxOptions
                     {
                         Confirm = "Potwierdź zmodyfikowanie elementu",
@@ -186,12 +186,12 @@
             $zdjecieId = $zdjecie.attr('name');
 
             $.ajax({
-                type: 'POST',
-                url: "/Manage/UsunZdjecie",
-                data: { zdjecieId: $zdjecieId },
-                success: function (data) {
+                type: 'post',
+                url: "/manage/usunzdjecie",
+                data: { zdjecieid: $zdjecieid },
+                success: function (result) {
                     console.log('usunieto');
-                    $('#updateThis').html(data);
+                    $('#' + result.ID).html(data);
                 }
             });
             

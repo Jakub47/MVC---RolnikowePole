@@ -541,6 +541,7 @@
     <Content Include="Views\Manage\_Wiadomosci.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\EmailDoAdmina.cshtml" />
+    <Content Include="Views\Manage\_Zdjecia.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
