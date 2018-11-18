@@ -184,11 +184,11 @@
 
             //Id zdjecia do usuniecia
             $zdjecieId = $zdjecie.attr('name');
-
+            
             $.ajax({
                 type: 'post',
-                url: "/manage/usunzdjecie",
-                data: { zdjecieid: $zdjecieid },
+                url: "/manage/UsunZdjecie",
+                data: { zdjecieid: $zdjecieId },
                 success: function (result) {
                     console.log('usunieto');
                     $('#' + result.ID).html(data);
