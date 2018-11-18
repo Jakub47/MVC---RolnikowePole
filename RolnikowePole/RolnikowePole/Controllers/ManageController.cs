@@ -233,7 +233,7 @@ namespace RolnikowePole.Controllers
         }
 
         [HttpPost]
-        public JsonResult UsunZdjecie(int zdjecieId)
+        public ActionResult UsunZdjecie(int zdjecieId)
         {
             var Zdjecie = db.Zdjecie.Find(zdjecieId);
             var ZwierzeId = Zdjecie.ZwierzeId;
@@ -282,8 +282,11 @@ namespace RolnikowePole.Controllers
                 });
             });
 
-            var result = new { Result = vm, ID = ZwierzeId };
-            return Json(result, JsonRequestBehavior.AllowGet);
+            var zw = vm.Where(a => a.WystawioneZwierzeta.ZwierzeId == ZwierzeId).FirstOrDefault();
+
+            return PartialView("_Zdjecia", zw);
+            //var result = new { Result = vm, ID = ZwierzeId };
+            //return Json(result);
         }
 
 
@@ -865,6 +868,8 @@ namespace RolnikowePole.Controllers
         [HttpPost]
         public ActionResult UploadFiles(int id)
         {
+            var zwierze = db.Zwierzeta.Find(id);
+
             // Checking no of files injected in Request object  
             if (Request.Files.Count > 0)
             {
@@ -888,9 +893,7 @@ namespace RolnikowePole.Controllers
                         var path = Path.Combine(Server.MapPath(AppConfig.ObrazkiFolderWzgledny), filename);
                         //file.SaveAs(path);
                         sourceImage.Save(path);
-
-                        var zwierze = db.Zwierzeta.Find(id);
-
+                        
                         Zdjecie zdjecie = new Zdjecie
                         {
                             FilePath = filename,
@@ -900,8 +903,14 @@ namespace RolnikowePole.Controllers
                         db.Zdjecie.AddOrUpdate(zdjecie);
                         db.SaveChanges();
                     }
-                    // Returns message that successfully uploaded  
-                    return Json("File Uploaded Successfully!");
+
+                    var zz = db.Zdjecie.Where(a => a.ZwierzeId == id).ToList();
+
+                    var vm = new WystawioneZwierzetaViewModel() { WystawioneZwierzeta = zwierze, Zdjecia = zz };
+
+
+                    return PartialView("_Zdjecia", vm);
+
                 }
                 catch (Exception ex)
                 {

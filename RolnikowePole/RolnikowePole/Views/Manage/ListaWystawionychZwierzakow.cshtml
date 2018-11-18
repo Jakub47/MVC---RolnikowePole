@@ -11,7 +11,7 @@
         {
             foreach (var pozycjaZamowienia in Model)
             {
-                <div class="col-lg-4 col-md-6 mb-4" id="@pozycjaZamowienia.WystawioneZwierzeta.ZwierzeId">
+                <div class="col-lg-4 col-md-6 mb-4" >
                     @using (Ajax.BeginForm("ListaWystawionychZwierzakow", pozycjaZamowienia, new AjaxOptions
                     {
                         Confirm = "Potwierdź zmodyfikowanie elementu",
@@ -26,7 +26,10 @@
                         <div class="card" style="width: 18rem;">
                             <a href="@Url.Action("Szczegoly", "Zwierzeta", new { id = pozycjaZamowienia.WystawioneZwierzeta.ZwierzeId })">
 
-                                @if (pozycjaZamowienia.Zdjecia.Count() != 0)
+                                @{Html.RenderPartial("_Zdjecia", pozycjaZamowienia);}
+
+
+                                @*@if (pozycjaZamowienia.Zdjecia.Count() != 0)
                                 {
                                     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="false">
                                         <div class="carousel-inner">
@@ -34,7 +37,7 @@
                                             {
                                                 if (zdjecie == pozycjaZamowienia.Zdjecia.First())
                                                 {
-                                                    <div class="carousel-item active" >
+                                                    <div class="carousel-item active">
                                                         <img class="d-block w-100" name="@zdjecie.ZdjecieID" src="@Url.ObrazkiSciezka(zdjecie.FilePath)" alt="First slide">
                                                     </div>
                                                 }
@@ -49,21 +52,21 @@
                                         </div>
                                         @if (pozycjaZamowienia.Zdjecia.Count() > 1)
                                         {
-                                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                            <span class="sr-only">Previous</span>
-                                        </a>
-                                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                            <span class="sr-only">Next</span>
-                                        </a>
+                                            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
                                         }
                                     </div>
                                 }
                                 else
                                 {
                                     <img class="card-img-top" id="zdjecie" name="@pozycjaZamowienia.WystawioneZwierzeta.ZwierzeId" src="@Url.Content("~/Content/Kursy/" + pozycjaZamowienia.WystawioneZwierzeta.NazwaPlikuObrazka)" alt="Card image cap" />
-                                }
+                                }*@
                             </a>
                             <input type="button" onclick="btnClick(this)" id="UsunZdjecie" value="Usun" class="btn btn-danger mt-2" />
                             Dodaj zdjęcie: <input type="file" name="@pozycjaZamowienia.WystawioneZwierzeta.ZwierzeId" value="Dodaj" id="txtUploadFile" class="makethispretty form-control-file ml-5 mt-1" />
@@ -174,31 +177,42 @@
             $zdjecie = $ele.prev().children().first();
             
             if (typeof $zdjecie.attr('id') != 'undefined') {
-                console.log('jedno zdjecie');
+               // console.log('jedno zdjecie');
             }
             else
             {
                 $zdjecie = $('.active').children().first();
-                console.log('kilka zdjec');
+               // console.log('kilka zdjec');
             }
 
             //Id zdjecia do usuniecia
             $zdjecieId = $zdjecie.attr('name');
-            
+            $zwierzeId = $zdjecie.attr('id');
+
+            console.log($zwierzeId);
             $.ajax({
                 type: 'post',
                 url: "/manage/UsunZdjecie",
                 data: { zdjecieid: $zdjecieId },
                 success: function (result) {
-                    console.log('usunieto');
-                    $('#' + result.ID).html(data);
+                    $('#' + $zwierzeId).replaceWith(result);
+                    alert('Poprawnie usunięto zdjęcie!');
+                    //console.log('------------------------');
+                    //console.log('#' + result.ID);
+                    //console.log('------------------------');
+                    //console.log(result.Result);
+                    ////$('#' + result.ID).html(result.);
+
                 }
             });
-            
+
+            return false;
         }
 
         $('#txtUploadFile').on('change', function (e) {
             var files = e.target.files;
+            $zwierzeId = $(this).attr('name');
+
             //var myID = 3; //uncomment this to make sure the ajax URL works
             if (files.length > 0) {
                 if (window.FormData !== undefined) {
@@ -213,7 +227,9 @@
                         contentType: false,
                         processData: false,
                         data: data,
-                        success: function (result) {
+                        success: function (result)
+                        {
+                            $('#' + $zwierzeId).replaceWith(result);
                             alert('dodano!');
                         },
                         error: function (xhr, status, p3, p4) {
