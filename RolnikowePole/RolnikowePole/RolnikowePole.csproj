@@ -237,6 +237,7 @@
     <Content Include="Content\Kursy\Wojtek.png" />
     <Content Include="Content\Kursy\owca.png" />
     <Content Include="Content\Kursy\swinia.png" />
+    <Content Include="Content\less\normalize.css" />
     <Content Include="Content\Prototype.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />

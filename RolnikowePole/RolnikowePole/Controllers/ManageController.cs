@@ -232,7 +232,7 @@ namespace RolnikowePole.Controllers
             return View(vm);
         }
 
-        [HttpPost]
+        [HttpDelete]
         public ActionResult UsunZdjecie(int zdjecieId)
         {
             var Zdjecie = db.Zdjecie.Find(zdjecieId);
@@ -254,9 +254,6 @@ namespace RolnikowePole.Controllers
 
             ViewBag.Wojewodztwa = wojewodztwa.Distinct();
             ViewBag.Gatunki = db.Gatunki.ToList().Select(a => a.NazwaGatunku);
-
-
-
 
             List<Zwierze> WystawioneZwierzeta;
 
@@ -282,9 +279,15 @@ namespace RolnikowePole.Controllers
                 });
             });
 
+            //Tutak
+            var zz = db.Zdjecie.Where(a => a.ZwierzeId == ZwierzeId).ToList();
+            var zwierze = db.Zwierzeta.Find(ZwierzeId);
+            var cc = new WystawioneZwierzetaViewModel() { WystawioneZwierzeta = zwierze, Zdjecia = zz };
+            //Tuaj
+
             var zw = vm.Where(a => a.WystawioneZwierzeta.ZwierzeId == ZwierzeId).FirstOrDefault();
 
-            return PartialView("_Zdjecia", zw);
+            return PartialView("_Zdjecia", cc);
             //var result = new { Result = vm, ID = ZwierzeId };
             //return Json(result);
         }
@@ -591,10 +594,6 @@ namespace RolnikowePole.Controllers
             //1)W liscie znajduje sie taki obiekt z kluczem zwierza jezeli nie dodaj
             //2)jezeli nastepny obiekt ma taki sam klucz zwierza ale inny klucz obcy idUser to dodaj
             //Oczywiscie przypisz te wiadomosci z bazy do zmiennej a nastpenie posortuje OrderByDescending!
-
-
-
-
             var w1 = new List<Wiadomosc>();
             wiadomosciWyslane.ForEach((a, b) =>
             {

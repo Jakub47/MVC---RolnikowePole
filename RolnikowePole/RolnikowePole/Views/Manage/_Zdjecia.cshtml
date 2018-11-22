@@ -3,8 +3,8 @@
 
     @if (Model.Zdjecia.Count() != 0)
     {
-        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="false">
-            <div class="carousel-inner" id="@Model.WystawioneZwierzeta.ZwierzeId">
+        <div id="carouselExampleIndicators"  class="carousel slide" data-ride="carousel" data-interval="false">
+            <div class="carousel-inner" id="@Model.WystawioneZwierzeta.ZwierzeId" >
                 @foreach (var zdjecie in Model.Zdjecia)
                 {
                     if (zdjecie == Model.Zdjecia.First())

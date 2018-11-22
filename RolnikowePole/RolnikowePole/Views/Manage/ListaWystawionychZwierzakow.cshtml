@@ -189,12 +189,16 @@
             $zdjecieId = $zdjecie.attr('name');
             $zwierzeId = $zdjecie.attr('id');
 
-            console.log($zwierzeId);
+            console.log('ohuih; + ' + $zwierzeId);
+            console.log('ohuih; + ' + $zdjecieId);
+
             $.ajax({
-                type: 'post',
+                type: 'delete',
                 url: "/manage/UsunZdjecie",
                 data: { zdjecieid: $zdjecieId },
-                success: function (result) {
+                success: function (result)
+                {
+                    console.log(result);
                     $('#' + $zwierzeId).replaceWith(result);
                     alert('Poprawnie usunięto zdjęcie!');
                     //console.log('------------------------');
@@ -209,7 +213,46 @@
             return false;
         }
 
-        $('#txtUploadFile').on('change', function (e) {
+        //function upload()
+        //{
+        //    $('#txtUploadFile').on('change', function (e) {
+        //    var files = e.target.files;
+        //    $zwierzeId = $(this).attr('name');
+
+        //    //var myID = 3; //uncomment this to make sure the ajax URL works
+        //    if (files.length > 0) {
+        //        if (window.FormData !== undefined) {
+        //            var data = new FormData();
+        //            for (var x = 0; x < files.length; x++) {
+        //                data.append("file" + x, files[x]);
+        //            }
+        //            data.append("id", $(this).attr('name'));
+        //            $.ajax({
+        //                type: "POST",
+        //                url: '/Manage/UploadFiles',
+        //                contentType: false,
+        //                processData: false,
+        //                data: data,
+        //                success: function (result)
+        //                {
+        //                    $('#' + $zwierzeId).replaceWith(result);
+        //                    alert('dodano!');
+        //                },
+        //                error: function (xhr, status, p3, p4) {
+        //                    var err = "Error " + " " + status + " " + p3 + " " + p4;
+        //                    if (xhr.responseText && xhr.responseText[0] == "{")
+        //                        err = JSON.parse(xhr.responseText).Message;
+        //                    console.log(err);
+        //                }
+        //            });
+        //        } else {
+        //            alert("This browser doesn't support HTML5 file uploads!");
+        //        }
+        //    }
+        //});
+        //}
+
+        $(document).on('change', '#txtUploadFile', function (e) {
             var files = e.target.files;
             $zwierzeId = $(this).attr('name');
 
