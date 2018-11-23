@@ -68,8 +68,8 @@
                                     <img class="card-img-top" id="zdjecie" name="@pozycjaZamowienia.WystawioneZwierzeta.ZwierzeId" src="@Url.Content("~/Content/Kursy/" + pozycjaZamowienia.WystawioneZwierzeta.NazwaPlikuObrazka)" alt="Card image cap" />
                                 }*@
                             </a>
-                            <input type="button" onclick="btnClick(this)" id="UsunZdjecie" value="Usun" class="btn btn-danger mt-2" />
-                            Dodaj zdjęcie: <input type="file" name="@pozycjaZamowienia.WystawioneZwierzeta.ZwierzeId" value="Dodaj" id="txtUploadFile" class="makethispretty form-control-file ml-5 mt-1" />
+                            <input id="Delete-@pozycjaZamowienia.WystawioneZwierzeta.ZwierzeId" type="button" onclick="btnClick(this,@pozycjaZamowienia.WystawioneZwierzeta.ZwierzeId)" value="Usun" class="btn btn-danger mt-2" />
+                            Dodaj zdjęcie: <input type="file" name="@pozycjaZamowienia.WystawioneZwierzeta.ZwierzeId" value="Dodaj" id="Update-@pozycjaZamowienia.WystawioneZwierzeta.ZwierzeId" class="makethispretty txtUploadFile form-control-file ml-5 mt-1" />
                             <div class="card-body">
                                 <h5 class="card-title"> @Html.TextBoxFor(m => pozycjaZamowienia.WystawioneZwierzeta.Nazwa)</h5>
                                 @*<p class="card-text">
@@ -169,28 +169,57 @@
             //});
         });
 
-        function btnClick(ele)
+        function btnClick(ele, id)
         {
-            
-            $ele = $(ele);
+            //console.log('id:' + id);
+            $ele = $('#Delete-' + id);
 
-            $zdjecie = $ele.prev().children().first();
-            
-            if (typeof $zdjecie.attr('id') != 'undefined') {
-               // console.log('jedno zdjecie');
+            $zdjecie = $ele.prev();
+
+            //Jedno zjęcie
+            if ($zdjecie.is("a"))
+            {
+                $zdjecie = $ele.prev().children().first().children().first();
             }
             else
             {
-                $zdjecie = $('.active').children().first();
-               // console.log('kilka zdjec');
+                //<div class="carousel-inner" id="19">  <<< Przed active znalezc teraz element z klasa active
+                $elementBezActive = $ele.prev().children().first().children().first();
+
+                console.log('$elementBezActive: ' + $elementBezActive.attr('id'));
+
+                //Poszukac komendy odszukujacej div z danymi klasami
+                //$elementZActive = $elementBezActive.children().find("active").children().first();
+
+                $idd = $elementBezActive.attr('id');
+
+                console.log('$idd: ' + $idd);
+
+                var x = document.getElementsByClassName("active");
+
+                for (var i = 0; i < x.length; i++)
+                {
+                    if (x[i].parentElement.getAttribute('id').toString() == $idd)
+                    {
+                        var dzieci = x[i].children;
+                        $zdjecie = dzieci[0];
+                        break;
+                    }
+                }
+
+                //console.log(x[0].parentElement.getAttribute('id').toString());
+
+
+                //console.log($elementZActive.attr('name'));
+                //$zdjecie = $elementZActive;
             }
 
             //Id zdjecia do usuniecia
-            $zdjecieId = $zdjecie.attr('name');
-            $zwierzeId = $zdjecie.attr('id');
+            $zdjecieId = $($zdjecie).attr('name');
+            $zwierzeId = $($zdjecie).attr('id');
 
-            console.log('ohuih; + ' + $zwierzeId);
-            console.log('ohuih; + ' + $zdjecieId);
+            console.log('$zwierzeId:' + $zwierzeId);
+            console.log('$zdjecieId:' + $zdjecieId);
 
             $.ajax({
                 type: 'delete',
@@ -199,13 +228,17 @@
                 success: function (result)
                 {
                     console.log(result);
-                    $('#' + $zwierzeId).replaceWith(result);
+                    //$('#' + $zwierzeId).replaceWith(result);
+                    if ($('#carouselExampleIndicators-' + $zwierzeId).length)
+                    {
+                        $('#carouselExampleIndicators-' + $zwierzeId).replaceWith(result);
+                    }
+                    else
+                    {
+                        $('#' + $zwierzeId).replaceWith(result);
+                    }
+                    
                     alert('Poprawnie usunięto zdjęcie!');
-                    //console.log('------------------------');
-                    //console.log('#' + result.ID);
-                    //console.log('------------------------');
-                    //console.log(result.Result);
-                    ////$('#' + result.ID).html(result.);
 
                 }
             });
@@ -252,10 +285,10 @@
         //});
         //}
 
-        $(document).on('change', '#txtUploadFile', function (e) {
+        $(document).on('change', '.txtUploadFile', function (e)
+        {
             var files = e.target.files;
             $zwierzeId = $(this).attr('name');
-
             //var myID = 3; //uncomment this to make sure the ajax URL works
             if (files.length > 0) {
                 if (window.FormData !== undefined) {
@@ -272,7 +305,17 @@
                         data: data,
                         success: function (result)
                         {
-                            $('#' + $zwierzeId).replaceWith(result);
+                            //$('#' + $zwierzeId).replaceWith(result);
+                            //$('#carouselExampleIndicators-' + $zwierzeId).replaceWith(result);
+
+                            if ($('#carouselExampleIndicators-' + $zwierzeId).length)
+                            {
+                                $('#carouselExampleIndicators-' + $zwierzeId).replaceWith(result);
+                            }
+                            else
+                            {
+                                $('#' + $zwierzeId).replaceWith(result);
+                            }
                             alert('dodano!');
                         },
                         error: function (xhr, status, p3, p4) {
