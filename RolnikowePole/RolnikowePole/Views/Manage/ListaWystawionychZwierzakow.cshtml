@@ -11,7 +11,7 @@
         {
             foreach (var pozycjaZamowienia in Model)
             {
-                <div class="col-lg-4 col-md-6 mb-4" >
+                <div id="@pozycjaZamowienia.WystawioneZwierzeta.ZwierzeId" class="col-lg-4 col-md-6 mb-4" >
                     @using (Ajax.BeginForm("ListaWystawionychZwierzakow", pozycjaZamowienia, new AjaxOptions
                     {
                         Confirm = "Potwierdź zmodyfikowanie elementu",
@@ -125,9 +125,13 @@
                                     }
                                 </li>
 
-                                <li class="list-group-item text-center">
+                                <li class="list-group-item">
                                     <input type="submit" class="btn btn-warning btn-block" value="Zmień" />
                                 </li>
+                                <li class="list-group-item">
+                                    <input onclick="usunZwierze(@pozycjaZamowienia.WystawioneZwierzeta.ZwierzeId)" type="button" class="btn btn-danger btn-block" value="Usuń" />
+                                </li>
+
                             </ul>
                         </div>
                     }
@@ -246,44 +250,18 @@
             return false;
         }
 
-        //function upload()
-        //{
-        //    $('#txtUploadFile').on('change', function (e) {
-        //    var files = e.target.files;
-        //    $zwierzeId = $(this).attr('name');
-
-        //    //var myID = 3; //uncomment this to make sure the ajax URL works
-        //    if (files.length > 0) {
-        //        if (window.FormData !== undefined) {
-        //            var data = new FormData();
-        //            for (var x = 0; x < files.length; x++) {
-        //                data.append("file" + x, files[x]);
-        //            }
-        //            data.append("id", $(this).attr('name'));
-        //            $.ajax({
-        //                type: "POST",
-        //                url: '/Manage/UploadFiles',
-        //                contentType: false,
-        //                processData: false,
-        //                data: data,
-        //                success: function (result)
-        //                {
-        //                    $('#' + $zwierzeId).replaceWith(result);
-        //                    alert('dodano!');
-        //                },
-        //                error: function (xhr, status, p3, p4) {
-        //                    var err = "Error " + " " + status + " " + p3 + " " + p4;
-        //                    if (xhr.responseText && xhr.responseText[0] == "{")
-        //                        err = JSON.parse(xhr.responseText).Message;
-        //                    console.log(err);
-        //                }
-        //            });
-        //        } else {
-        //            alert("This browser doesn't support HTML5 file uploads!");
-        //        }
-        //    }
-        //});
-        //}
+        function usunZwierze(ID)
+        {
+            $.ajax({
+                type: 'delete',
+                url: "/manage/UsunZwierze",
+                data: { zwierzeID: ID },
+                success: function (result) {
+                    $('#' + ID).html(result);
+                    alert('Poprawnie usunięto Zwierze!');
+                }
+            });
+        }
 
         $(document).on('change', '.txtUploadFile', function (e)
         {

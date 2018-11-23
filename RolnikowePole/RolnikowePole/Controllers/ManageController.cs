@@ -292,6 +292,16 @@ namespace RolnikowePole.Controllers
             //return Json(result);
         }
 
+        [HttpDelete]
+        public ActionResult UsunZwierze(int zwierzeID)
+        {
+            var Zwierze = db.Zwierzeta.Find(zwierzeID);
+            var ZwierzeId = Zwierze.ZwierzeId;
+            db.Entry(Zwierze).State = EntityState.Deleted;
+            db.SaveChanges();
+            
+            return new EmptyResult();
+        }
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
