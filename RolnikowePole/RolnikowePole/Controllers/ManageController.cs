@@ -201,7 +201,7 @@ namespace RolnikowePole.Controllers
             ViewBag.Gatunki = db.Gatunki.ToList().Select(a => a.NazwaGatunku);
 
 
-            
+
 
             List<Zwierze> WystawioneZwierzeta;
 
@@ -227,7 +227,7 @@ namespace RolnikowePole.Controllers
                 });
             });
 
-           
+
 
             return View(vm);
         }
@@ -295,11 +295,21 @@ namespace RolnikowePole.Controllers
         [HttpDelete]
         public ActionResult UsunZwierze(int zwierzeID)
         {
+            //Usun Zwierze
             var Zwierze = db.Zwierzeta.Find(zwierzeID);
             var ZwierzeId = Zwierze.ZwierzeId;
             db.Entry(Zwierze).State = EntityState.Deleted;
+
+            //Usun Zdjecia
+            var Zdjecia = db.Zdjecie.Where(a => a.ZwierzeId == zwierzeID).ToList();
+            Zdjecia.ForEach(b => db.Zdjecie.Remove(b));
+
+            //Usun Wiadomosci
+            var wiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == zwierzeID).ToList();
+            wiadomosci.ForEach(b => db.Wiadomosci.Remove(b));
+
             db.SaveChanges();
-            
+
             return new EmptyResult();
         }
 
@@ -341,10 +351,10 @@ namespace RolnikowePole.Controllers
         {
             var user = UserManager.FindById(User.Identity.GetUserId());
 
-            if(user.DaneUzytkownika.Adres == null || user.DaneUzytkownika.Email == null || user.DaneUzytkownika.Imie == null || user.DaneUzytkownika.KodPocztowy == null ||
+            if (user.DaneUzytkownika.Adres == null || user.DaneUzytkownika.Email == null || user.DaneUzytkownika.Imie == null || user.DaneUzytkownika.KodPocztowy == null ||
                user.DaneUzytkownika.Miasto == null || user.DaneUzytkownika.Nazwisko == null || user.DaneUzytkownika.Telefon == null)
                 return RedirectToAction("Index", new { info = "Prosze wprowadzić swoje dane" });
-            
+
             var WszystkieZwierzeta = db.Zwierzeta.ToList();
             List<string> wojewodztwa = new List<string>();
             WszystkieZwierzeta.ForEach(a =>
@@ -408,7 +418,7 @@ namespace RolnikowePole.Controllers
             }
             else
             {
-                
+
                 //Co gdy użytkownik nie wybral pliku
                 if (file == null)
                 {
@@ -523,7 +533,7 @@ namespace RolnikowePole.Controllers
                             }
                             licznik = 0;
                         }
-                        
+
                         return RedirectToAction("DodajZwierze", new { potwierdzenie = true });
                     }
                     else
@@ -640,20 +650,20 @@ namespace RolnikowePole.Controllers
 
             for (int i = 0; i < w1.Count; i++)
             {
-                    for (int y = 0; y < w1.Count; y++)
-                    {
-                        var ww = w1[i];
-                        var cc = w1[y];
+                for (int y = 0; y < w1.Count; y++)
+                {
+                    var ww = w1[i];
+                    var cc = w1[y];
 
-                        if ((w1[i].ZwierzeId == w1[y].ZwierzeId) && (w1[i].ReceiverId == w1[y].SenderId &&
-                           w1[i].SenderId == w1[y].ReceiverId))
-                        {
-                            if (w1[i].DateAndTimeOfSend > w1[y].DateAndTimeOfSend)
-                                w1.Remove(w1[y]);
-                            else if (w1[i].DateAndTimeOfSend < w1[y].DateAndTimeOfSend)
-                            { w1.Remove(w1[i]); continue; }
-                        }
+                    if ((w1[i].ZwierzeId == w1[y].ZwierzeId) && (w1[i].ReceiverId == w1[y].SenderId &&
+                       w1[i].SenderId == w1[y].ReceiverId))
+                    {
+                        if (w1[i].DateAndTimeOfSend > w1[y].DateAndTimeOfSend)
+                            w1.Remove(w1[y]);
+                        else if (w1[i].DateAndTimeOfSend < w1[y].DateAndTimeOfSend)
+                        { w1.Remove(w1[i]); continue; }
                     }
+                }
             }
             //for(int i = 0;i<wiadomosciOtrzymane.Count;i++)
             //{
@@ -700,11 +710,12 @@ namespace RolnikowePole.Controllers
 
             //Teraz wiem ze wiadomosciWyslane powinny miec unikalny na podstawie klucza otrzymane a otrzymane to klucz wys
             var wiadomosciUzytkownika = db.Wiadomosci.Where(a => a.ReceiverId == user.Id || a.SenderId == user.Id)
-                .OrderByDescending(a => a.DateAndTimeOfSend).DistinctBy(a =>a.ZwierzeId ).ToList();
+                .OrderByDescending(a => a.DateAndTimeOfSend).DistinctBy(a => a.ZwierzeId).ToList();
 
-            
 
-            w1.ForEach(a =>
+            try
+            {
+                w1.ForEach(a =>
             {
                 wiadomosci.Add(new WiadomoscZIdViewModel()
                 {
@@ -717,7 +728,11 @@ namespace RolnikowePole.Controllers
                     Email = db.Users.Find(a.ReceiverId == user.Id ? a.SenderId : a.ReceiverId).Email
                 });
             });
-
+            }catch(NullReferenceException ex)
+            {
+                Debug.Write(ex.Data.Keys);
+                Debug.Write(ex.InnerException.TargetSite.Name);
+            }
 
             //wiadomosciWyslane.ForEach(a =>
             //{
@@ -809,7 +824,7 @@ namespace RolnikowePole.Controllers
             wszystkieWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && ((a.ReceiverId == idUser && a.SenderId == userLogged.Id)
                                                      || (a.SenderId == idUser && a.ReceiverId == userLogged.Id))).ToList();
 
-                                    ///Tutaj zmiana
+            ///Tutaj zmiana
             //if (Otrzymane)
             //{
             //    //var mojeWiadomosci = userLogged.SenderMessages.Where(a => a.ZwierzeId == idZwierza && a.ReceiverId == idUser).ToList();
@@ -902,7 +917,7 @@ namespace RolnikowePole.Controllers
                         var path = Path.Combine(Server.MapPath(AppConfig.ObrazkiFolderWzgledny), filename);
                         //file.SaveAs(path);
                         sourceImage.Save(path);
-                        
+
                         Zdjecie zdjecie = new Zdjecie
                         {
                             FilePath = filename,
@@ -965,7 +980,7 @@ namespace RolnikowePole.Controllers
                     }
                 }
             }
-            if(FromSzczegoly)
+            if (FromSzczegoly)
             {
                 return null;
             }
@@ -974,7 +989,7 @@ namespace RolnikowePole.Controllers
             var userDiffrent = UserManager.FindById(wiadomosc.ReceiverId);
             var wszystkieWiadomosci = new List<Wiadomosc>();
 
-            wszystkieWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == wiadomosc.ZwierzeId 
+            wszystkieWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == wiadomosc.ZwierzeId
                                                      && ((a.ReceiverId == userDiffrent.Id && a.SenderId == userLogged.Id)
                                                      || (a.SenderId == userDiffrent.Id && a.ReceiverId == userLogged.Id))).ToList();
 
@@ -985,7 +1000,7 @@ namespace RolnikowePole.Controllers
                     item.Sender = UserManager.FindById(item.SenderId);
                 }
 
-                if(item.Receiver == null)
+                if (item.Receiver == null)
                 {
                     item.Receiver = UserManager.FindById(item.ReceiverId);
                 }
@@ -998,7 +1013,7 @@ namespace RolnikowePole.Controllers
             //var inneWiadomosci = userDiffrent.SenderMessages.Where(a => a.ZwierzeId == idZwierza && a.SenderId == userLogged.Id).ToList();
             //var wszystkieWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && (a.ReceiverId == idReceiverId &&
             //                                         a.SenderId == idSenderID)).ToList();
-            
+
 
             //var inneWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && a.SenderId == idSenderID).ToList();
             return View("_Wiadomosci", wszystkieWiadomosci);
