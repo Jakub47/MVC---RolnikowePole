@@ -237,6 +237,17 @@ namespace RolnikowePole.Controllers
         {
             var Zdjecie = db.Zdjecie.Find(zdjecieId);
             var ZwierzeId = Zdjecie.ZwierzeId;
+
+            //Sprawdz ile zdjec jest obecnie przypisanych do tego zwierza
+            var Zdjecia = db.Zdjecie.Where(a => a.ZwierzeId == ZwierzeId && a.ZdjecieID == zdjecieId).ToList();
+
+            //Sprawdz czy usuwane zdjecie jest glownym zdjeciem tego Zwierza
+            var ZdjecieGlowne = db.Zwierzeta.Where(a => a.NazwaPlikuObrazka == Zdjecie.ZdjecieID.ToString()).SingleOrDefault();
+            if(ZdjecieGlowne != null)
+            {
+
+            }
+
             db.Entry(Zdjecie).State = EntityState.Deleted;
             db.SaveChanges();
             //Check if current user is admin
