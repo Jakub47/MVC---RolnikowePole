@@ -242,7 +242,7 @@ namespace RolnikowePole.Controllers
             var Zwierze = db.Zwierzeta.Find(ZwierzeId);
 
             //Sprawdz ile zdjec jest obecnie przypisanych do tego zwierza
-            var Zdjecia = db.Zdjecie.Where(a => a.ZwierzeId == ZwierzeId && a.ZdjecieID == zdjecieId).ToList();
+            var Zdjecia = db.Zdjecie.Where(a => a.ZwierzeId == ZwierzeId).ToList();
 
             if (Zdjecia == null)
             {
@@ -255,14 +255,14 @@ namespace RolnikowePole.Controllers
             }
 
             //Sprawdz czy usuwane zdjecie jest glownym zdjeciem tego Zwierza
-            var ZdjecieGlowne = db.Zwierzeta.Where(a => a.NazwaPlikuObrazka == Zdjecie.ZdjecieID.ToString()).SingleOrDefault();
+            var ZdjecieGlowne = db.Zwierzeta.Where(a => a.NazwaPlikuObrazka == Zdjecie.FilePath).SingleOrDefault();
             if(ZdjecieGlowne != null)
             {
                 //Sprawdz czy zwierze ma inne Zdjecia
                 if(Zdjecia != null)
                 {
                     //Ustaw inne zdjecie głównym zdjeciem
-                    Zwierze.NazwaPlikuObrazka = Zdjecia.Take(1).FirstOrDefault().FilePath;
+                    Zwierze.NazwaPlikuObrazka = Zdjecia.Where(a => a.ZdjecieID != zdjecieId).Take(1).FirstOrDefault().FilePath;
                 }
                 //W innym przypadku ustaw domyślne zdjecie
                 else

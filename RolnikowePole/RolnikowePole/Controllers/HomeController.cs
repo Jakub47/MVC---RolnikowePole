@@ -64,17 +64,19 @@ namespace RolnikowePole.Controllers
             }
 
             List<Zwierze> zwierzeta;
+            zwierzeta = db.Zwierzeta.Where(z => !z.Ukryty).OrderBy(a => Guid.NewGuid()).ToList();
 
-            if (cache.IsSet(Consts.ZwierzetaGatunkuCacheKey))
-            {
-                zwierzeta = cache.Get(Consts.ZwierzetaGatunkuCacheKey) as List<Zwierze>;
-            }
+            //                          NIe pobierać zwięrząt cache! bo mogą zostać w każdym momencie zmodyfikowane!
+            //if (cache.IsSet(Consts.ZwierzetaGatunkuCacheKey))
+            //{
+            //    zwierzeta = cache.Get(Consts.ZwierzetaGatunkuCacheKey) as List<Zwierze>;
+            //}
 
-            else
-            {                
-                zwierzeta = db.Zwierzeta.Where(z => !z.Ukryty).OrderBy(a => Guid.NewGuid()).ToList();
-                cache.Set(Consts.ZwierzetaGatunkuCacheKey, zwierzeta, 60);
-            }
+            //else
+            //{                
+            //    zwierzeta = db.Zwierzeta.Where(z => !z.Ukryty).OrderBy(a => Guid.NewGuid()).ToList();
+            //    cache.Set(Consts.ZwierzetaGatunkuCacheKey, zwierzeta, 60);
+            //}
             
             //var vm = new ZwierzetaGatunkiViewModel()
             //{
