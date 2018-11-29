@@ -119,6 +119,7 @@ namespace RolnikowePole.Controllers
             return View(model);
         }
 
+        [NonAction]
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)

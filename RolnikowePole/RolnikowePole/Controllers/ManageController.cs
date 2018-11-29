@@ -495,6 +495,9 @@ namespace RolnikowePole.Controllers
                                 ZwierzeId = model.Zwierze.ZwierzeId,
                                 Zwierze = model.Zwierze
                             };
+                            
+                            
+
                             db.Zdjecie.AddOrUpdate(zdjecie);
                             db.SaveChanges();
                         }
@@ -927,6 +930,7 @@ namespace RolnikowePole.Controllers
         public ActionResult UploadFiles(int id)
         {
             var zwierze = db.Zwierzeta.Find(id);
+            var userLogged = UserManager.FindById(User.Identity.GetUserId());
 
             // Checking no of files injected in Request object  
             if (Request.Files.Count > 0)
@@ -958,6 +962,13 @@ namespace RolnikowePole.Controllers
                             ZwierzeId = id,
                             Zwierze = zwierze
                         };
+
+                        //Sprawdź czy Zwierze ma zdjęcie domyślne
+                        if (zwierze.NazwaPlikuObrazka == "Domyslne.png")
+                        {
+                            zwierze.NazwaPlikuObrazka = filename;
+                        }
+
                         db.Zdjecie.AddOrUpdate(zdjecie);
                         db.SaveChanges();
                     }

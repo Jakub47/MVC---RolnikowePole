@@ -34,7 +34,7 @@ namespace RolnikowePole.Infrastucture
             return koszyk;
         }
 
-        public void DodajDoKoszyka(int zwierzeId)
+        public void DodajDoKoszyka(int? zwierzeId)
         {
             var koszyk = PobierzKoszyk();
             var pozycjaKoszyka = koszyk.Find(k => k.Zwierze.ZwierzeId == zwierzeId);

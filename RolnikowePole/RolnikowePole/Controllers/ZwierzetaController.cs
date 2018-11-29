@@ -32,6 +32,9 @@ namespace RolnikowePole.Controllers
                 return new EmptyResult();
             }
 
+            if (!db.Gatunki.Any(a => a.NazwaGatunku.ToLower() == nazwaGatunku.ToLower()))
+                return RedirectToAction("Index", "Home");
+
             var gatunki = db.Gatunki.Include("Zwierzeta").Where(k => k.NazwaGatunku.ToUpper() == nazwaGatunku.ToUpper()).Single();
 
             var zwierzeta = gatunki.Zwierzeta.Where(a => (searchQuery == null ||
@@ -117,19 +120,19 @@ namespace RolnikowePole.Controllers
             ICacheProvider cache = new DefaultCacheProvider();
 
             List<Zwierze> nowosci;
+            nowosci = db.Zwierzeta.Where(a => !a.Ukryty).OrderByDescending(a => a.DataDodania).Take(6).ToList();
 
             //Check if given values already exits in cache {Remeber to use Consts because we don't want to remeber the key don't we? Let just use variable for that!}
-            if (cache.IsSet(Consts.NowosciCacheKey))
-            {
-                //If it exitsts get that value from cache
-                nowosci = cache.Get(Consts.NowosciCacheKey) as List<Zwierze>;
-            }
-            else
-            {
-                //If it does not exists get from database
-                nowosci = db.Zwierzeta.Where(a => !a.Ukryty).OrderByDescending(a => a.DataDodania).Take(3).ToList();
-                cache.Set(Consts.NowosciCacheKey, nowosci, 60);
-            }
+            //if (cache.IsSet(Consts.NowosciCacheKey))
+            //{
+            //    //If it exitsts get that value from cache
+            //    nowosci = cache.Get(Consts.NowosciCacheKey) as List<Zwierze>;
+            //}
+            //else
+            //{
+            //    //If it does not exists get from database
+            //    cache.Set(Consts.NowosciCacheKey, nowosci, 60);
+            //}
 
             List<Zwierze> wyroznione;
 
@@ -156,7 +159,7 @@ namespace RolnikowePole.Controllers
             var vm = new HomeViewModel
             {
                 Nowe = nowosci,
-                Wyroznione = wyroznione,
+                //Wyroznione = wyroznione,
                 Zwierze = zwierze,
                 //Since i am working on testing examples their' properties may not be set due to initialization. 
                 //Later on this line must be modify to : daneUzytkownika = user.DaneUzytkownika

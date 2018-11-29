@@ -45,7 +45,7 @@ namespace RolnikowePole.Controllers
 
         public ActionResult Index()
         {
-            logger.Info("Jestes na stronie glownej");
+            //logger.Info("Jestes na stronie glownej");
 
             // Test Cache with create class
             ICacheProvider cache = new DefaultCacheProvider();
@@ -65,6 +65,8 @@ namespace RolnikowePole.Controllers
 
             List<Zwierze> zwierzeta;
             zwierzeta = db.Zwierzeta.Where(z => !z.Ukryty).OrderBy(a => Guid.NewGuid()).ToList();
+
+
 
             //                          NIe pobierać zwięrząt cache! bo mogą zostać w każdym momencie zmodyfikowane!
             //if (cache.IsSet(Consts.ZwierzetaGatunkuCacheKey))
@@ -104,15 +106,15 @@ namespace RolnikowePole.Controllers
             return View();
         }
 
-        public ActionResult StronyStatyczne(string nazwa)
-        {
-            return View(nazwa);
-        }
+        //public ActionResult StronyStatyczne(string nazwa)
+        //{
+        //    return View(nazwa);
+        //}
 
-        public ActionResult Index2()
-        {
-            return View();
-        }
+        //public ActionResult Index2()
+        //{
+        //    return View();
+        //}
 
         [ChildActionOnly]
         public PartialViewResult GetLogin()

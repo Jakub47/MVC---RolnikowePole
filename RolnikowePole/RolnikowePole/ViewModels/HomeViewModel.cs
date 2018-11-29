@@ -12,7 +12,7 @@ namespace RolnikowePole.ViewModels
         public DaneUzytkownika daneUzytkownika { get; set; }
         public Wiadomosc wiadomosc { get; set; }
         public IEnumerable<Zdjecie> Zdjecia { get; set; }
-        public IEnumerable<Zwierze> Wyroznione { get; set; }
+        //public IEnumerable<Zwierze> Wyroznione { get; set; }
         public IEnumerable<Zwierze> Nowe { get; set; }
         
     }
