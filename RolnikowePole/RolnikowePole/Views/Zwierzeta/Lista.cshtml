@@ -60,7 +60,7 @@
                 success: function (result) {
                     //TODO: jezeli p;usty to nie renderuj
                     console.log('Powinno zmienic');
-                    $('#SekcjaListaZwierzat').html(result);
+                    $('#SekcjaListaZwierzat').replaceWith(result);
                 }
             });
             });
@@ -73,7 +73,7 @@
                 success: function (result) {
                     //TODO: jezeli p;usty to nie renderuj
                     console.log('Powinno zmienic');
-                    $('#SekcjaListaZwierzat').html(result);
+                    $('#SekcjaListaZwierzat').replaceWith(result);
                 }
             });
             });
@@ -88,7 +88,7 @@
                 success: function (result) {
                     //TODO: jezeli p;usty to nie renderuj
                     console.log('Powinno zmienic');
-                    $('#SekcjaListaZwierzat').html(result);
+                    $('#SekcjaListaZwierzat').replaceWith(result);
                 }
             });
             });
@@ -101,7 +101,7 @@
                 success: function (result) {
                     //TODO: jezeli p;usty to nie renderuj
                     console.log('Powinno zmienic');
-                    $('#SekcjaListaZwierzat').html(result);
+                    $('#SekcjaListaZwierzat').replaceWith(result);
                 }
             });
             });
@@ -117,7 +117,7 @@
                     success: function (result) {
                         if (!$.trim($(result).html()).length)
                         {
-                            $('#SekcjaListaZwierzat').html('<p>Wybrane wojewodztwo nie posiada zwierząt z wybranego województwa</p>');
+                            $('#SekcjaListaZwierzat').replaceWith('<p>Wybrane wojewodztwo nie posiada zwierząt z wybranego województwa</p>');
                         }
                         else
                         {
