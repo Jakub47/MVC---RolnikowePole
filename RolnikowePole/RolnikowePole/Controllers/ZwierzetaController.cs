@@ -119,6 +119,7 @@ namespace RolnikowePole.Controllers
         {
             ICacheProvider cache = new DefaultCacheProvider();
 
+
             List<Zwierze> nowosci;
             nowosci = db.Zwierzeta.Where(a => !a.Ukryty).OrderByDescending(a => a.DataDodania).Take(6).ToList();
 
@@ -147,6 +148,11 @@ namespace RolnikowePole.Controllers
             }
 
             var zwierze = db.Zwierzeta.Find(int.Parse(id));
+            if(zwierze == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             var user = zwierze.User;
             var W = new Wiadomosc();
 
@@ -184,12 +190,12 @@ namespace RolnikowePole.Controllers
             return PartialView("_GatunkiMenu", gatunki);
         }
 
-        public ActionResult ZwierzePodpowiedzi(string term)
-        {
-            var zwierzeta = this.db.Zwierzeta.Where(a => !a.Ukryty && a.Nazwa.ToLower().Contains(term.ToLower()))
-                            .Take(5).Select(a => new { label = a.Nazwa });
+        //public ActionResult ZwierzePodpowiedzi(string term)
+        //{
+        //    var zwierzeta = this.db.Zwierzeta.Where(a => !a.Ukryty && a.Nazwa.ToLower().Contains(term.ToLower()))
+        //                    .Take(5).Select(a => new { label = a.Nazwa });
 
-            return Json(zwierzeta, JsonRequestBehavior.AllowGet);
-        }
+        //    return Json(zwierzeta, JsonRequestBehavior.AllowGet);
+        //}
     }
 }
