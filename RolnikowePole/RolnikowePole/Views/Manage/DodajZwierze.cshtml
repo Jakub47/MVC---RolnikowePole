@@ -1,7 +1,9 @@
 ﻿@model RolnikowePole.ViewModels.EditZwierzeViewModel
 @{
-    ViewBag.Title = "DodajZwierze";
-    Layout = "~/Views/Shared/_ManageLayout.cshtml";
+                /**/
+
+                ViewBag.Title = "DodajZwierze";
+                Layout = "~/Views/Shared/_ManageLayout.cshtml";
 }
 
 <h2>Dodanie zwierzęcia</h2>
@@ -10,6 +12,12 @@
 {
     <div class="form-group text-success">
         Pomyślnie wprowadzono zmiany!
+    </div>
+}
+else if (ViewBag.WprowadzPlik != null)
+{
+    <div class="form-group text-danger">
+        @ViewBag.WprowadzPlik
     </div>
 }
 
@@ -76,11 +84,11 @@
 
     if (ViewBag.EditMode == null || !ViewBag.EditMode)
     {
-    <div class="form-group">
-        <label for="exampleFormControlFile1">Wprowadź zdjęcie</label>
-        <input type="file" name="file" class="form-control-file" multiple>
-        @Html.ValidationMessageFor(o => o.Zwierze.NazwaPlikuObrazka, null, new { @class = "form-text text-danger" })
-    </div>
+        <div class="form-group">
+            <label for="exampleFormControlFile1">Wprowadź zdjęcie [Max 20MB!]</label>
+            <input type="file" name="file" class="form-control-file" multiple>
+            @Html.ValidationMessageFor(o => o.Zwierze.NazwaPlikuObrazka, null, new { @class = "form-text text-danger" })
+        </div>
     }
 
     else if (ViewBag.EditMode)

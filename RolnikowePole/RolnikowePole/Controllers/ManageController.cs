@@ -452,16 +452,31 @@ namespace RolnikowePole.Controllers
             }
             else
             {
-
                 //Co gdy użytkownik nie wybral pliku
-                if (file == null)
+                if (file == null || file.First() == null)
                 {
                     //Model zostanie zwrocony, ponieważ w drpodown liście nie zostaną wyświetlone elementy! stąd musimy je jeszcze
                     //raz pobrać żeby poprostu zostały pokazane!
                     var gatunki = db.Gatunki.ToList();
                     model.Gatunki = gatunki;
+                    ViewBag.WprowadzPlik = "Proszę wprowadzić plik(i)!";
                     return View(model);
                 }
+
+                string c = Path.GetExtension(file.ElementAt(0).FileName);
+                c = c.Remove(0, 1);
+                c = c.ToLower();
+
+                if (c != "png" && c != "jpg")
+                {
+                    //Model zostanie zwrocony, ponieważ w drpodown liście nie zostaną wyświetlone elementy! stąd musimy je jeszcze
+                    //raz pobrać żeby poprostu zostały pokazane!
+                    var gatunki = db.Gatunki.ToList();
+                    model.Gatunki = gatunki;
+                    ViewBag.WprowadzPlik = "Proszę wprowadzić plik w formacie PNG lub JPG";
+                    return View(model);
+                }
+                
                 //Sprawdzenie czy uzytkownik wybral plik
                 else
                 {
@@ -506,6 +521,24 @@ namespace RolnikowePole.Controllers
                             int licznik = 0;
                             foreach (var item in file)
                             {
+                                //Check ext and len
+                                c = Path.GetExtension(item.FileName);
+                                c = c.Remove(0, 1);
+                                c = c.ToLower();
+
+                                if (c != "png" && c != "jpg")
+                                {
+                                    //Model zostanie zwrocony, ponieważ w drpodown liście nie zostaną wyświetlone elementy! stąd musimy je jeszcze
+                                    //raz pobrać żeby poprostu zostały pokazane!
+                                    var gatunki = db.Gatunki.ToList();
+                                    model.Gatunki = gatunki;
+                                    ViewBag.WprowadzPlik = "Proszę wprowadzić plik w formacie PNG lub JPG";
+                                    return View(model);
+                                }
+
+                                //
+
+
                                 if (licznik == 0)
                                 {
                                     var sourceImage = Image.FromStream(item.InputStream);
