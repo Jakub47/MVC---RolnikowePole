@@ -192,8 +192,7 @@ namespace RolnikowePole.Controllers
             List<string> wojewodztwa = new List<string>();
             WszystkieZwierzeta.ForEach(a =>
             {
-                //When launching delete a.Wojewodztwo != null
-                if (a.Wojewodztwo != null && !a.Wojewodztwo.Equals(String.Empty))
+                if (!a.Wojewodztwo.Equals(String.Empty))
                     wojewodztwa.Add(a.Wojewodztwo);
             });
 
@@ -214,7 +213,6 @@ namespace RolnikowePole.Controllers
             {
                 var user = UserManager.FindById(User.Identity.GetUserId());
                 WystawioneZwierzeta = db.Zwierzeta.Where(a => a.UserId == user.Id).ToList();
-                //ZamowieniaUzytkownika = db.Zamowienia.Where(o => o.UserId == userId).Include("PozycjeZamowienia").OrderByDescending(o => o.DataDodania).ToArray();
             }
 
             var vm = new List<WystawioneZwierzetaViewModel>();
@@ -300,7 +298,6 @@ namespace RolnikowePole.Controllers
             {
                 var user = UserManager.FindById(User.Identity.GetUserId());
                 WystawioneZwierzeta = db.Zwierzeta.Where(a => a.UserId == user.Id).ToList();
-                //ZamowieniaUzytkownika = db.Zamowienia.Where(o => o.UserId == userId).Include("PozycjeZamowienia").OrderByDescending(o => o.DataDodania).ToArray();
             }
 
             var vm = new List<WystawioneZwierzetaViewModel>();
@@ -313,17 +310,13 @@ namespace RolnikowePole.Controllers
                 });
             });
 
-            //Tutak
             var zz = db.Zdjecie.Where(a => a.ZwierzeId == ZwierzeId).ToList();
             var zwierze = db.Zwierzeta.Find(ZwierzeId);
             var cc = new WystawioneZwierzetaViewModel() { WystawioneZwierzeta = zwierze, Zdjecia = zz };
-            //Tuaj
 
             var zw = vm.Where(a => a.WystawioneZwierzeta.ZwierzeId == ZwierzeId).FirstOrDefault();
 
             return PartialView("_Zdjecia", cc);
-            //var result = new { Result = vm, ID = ZwierzeId };
-            //return Json(result);
         }
 
         [HttpDelete]
@@ -347,17 +340,17 @@ namespace RolnikowePole.Controllers
             return new EmptyResult();
         }
 
-        [HttpPost]
-        [Authorize(Roles = "Admin")]
-        public StanZamowienia ZmianaStanuZamowienia(Zamowienie zamowienie)
-        {
-            //Pobierz Zamowienie z Bazy
-            Zamowienie zamowienieDoModyfikacji = db.Zamowienia.Find(zamowienie.ZamowienieId);
-            zamowienieDoModyfikacji.StanZamowienia = zamowienie.StanZamowienia;
-            db.SaveChanges();
+        //[HttpPost]
+        //[Authorize(Roles = "Admin")]
+        //public StanZamowienia ZmianaStanuZamowienia(Zamowienie zamowienie)
+        //{
+        //    //Pobierz Zamowienie z Bazy
+        //    Zamowienie zamowienieDoModyfikacji = db.Zamowienia.Find(zamowienie.ZamowienieId);
+        //    zamowienieDoModyfikacji.StanZamowienia = zamowienie.StanZamowienia;
+        //    db.SaveChanges();
 
-            return zamowienie.StanZamowienia;
-        }
+        //    return zamowienie.StanZamowienia;
+        //}
 
 
         [Authorize(Roles = "Admin")]
@@ -394,7 +387,7 @@ namespace RolnikowePole.Controllers
             WszystkieZwierzeta.ForEach(a =>
             {
                 //When launching delete a.Wojewodztwo != null
-                if (a.Wojewodztwo != null && !a.Wojewodztwo.Equals(String.Empty))
+                if (!a.Wojewodztwo.Equals(String.Empty))
                     wojewodztwa.Add(a.Wojewodztwo);
             });
 
@@ -469,8 +462,6 @@ namespace RolnikowePole.Controllers
 
                 if (c != "png" && c != "jpg")
                 {
-                    //Model zostanie zwrocony, ponieważ w drpodown liście nie zostaną wyświetlone elementy! stąd musimy je jeszcze
-                    //raz pobrać żeby poprostu zostały pokazane!
                     var gatunki = db.Gatunki.ToList();
                     model.Gatunki = gatunki;
                     ViewBag.WprowadzPlik = "Proszę wprowadzić plik w formacie PNG lub JPG";
@@ -656,20 +647,7 @@ namespace RolnikowePole.Controllers
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewBag.ID = user.Id;
 
-            //Jak ja wysyłam to mnie nie obchodzi wysyłający tylko odbiorca
-            //Jak ja odbieram to mnie nie obchodzi odbierający tylko wysyłający
-
-            //List of all users id !
-            //var GetUsersIDSended = user.SenderMessages.Where(a => a.ReceiverId != user.Id).Select(b => b.ReceiverId).ToList();
-            //var GetUsersIDRetrived = user.ReceiverMessages.Where(a => a.SenderId != user.Id).Select(b => b.SenderId).ToList();
-
-            //var wiadomosciWyslane = user.SenderMessages.Where(a => a.SenderId == user.Id).OrderByDescending(a => a.DateAndTimeOfSend).DistinctBy(a => a.ZwierzeId).ToList();
-
-            ////GIT
-            //var wiadomosciOtrzymane = user.ReceiverMessages.Where(a => a.ReceiverId == user.Id).OrderByDescending(a => a.DateAndTimeOfSend).DistinctBy(a => a.ZwierzeId).ToList();
-
-
-            //Potrzebuje nazwyUzytkownika + Daty + Tresci kazdej wiadomosci
+            
             var wiadomosci = new List<WiadomoscZIdViewModel>();
             var w = new WiadomoscZIdViewModel();
             var g = new List<Wiadomosc>();
@@ -679,11 +657,7 @@ namespace RolnikowePole.Controllers
             //GIT
             var wiadomosciOtrzymane = user.ReceiverMessages.OrderByDescending(a => a.DateAndTimeOfSend).ToList();
 
-            //Działa,ale tylko dla wiadomosci jedna po drugiej!
-            //Spróbuj utworzyc pustą liste i dla kazdej wiadomosci w bazie (odseparowanej) sprawdz czy:
-            //1)W liscie znajduje sie taki obiekt z kluczem zwierza jezeli nie dodaj
-            //2)jezeli nastepny obiekt ma taki sam klucz zwierza ale inny klucz obcy idUser to dodaj
-            //Oczywiscie przypisz te wiadomosci z bazy do zmiennej a nastpenie posortuje OrderByDescending!
+            
             var w1 = new List<Wiadomosc>();
             wiadomosciWyslane.ForEach((a, b) =>
             {
@@ -691,8 +665,6 @@ namespace RolnikowePole.Controllers
                     w1.Add(a);
                 else
                 {
-                    ///such value with given key exits 
-                    ///check his id
                     if (!w1.Exists(n => (n.ZwierzeId == a.ZwierzeId) && (n.ReceiverId == a.ReceiverId)))
                         w1.Add(a);
                 }
@@ -705,16 +677,12 @@ namespace RolnikowePole.Controllers
                     w2.Add(a);
                 else
                 {
-                    ///such value with given key exits 
-                    ///check his id
                     if (!w2.Exists(n => (n.ZwierzeId == a.ZwierzeId) && (n.SenderId == a.SenderId)))
                         w2.Add(a);
                 }
             });
 
-            //Dopre wartosci niemniej trzeba usunac duplikaty!
-
-
+            //Dopre wartosci niemniej trzeba usunac duplik
             w1.AddRange(w2);
             w1 = w1.OrderByDescending(a => a.DateAndTimeOfSend).Distinct().ToList();
 
@@ -735,46 +703,7 @@ namespace RolnikowePole.Controllers
                     }
                 }
             }
-            //for(int i = 0;i<wiadomosciOtrzymane.Count;i++)
-            //{
-            //    if(i == 0)
-            //    {
-            //        if (wiadomosciOtrzymane[i + 1].ZwierzeId != wiadomosciOtrzymane[i].ZwierzeId
-            //            || wiadomosciOtrzymane[i + 1].SenderId != wiadomosciOtrzymane[i].SenderId)
-            //        {
-            //            g.Add(wiadomosciOtrzymane[i]);
-            //        }
-            //    }0
-
-            //    if (i < wiadomosciOtrzymane.Count-1)
-            //    {
-            //        if (wiadomosciOtrzymane[i + 1].ZwierzeId != wiadomosciOtrzymane[i].ZwierzeId
-            //            || wiadomosciOtrzymane[i + 1].SenderId != wiadomosciOtrzymane[i].SenderId)
-            //        {
-            //            g.Add(wiadomosciOtrzymane[i+1]);
-            //        }
-            //    }
-            //}
-            //for (int i = 0; i < wiadomosciWyslane.Count; i++)
-            //{
-            //    if(i == 0)
-            //    {
-            //        if (wiadomosciWyslane[i + 1].ZwierzeId != wiadomosciWyslane[i].ZwierzeId
-            //            || wiadomosciWyslane[i + 1].SenderId != wiadomosciWyslane[i].SenderId)
-            //        {
-            //            g.Add(wiadomosciWyslane[i]);
-            //        }
-            //    }
-
-            //    if (i < wiadomosciWyslane.Count-1)
-            //    {
-            //        if (wiadomosciWyslane[i + 1].ZwierzeId != wiadomosciWyslane[i].ZwierzeId
-            //            || wiadomosciWyslane[i + 1].SenderId != wiadomosciWyslane[i].SenderId)
-            //        {
-            //            g.Add(wiadomosciWyslane[i+1]);
-            //        }
-            //    }
-            //}
+           
 
             var c = g.ToList();
 
@@ -804,72 +733,7 @@ namespace RolnikowePole.Controllers
                 Debug.Write(ex.InnerException.TargetSite.Name);
             }
 
-            //wiadomosciWyslane.ForEach(a =>
-            //{
-            //    //wiadomosci.Add(new WiadomosciViewModel()
-            //    //{
-            //    //    NazwaUzytkownika = a.Receiver.DaneUzytkownika.Imie + " " +  a.Receiver.DaneUzytkownika.Nazwisko,
-            //    //    DataWyslania = a.DateAndTimeOfSend,
-            //    //    TrescWiadomosci = a.Body
-            //    //});
-
-            //    var z = new WiadomosciViewModel()
-            //    {
-            //        NazwaUzytkownika = a.Receiver.DaneUzytkownika.Imie + " " + a.Receiver.DaneUzytkownika.Nazwisko,
-            //        DataWyslania = a.DateAndTimeOfSend,
-            //        TrescWiadomosci = a.Body,
-            //        Id = a.ReceiverId,
-            //        Zwierze = db.Zwierzeta.Where(b => b.ZwierzeId == a.ZwierzeId).FirstOrDefault()
-            //    };
-
-            //    w.WiadomosciWyslane.Add(z);
-            //});
-
-            //wiadomosciOtrzymane.ForEach(a =>
-            //{
-            //    //wiadomosci.Add(new WiadomosciViewModel()
-            //    //{
-            //    //    NazwaUzytkownika = a.Receiver.DaneUzytkownika.Imie + " " + a.Receiver.DaneUzytkownika.Nazwisko,
-            //    //    DataWyslania = a.DateAndTimeOfSend,
-            //    //    TrescWiadomosci = a.Body
-            //    //});
-
-            //    var z = new WiadomosciViewModel()
-            //    {
-            //        NazwaUzytkownika = a.Receiver.DaneUzytkownika.Imie + " " + a.Receiver.DaneUzytkownika.Nazwisko,
-            //        DataWyslania = a.DateAndTimeOfSend,
-            //        TrescWiadomosci = a.Body,
-            //        Id = a.SenderId,
-            //        Zwierze = db.Zwierzeta.Where(b => b.ZwierzeId == a.ZwierzeId).FirstOrDefault()
-            //    };
-
-            //    w.WiadomosciOtrzymane.Add(z);
-            //});
-
-
             return View(wiadomosci);
-
-            //var WszyscyUserzy = UserManager.Users;
-
-            //foreach (var userr in UserManager.Users)
-            //{
-            //    wiadomosciOtrzymane.ForEach(a =>
-            //    {
-
-            //    });
-            //}
-
-            //Wziąć ostatnią wiadomość i id użytkownika innego niz zalogowany 
-            //Co wziac
-
-
-            //var wiadomoscVM = new WiadomosciViewModel
-            //{
-            //    WiadomosciWyslane = wiadomosciWyslane,
-            //    WiadomosciOtrzymane = wiadomosciOtrzymane
-            //};
-
-            //return View(wiadomoscVM);
         }
 
         public ActionResult WiadomosciKonwersacja(int idZwierza, string idUser, bool Otrzymane = false, int w = -1)
@@ -894,55 +758,7 @@ namespace RolnikowePole.Controllers
             wszystkieWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && ((a.ReceiverId == idUser && a.SenderId == userLogged.Id)
                                                      || (a.SenderId == idUser && a.ReceiverId == userLogged.Id))).ToList();
 
-            ///Tutaj zmiana
-            //if (Otrzymane)
-            //{
-            //    //var mojeWiadomosci = userLogged.SenderMessages.Where(a => a.ZwierzeId == idZwierza && a.ReceiverId == idUser).ToList();
-            //    //var inneWiadomosci = userDiffrent.ReceiverMessages.Where(a => a.ZwierzeId == idZwierza && a.SenderId == userLogged.Id).ToList();
-            //    //mojeWiadomosci.ForEach(a => wszystkieWiadomosci.Add(a)); inneWiadomosci.ForEach(a => wszystkieWiadomosci.Add(a));
-
-            //    wszystkieWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && (a.ReceiverId == userLogged.Id
-            //                                         && a.SenderId == userDiffrent.Id)).ToList();
-            //}
-            //else
-            //{
-            //    //var mojeWiadomosci = userLogged.SenderMessages.Where(a => a.ZwierzeId == idZwierza && a.ReceiverId == idUser).ToList();
-            //    //var inneWiadomosci = userDiffrent.SenderMessages.Where(a => a.ZwierzeId == idZwierza && a.SenderId == userLogged.Id).ToList();
-            //    //mojeWiadomosci.ForEach(a => wszystkieWiadomosci.Add(a)); inneWiadomosci.ForEach(a => wszystkieWiadomosci.Add(a));
-            //    wszystkieWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && (a.ReceiverId == userDiffrent.Id
-            //                                         && a.SenderId == userLogged.Id)).ToList();
-            //}
-
-
-
-            //var listaMoichWiadomosci = new List<Wiadomosc>();
-            //var listaInnychWiadomosci = new List<Wiadomosc>();
-            //var userId = User.Identity.GetUserId();
-
-            //var listaWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && a.ReceiverId == idUser && a.SenderId == userId)
-            //                            .ToList();
-
-            //idUser == gosc do ktorego sie wysyla ... userId == mojeId
-
-            //if (czyIdUzytkownika)
-            //{
-            //   listaMoichWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && a.SenderId == idUser).ToList();
-            //   listaInnychWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && a.Re
-            //}
-            //else
-            //{
-            //    var listaMoichWiadomos
-            //}
-
-            //Chcę wziąć wszystkie wiadmości odnośnie konkretnego zwierza i od określonej osoby
-
-            //a.ReceiverId.Equals(idReceiverId, StringComparison.CurrentCultureIgnoreCase)
-            //|| (a.SenderId.Equals(idSenderID, StringComparison.CurrentCultureIgnoreCase)))).ToList();
-
-            //Pobierz wiadomosci które ja wysłałem do tej osoby
-            //var listaWiadomosciOsobyWysylającej = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && )
-
-            //Pobierz wiadomosci które ona wysłałą do mnie!
+           //Pobierz wiadomosci które ona wysłałą do mnie!
             var wWiadomosc = new Wiadomosc
             {
                 ZwierzeId = idZwierza,
@@ -965,7 +781,6 @@ namespace RolnikowePole.Controllers
             var zwierze = db.Zwierzeta.Find(id);
             var userLogged = UserManager.FindById(User.Identity.GetUserId());
 
-            // Checking no of files injected in Request object  
             if (Request.Files.Count > 0)
             {
                 try
@@ -1028,8 +843,6 @@ namespace RolnikowePole.Controllers
         [HttpPost]
         public ActionResult WyslijWiadomosc(Wiadomosc wiadomosc, bool FromSzczegoly = false)
         {
-            //db.Users.Find(wiadomosc.ReceiverId).ReceiverMessages.Add(wiadomosc);
-            //db.Users.Find(wiadomosc.SenderId).SenderMessages.Add(wiadomosc);
             wiadomosc.DateAndTimeOfSend = DateTime.Now;
 
             db.Wiadomosci.AddOrUpdate(wiadomosc);
@@ -1086,14 +899,7 @@ namespace RolnikowePole.Controllers
 
             var idZwierza = wiadomosc.ZwierzeId;
             string idReceiverId = wiadomosc.ReceiverId;
-
-            //var mojeWiadomosci = userLogged.SenderMessages.Where(a => a.ZwierzeId == idZwierza && a.ReceiverId == idUser).ToList();
-            //var inneWiadomosci = userDiffrent.SenderMessages.Where(a => a.ZwierzeId == idZwierza && a.SenderId == userLogged.Id).ToList();
-            //var wszystkieWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && (a.ReceiverId == idReceiverId &&
-            //                                         a.SenderId == idSenderID)).ToList();
-
-
-            //var inneWiadomosci = db.Wiadomosci.Where(a => a.ZwierzeId == idZwierza && a.SenderId == idSenderID).ToList();
+            
             return View("_Wiadomosci", wszystkieWiadomosci);
         }
 

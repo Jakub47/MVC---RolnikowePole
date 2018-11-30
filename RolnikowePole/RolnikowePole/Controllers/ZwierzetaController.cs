@@ -44,8 +44,7 @@ namespace RolnikowePole.Controllers
             List<string> wojewodztwa = new List<string>();
             WszystkieZwierzeta.ForEach(a =>
                 {
-                    //When launching delete a.Wojewodztwo != null
-                    if ( a.Wojewodztwo != null && !a.Wojewodztwo.Equals(String.Empty))
+                    if ( !a.Wojewodztwo.Equals(String.Empty))
                         wojewodztwa.Add(a.Wojewodztwo);
                 });
 
@@ -56,7 +55,6 @@ namespace RolnikowePole.Controllers
             {
                 if (nazwa == "DataW")
                 {
-                    //var NoweZwierzeta = gatunki.Zwierzeta.OrderByDescending(a => a.DataDodania).ToList();
                     zwierzeta = zwierzeta.OrderByDescending(a => a.DataDodania).ToList();
                     return View("_ZwierzetaList", zwierzeta);
                 }
@@ -88,22 +86,6 @@ namespace RolnikowePole.Controllers
 
                 else if (nazwa != null)
                 {
-                    //zwierzeta = zwierzeta.Where(a => a.Wojewodztwo.ToLower() == nazwa.ToLower());
-                    //List<Zwierze> NewOnes = new List<Zwierze>();
-
-                    //foreach (var item in zwierzeta)
-                    //{
-                    //    string c = item.Wojewodztwo.ToLower();
-                    //    string g = nazwa.ToLower();
-
-                    //    if (c == g)
-                    //        NewOnes.Add(item);
-                    //}
-
-                    ////var NoweZwierzeta = gatunki.Zwierzeta.Where(a => !a.Ukryty && a.Wojewodztwo.ToLower() == nazwa.ToLower());
-
-                    //if (NewOnes.Count <= 0)
-                    //    return new EmptyResult();
 
                     zwierzeta = zwierzeta.Where(a => a.Wojewodztwo.ToLower() == nazwa.ToLower());
 
@@ -167,8 +149,6 @@ namespace RolnikowePole.Controllers
                 Nowe = nowosci,
                 //Wyroznione = wyroznione,
                 Zwierze = zwierze,
-                //Since i am working on testing examples their' properties may not be set due to initialization. 
-                //Later on this line must be modify to : daneUzytkownika = user.DaneUzytkownika
                 daneUzytkownika = user.DaneUzytkownika,
                 wiadomosc = W,
                 Zdjecia = db.Zdjecie.Where(a=> a.ZwierzeId == zwierze.ZwierzeId).ToList()

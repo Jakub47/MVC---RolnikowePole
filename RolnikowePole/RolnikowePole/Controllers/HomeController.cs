@@ -68,7 +68,7 @@ namespace RolnikowePole.Controllers
 
 
 
-            //                          NIe pobierać zwięrząt cache! bo mogą zostać w każdym momencie zmodyfikowane!
+            //  NIe pobierać zwięrząt cache! bo mogą zostać w każdym momencie zmodyfikowane!
             //if (cache.IsSet(Consts.ZwierzetaGatunkuCacheKey))
             //{
             //    zwierzeta = cache.Get(Consts.ZwierzetaGatunkuCacheKey) as List<Zwierze>;
@@ -79,13 +79,6 @@ namespace RolnikowePole.Controllers
             //    zwierzeta = db.Zwierzeta.Where(z => !z.Ukryty).OrderBy(a => Guid.NewGuid()).ToList();
             //    cache.Set(Consts.ZwierzetaGatunkuCacheKey, zwierzeta, 60);
             //}
-            
-            //var vm = new ZwierzetaGatunkiViewModel()
-            //{
-            //    Gatunki = gatunki,
-            //    ZwierzetaGatunku = zwierzeta
-            //};
-
             return View(zwierzeta);
         }
 
@@ -105,16 +98,7 @@ namespace RolnikowePole.Controllers
 
             return View();
         }
-
-        //public ActionResult StronyStatyczne(string nazwa)
-        //{
-        //    return View(nazwa);
-        //}
-
-        //public ActionResult Index2()
-        //{
-        //    return View();
-        //}
+        
 
         [ChildActionOnly]
         public PartialViewResult GetLogin()
@@ -147,8 +131,6 @@ namespace RolnikowePole.Controllers
                             w2.Add(a);
                         else
                         {
-                        ///such value with given key exits 
-                        ///check his id
                         if (!w2.Exists(n => (n.ZwierzeId == a.ZwierzeId) && (n.SenderId == a.SenderId)))
                                 w2.Add(a);
                         }
